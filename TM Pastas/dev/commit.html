@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Desenvolvimento - TM Sempre Tecnologia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .commit {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #00d4ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .commit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .commit-time {
+            color: #00d4ff;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .commit-tag {
+            background: linear-gradient(90deg, #7b2cbf, #00d4ff);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .commit-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .commit-desc {
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        .commit-desc ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .commit-desc li {
+            margin-bottom: 4px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: 8px;
+        }
+
+        .status-done {
+            background: #00c853;
+            color: #000;
+        }
+
+        .status-progress {
+            background: #ffab00;
+            color: #000;
+        }
+
+        .status-pending {
+            background: #455a64;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📋 Registro de Desenvolvimento</h1>
+        <p class="subtitle">Gerador de Estrutura de Pastas para Levantamentos Fotográficos<br>
+            <span style="color: #00d4ff; font-weight: 600;">TM - Sempre Tecnologia</span> |
+            <span>Thiago Nascimento Barbosa</span>
+        </p>
+
+        <!-- COMMIT 1 -->
+        <div class="commit">
+            <div class="commit-header">
+                <span class="commit-time">06/02/2026 - 03:14</span>
+                <span class="commit-tag">Início</span>
+            </div>
+            <div class="commit-title">🚀 Início do Desenvolvimento</div>
+            <div class="commit-desc">
+                Iniciando a implementação do Gerador de Estrutura de Pastas conforme PRD.
+                <ul>
+                    <li>Tecnologia escolhida: Python + CustomTkinter</li>
+                    <li>Criando estrutura de arquivos do projeto</li>
+                    <li>Configurando ambiente de desenvolvimento</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COMMIT 2 -->
+        <div class="commit">
+            <div class="commit-header">
+                <span class="commit-time">06/02/2026 - 03:15</span>
+                <span class="commit-tag">Setup</span>
+            </div>
+            <div class="commit-title">📁 Criando Estrutura do Projeto</div>
+            <div class="commit-desc">
+                <ul>
+                    <li>Criado arquivo requirements.txt com dependência CustomTkinter</li>
+                    <li>Criado arquivo principal app.py</li>
+                    <li>Criado pasta dev/ para documentação de desenvolvimento</li>
+                    <li>Iniciando implementação da interface gráfica</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COMMIT 3 -->
+        <div class="commit">
+            <div class="commit-header">
+                <span class="commit-time">06/02/2026 - 03:16</span>
+                <span class="commit-tag">Core</span>
+            </div>
+            <div class="commit-title">🎨 Aplicação Principal Implementada</div>
+            <div class="commit-desc">
+                Criado app.py com interface completa CustomTkinter:
+                <ul>
+                    <li>✅ Interface com tema escuro moderno</li>
+                    <li>✅ Seletor de pasta destino</li>
+                    <li>✅ Painel de ambientes com checkboxes + campo customizado</li>
+                    <li>✅ Painel de serviços com numeração automática (X.1, X.2...)</li>
+                    <li>✅ Painel de subpastas opcionais</li>
+                    <li>✅ Preview em tempo real da estrutura</li>
+                    <li>✅ Botão de geração que cria pastas no sistema</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COMMIT 4 -->
+        <div class="commit">
+            <div class="commit-header">
+                <span class="commit-time">06/02/2026 - 03:17</span>
+                <span class="commit-tag">Deploy</span>
+            </div>
+            <div class="commit-title">🚀 Arquivos de Execução e Documentação</div>
+            <div class="commit-desc">
+                <ul>
+                    <li>✅ Criado executar_app.bat - Instala dependências e executa a aplicação</li>
+                    <li>✅ Criado guia.html - Landing page com tutorial completo</li>
+                    <li>📋 Próximo: Testar aplicação e validar funcionamento</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COMMIT 5 -->
+        <div class="commit">
+            <div class="commit-header">
+                <span class="commit-time">06/02/2026 - 03:18</span>
+                <span class="commit-tag">Concluído</span>
+            </div>
+            <div class="commit-title">✅ Projeto Finalizado com Sucesso!</div>
+            <div class="commit-desc">
+                <ul>
+                    <li>✅ Dependência CustomTkinter instalada com sucesso</li>
+                    <li>✅ Aplicação app.py testada e funcionando</li>
+                    <li>✅ Interface carrega corretamente com tema escuro</li>
+                    <li>✅ Todos os arquivos criados e estruturados</li>
+                </ul>
+                <br>
+                <strong>Arquivos do projeto:</strong>
+                <ul>
+                    <li>📄 app.py - Aplicação principal</li>
+                    <li>📄 executar_app.bat - Script de execução</li>
+                    <li>📄 guia.html - Tutorial/Landing page</li>
+                    <li>📄 requirements.txt - Dependências Python</li>
+                    <li>📁 dev/commit.html - Este log de desenvolvimento</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COMMIT 6 -->
+        <div class="commit">
+            <div class="commit-header">
+                <span class="commit-time">06/02/2026 - 03:25</span>
+                <span class="commit-tag">Feature</span>
+            </div>
+            <div class="commit-title">📁 Pasta Raiz do Levantamento</div>
+            <div class="commit-desc">
+                Adicionado campo "Nome do Levantamento" para agrupar todos os ambientes:
+                <ul>
+                    <li>✅ Campo de texto para nome da pasta raiz</li>
+                    <li>✅ Preview atualizado mostrando hierarquia completa</li>
+                    <li>✅ Validação obrigatória antes de gerar</li>
+                    <li>✅ Estrutura: Levantamento → Ambientes → Serviços → Subpastas</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COMMIT 7 -->
+        <div class="commit">
+            <div class="commit-header">
+                <span class="commit-time">06/02/2026 - 03:27</span>
+                <span class="commit-tag">Final</span>
+            </div>
+            <div class="commit-title">✍️ Assinatura do Projeto</div>
+            <div class="commit-desc">
+                Projeto assinado e documentado:
+                <ul>
+                    <li>✅ Assinatura adicionada no cabeçalho do código</li>
+                    <li>✅ Créditos na interface da aplicação</li>
+                    <li>✅ Assinatura no rodapé do guia.html</li>
+                    <li>✅ Documentação de desenvolvimento atualizada</li>
+                </ul>
+                <br>
+                <div style="background: rgba(0, 212, 255, 0.1); padding: 15px; border-radius: 8px; margin-top: 10px;">
+                    <strong style="color: #00d4ff;">TM - Sempre Tecnologia</strong><br>
+                    <span>Desenvolvido por: Thiago Nascimento Barbosa</span><br>
+                    <span style="color: #666;">Fevereiro 2026</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMMIT 8 -->
+        <div class="commit">
+            <div class="commit-header">
+                <span class="commit-time">06/02/2026 - 03:29</span>
+                <span class="commit-tag">Feature</span>
+            </div>
+            <div class="commit-title">📷 Pasta Vista Ampla por Ambiente</div>
+            <div class="commit-desc">
+                Adicionada opção de criar pasta "Vista ampla" diretamente nos ambientes:
+                <ul>
+                    <li>✅ Checkbox "Vista ampla" no painel de serviços</li>
+                    <li>✅ Cada ambiente pode ter sua própria pasta Vista ampla</li>
+                    <li>✅ Preview atualizado com ícone 📷 para Vista ampla</li>
+                    <li>✅ Geração de pastas inclui Vista ampla quando ativada</li>
+                </ul>
+                <br>
+                <strong>Estrutura resultante:</strong>
+                <pre style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; margin-top: 8px;">
+📁 Levantamento
+   └─📁 1 - Fachada
+      ├─📷 Vista ampla     ← Direto no ambiente
+      └─📁 1.1 - Pintura
+         ├─📁 Detalhes     ← Dentro do serviço
+         └─📁 Danos
+                </pre>
+            </div>
+            <!-- COMMIT 9 -->
+            <div class="commit">
+                <div class="commit-header">
+                    <span class="commit-time">06/02/2026 - 04:15</span>
+                    <span class="commit-tag">Refactor</span>
+                </div>
+                <div class="commit-title">🏗️ Hierarquia de 3 Níveis e Nomenclatura Histórica</div>
+                <div class="commit-desc">
+                    Refatoração profunda da lógica para refletir o histórico real (pastas.md):
+                    <ul>
+                        <li>✅ **Hierarquia 3 Níveis:** Área → Ambiente → Serviço</li>
+                        <li>✅ **Formatação pasta.md:** Áreas com prefixo `- ` unificado</li>
+                        <li>✅ **Numeração Contextual:** 1 - Ambiente | 1.1 - Serviço</li>
+                        <li>✅ **Sugestões:** Listas de itens baseadas no histórico real</li>
+                        <li>✅ **Ajuste:** Removido "(PVC)" de Piso tátil conforme feedback</li>
+                    </ul>
+                    <br>
+                    <strong>Novo padrão visual:</strong>
+                    <pre style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; margin-top: 8px;">
+📁 Levantamento
+   - Área interna
+      1 - SAA (sala de autoatendimento)
+         1.1 - Pintura acrílica
+            - Vista ampla
+                </pre>
+                </div>
+            </div>
+
+        </div>
+</body>
+
+</html>
