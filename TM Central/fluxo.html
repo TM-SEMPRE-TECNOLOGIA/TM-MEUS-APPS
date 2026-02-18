@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TM Central | Fluxo Integrado</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* Cosmic Theme Palette */
+            --bg-deep: #050510;
+            --bg-card: rgba(20, 20, 35, 0.6);
+            --bg-card-hover: rgba(30, 30, 50, 0.8);
+
+            --accent-cyan: #06B6D4;
+            --accent-purple: #8B5CF6;
+            --accent-emerald: #10B981;
+            --accent-rose: #F43F5E;
+
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --glow-cyan: 0 0 20px rgba(6, 182, 212, 0.3);
+            --glow-purple: 0 0 20px rgba(139, 92, 246, 0.3);
+
+            /* Spacing */
+            --header-height: 80px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.08) 0%, transparent 25%);
+            background-attachment: fixed;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* --- Header --- */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: rgba(5, 5, 16, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-content {
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--accent-cyan);
+        }
+
+        .app-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .app-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--glow-cyan);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding-top: calc(var(--header-height) + 4rem);
+            padding-bottom: 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.15), transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 99px;
+            color: var(--accent-purple);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* --- Pipeline Map (Simplified Node Diagram) --- */
+        .pipeline-container {
+            max-width: 1000px;
+            margin: 0 auto 6rem;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .pipeline-nodes {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Line connecting nodes */
+        .pipeline-line {
+            position: absolute;
+            top: 40px;
+            /* Half of node height (80px) */
+            left: 40px;
+            right: 40px;
+            height: 2px;
+            background: linear-gradient(90deg,
+                    var(--accent-cyan) 0%,
+                    var(--accent-emerald) 50%,
+                    var(--accent-purple) 100%);
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .node:hover {
+            transform: translateY(-5px);
+        }
+
+        .node-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .node:hover .node-icon {
+            border-color: var(--node-color);
+            box-shadow: 0 0 20px var(--node-glow);
+            background: var(--bg-deep);
+        }
+
+        .node-label {
+            font-family: 'Outfit';
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .node:hover .node-label {
+            color: var(--text-primary);
+        }
+
+        /* Node specific colors */
+        .node-1 {
+            --node-color: var(--accent-cyan);
+            --node-glow: rgba(6, 182, 212, 0.4);
+        }
+
+        .node-2 {
+            --node-color: var(--accent-emerald);
+            --node-glow: rgba(16, 185, 129, 0.4);
+        }
+
+        .node-3 {
+            --node-color: var(--accent-cyan);
+            --node-glow: rgba(6, 182, 212, 0.4);
+        }
+
+        .node-4 {
+            --node-color: var(--accent-purple);
+            --node-glow: rgba(139, 92, 246, 0.4);
+        }
+
+        .node-5 {
+            --node-color: var(--accent-rose);
+            --node-glow: rgba(244, 63, 94, 0.4);
+        }
+
+        /* --- Vertical Timeline --- */
+        .timeline-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .timeline-line-vertical {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg,
+                    var(--accent-cyan),
+                    var(--accent-emerald),
+                    var(--accent-purple));
+            transform: translateX(-50%);
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-bottom: 6rem;
+            position: relative;
+            opacity: 0;
+            /* JS Fade in */
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background: var(--bg-deep);
+            border: 2px solid var(--step-color);
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 24px;
+            /* Align with card header roughly */
+            transform: translateX(-50%);
+            z-index: 2;
+            box-shadow: 0 0 10px var(--step-glow);
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .timeline-content:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--step-color);
+            transform: scale(1.02);
+        }
+
+        /* Zig Zag Layout */
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+            /* Content Left */
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+            /* Content Right */
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: auto;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+
+        /* Step Card Styling */
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .step-icon-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--step-color);
+        }
+
+        .step-title h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .step-title span {
+            font-size: 0.8rem;
+            color: var(--step-color);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .step-body p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .step-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-list li {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 0.25rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .step-list li::before {
+            content: '•';
+            color: var(--step-color);
+            font-weight: bold;
+        }
+
+        .io-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .io-icon {
+            font-size: 1rem;
+        }
+
+        /* Step Colors */
+        .step-1 {
+            --step-color: var(--accent-cyan);
+            --step-glow: rgba(6, 182, 212, 0.4);
+        }
+
+        .step-2 {
+            --step-color: var(--accent-emerald);
+            --step-glow: rgba(16, 185, 129, 0.4);
+        }
+
+        .step-3 {
+            --step-color: var(--accent-cyan);
+            --step-glow: rgba(6, 182, 212, 0.4);
+        }
+
+        .step-4 {
+            --step-color: var(--accent-purple);
+            --step-glow: rgba(139, 92, 246, 0.4);
+        }
+
+        .step-5 {
+            --step-color: var(--accent-rose);
+            --step-glow: rgba(244, 63, 94, 0.4);
+        }
+
+        /* --- Scenarios Selector --- */
+        .scenarios-wrapper {
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+
+        .scenarios-title {
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .scenarios-pills {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem;
+            border-radius: 99px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .pill {
+            padding: 0.6rem 1.5rem;
+            border-radius: 99px;
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter';
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .pill:hover {
+            color: var(--text-primary);
+        }
+
+        .pill.active {
+            background: var(--accent-purple);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            margin-top: 8rem;
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(to top, rgba(5, 5, 16, 1), transparent);
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .pipeline-nodes {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 2rem;
+            }
+
+            .pipeline-line {
+                display: none;
+            }
+
+            .timeline-line-vertical {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                padding-left: 50px;
+            }
+
+            .timeline-content {
+                width: 100%;
+                margin: 0 !important;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="Readme.html" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Voltar ao Hub
+            </a>
+            <div class="app-title">
+                <div class="app-icon">🔄</div>
+                <span>Fluxo Integrado</span>
+            </div>
+            <div style="width: 100px;"></div> <!-- Spacer -->
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span style="font-size: 1.2em;">✨</span> Pipeline de Produtividade
+        </div>
+        <h1>Ecossistema Integrado<br>TM Apps</h1>
+        <p>
+            Do planejamento à validação. Conheça a jornada automatizada<br>
+            que transforma levantamentos fotográficos em relatórios precisos.
+        </p>
+    </section>
+
+    <!-- Pipeline Map -->
+    <section class="pipeline-container">
+        <div class="pipeline-line"></div>
+        <div class="pipeline-nodes">
+
+            <div class="node node-1" onclick="scrollToStep('step-1')">
+                <div class="node-icon">📁</div>
+                <div class="node-label">Estrutura</div>
+            </div>
+
+            <div class="node node-2" onclick="scrollToStep('step-2')">
+                <div class="node-icon">📷</div>
+                <div class="node-label">Campo</div>
+            </div>
+
+            <div class="node node-3" onclick="scrollToStep('step-3')">
+                <div class="node-icon">📸</div>
+                <div class="node-label">Relatório</div>
+            </div>
+
+            <div class="node node-4" onclick="scrollToStep('step-4')">
+                <div class="node-icon">📝</div>
+                <div class="node-label">Extração</div>
+            </div>
+
+            <div class="node node-5" onclick="scrollToStep('step-5')">
+                <div class="node-icon">🔄</div>
+                <div class="node-label">Validação</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Scenario Filters -->
+    <section class="scenarios-wrapper">
+        <h3 class="scenarios-title">Selecione um Cenário</h3>
+        <div class="scenarios-pills">
+            <button class="pill active" onclick="setScenario('all')">Completo</button>
+            <button class="pill" onclick="setScenario('report')">Relatório S/ Validação</button>
+            <button class="pill" onclick="setScenario('check')">Apenas Validação</button>
+        </div>
+    </section>
+
+    <!-- Vertical Timeline -->
+    <section class="timeline-section" id="timeline">
+        <div class="timeline-line-vertical"></div>
+
+        <!-- Step 1 -->
+        <div class="timeline-item step-1" id="step-1" data-scenario="all report">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="step-header">
+                    <div class="step-icon-small">📁</div>
+                    <div class="step-title">
+                        <span>Passo 1</span>
+                        <h3>TM Pastas</h3>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <p>Tudo começa com a organização. Antes de ir a campo, crie a estrutura de pastas padronizada para
+                        garantir que cada foto tenha seu lugar.</p>
+                    <ul class="step-list">
+                        <li>Defina Áreas, Ambientes e Serviços (1.1)</li>
+                        <li>Crie itens personalizados e hierarquia</li>
+                        <li>Sincronize com OneDrive/Drive</li>
+                    </ul>
+                    <div class="io-box">
+                        <span class="io-icon">📤</span> <strong>Saída:</strong> Estrutura de pastas vazia
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="timeline-item step-2" id="step-2" data-scenario="all report">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="step-header">
+                    <div class="step-icon-small">📷</div>
+                    <div class="step-title">
+                        <span>Passo 2</span>
+                        <h3>Registro em Campo</h3>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <p>A etapa manual crucial. Com a estrutura pronta no celular ou tablet, o registro fotográfico já
+                        acontece de forma organizada.</p>
+                    <ul class="step-list">
+                        <li>Fotografe diretamente nas pastas corretas</li>
+                        <li>Comece pela "Vista ampla"</li>
+                        <li>Garanta fotos de detalhes para cada serviço</li>
+                    </ul>
+                    <div class="io-box">
+                        <span class="io-icon">📥</span> <strong>Entrada:</strong> Fotos organizadas
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="timeline-item step-3" id="step-3" data-scenario="all report">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="step-header">
+                    <div class="step-icon-small">📸</div>
+                    <div class="step-title">
+                        <span>Passo 3</span>
+                        <h3>TM Relatório</h3>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <p>Transformação mágica. O software lê a estrutura de pastas e compila um documento Word
+                        profissional em segundos.</p>
+                    <ul class="step-list">
+                        <li>Seleção de modelos .docx personalizados</li>
+                        <li>Preview e curadoria de imagens</li>
+                        <li>Layout automático de fotos e legendas</li>
+                    </ul>
+                    <div class="io-box">
+                        <span class="io-icon">📤</span> <strong>Saída:</strong> Arquivo .docx pronto
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="timeline-item step-4" id="step-4" data-scenario="all check">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="step-header">
+                    <div class="step-icon-small">📝</div>
+                    <div class="step-title">
+                        <span>Passo 4</span>
+                        <h3>TM Extrator</h3>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <p>Para análises técnicas, extraímos os dados do relatório. O sistema identifica tabelas de itens e
+                        quantidades.</p>
+                    <ul class="step-list">
+                        <li>Leitura inteligente de tabelas Word</li>
+                        <li>Identificação de Códigos e Quantidades</li>
+                        <li>Exportação para formatos de dados</li>
+                    </ul>
+                    <div class="io-box">
+                        <span class="io-icon">⚙️</span> <strong>Processo:</strong> Análise de DOCX
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="timeline-item step-5" id="step-5" data-scenario="all check">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="step-header">
+                    <div class="step-icon-small">🔄</div>
+                    <div class="step-title">
+                        <span>Passo 5</span>
+                        <h3>TM Comparador</h3>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <p>O teste final de qualidade. Cruzamos o executado (Relatório) com o planejado (Orçamento/RAT).</p>
+                    <ul class="step-list">
+                        <li>Compara quantidades item a item</li>
+                        <li>Detecta serviços não realizados</li>
+                        <li>Aponta extras não orçados</li>
+                    </ul>
+                    <div class="io-box">
+                        <span class="io-icon">✅</span> <strong>Resultado:</strong> Log de validação
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="Readme.html" class="footer-link">Hub Principal</a>
+            <a href="commit.html" class="footer-link">Histórico</a>
+            <a href="#" class="footer-link">Suporte</a>
+        </div>
+        <p class="copyright">© 2026 TM Sempre Tecnologia. Design Cosmic System.</p>
+    </footer>
+
+    <script>
+        // Scroll Reveal Animation with Intersection Observer
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Smooth Scroll to ID
+        function scrollToStep(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Scenario Filtering
+        function setScenario(type) {
+            // Update pills
+            document.querySelectorAll('.pill').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter items
+            const items = document.querySelectorAll('.timeline-item');
+
+            items.forEach(item => {
+                const scenarios = item.dataset.scenario.split(' ');
+
+                if (scenarios.includes(type) || type === 'all') {
+                    item.style.display = 'flex';
+                    // Re-trigger animation if needed, simplified here by just keeping visible
+                    setTimeout(() => item.classList.add('visible'), 50);
+                } else {
+                    item.classList.remove('visible');
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300); // Wait for transition
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

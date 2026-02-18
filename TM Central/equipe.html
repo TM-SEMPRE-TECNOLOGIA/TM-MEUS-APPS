@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TM Equipe | AI Driven Dev</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0f1e;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --border-glass: rgba(148, 163, 184, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            margin-bottom: 4rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .member-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            transition: transform 0.3s;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .avatar {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            width: 120px;
+            height: 120px;
+            line-height: 120px;
+            border-radius: 50%;
+        }
+
+        h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .role {
+            color: var(--accent-blue);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .workflow {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border-glass);
+            text-align: left;
+        }
+
+        .workflow h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .workflow-step {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .step-icon {
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 3rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>AI Driven Development</h1>
+        <p class="subtitle">A fusão entra a criatividade humana e a potência computacional.</p>
+
+        <div class="team-grid">
+            <div class="member-card">
+                <div class="avatar">👨‍💻</div>
+                <h2>Thiago</h2>
+                <span class="role">Arquiteto & Visionário</span>
+                <p>Responsável pela visão estratégica, definição de requisitos, design patterns e validação final. O
+                    maestro que rege a orquestra de código.</p>
+            </div>
+
+            <div class="member-card">
+                <div class="avatar">🤖</div>
+                <h2>Gemini Developer</h2>
+                <span class="role">Engenheiro & Co-piloto</span>
+                <p>Responsável pela implementação técnica, refatoração, documentação e sugestões de otimização. A
+                    máquina que transforma ideias em realidade.</p>
+            </div>
+        </div>
+
+        <div class="workflow">
+            <h3>Como Trabalhamos</h3>
+            <div class="workflow-step">
+                <span class="step-icon">1️⃣</span>
+                <div>
+                    <strong>Intenção:</strong> Thiago define o problema e o resultado esperado em linguagem natural.
+                </div>
+            </div>
+            <div class="workflow-step">
+                <span class="step-icon">2️⃣</span>
+                <div>
+                    <strong>Planejamento:</strong> A IA analisa o contexto (repositório) e propõe um plano de ação
+                    detalhado.
+                </div>
+            </div>
+            <div class="workflow-step">
+                <span class="step-icon">3️⃣</span>
+                <div>
+                    <strong>Execução:</strong> A IA escreve o código, cria arquivos e realiza testes preliminares.
+                </div>
+            </div>
+            <div class="workflow-step">
+                <span class="step-icon">4️⃣</span>
+                <div>
+                    <strong>Refinamento:</strong> Thiago revisa, testa e solicita ajustes finos até a perfeição.
+                </div>
+            </div>
+        </div>
+
+        <a href="Readme.html" class="back-btn">← Voltar ao TM Central Hub</a>
+    </div>
+</body>
+
+</html>
