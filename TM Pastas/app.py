@@ -16,6 +16,8 @@ Data: Fevereiro 2026
 ───────────────────────────────────────────────────────────
 """
 
+APP_VERSION = "1.1.0"
+
 import os
 import customtkinter as ctk
 from tkinter import filedialog, messagebox, simpledialog
@@ -114,7 +116,7 @@ class GeradorEstruturaPastas(ctk.CTk):
         super().__init__()
         
         # Configuração da janela
-        self.title("🏗️ Gerador de Estrutura de Pastas - TM")
+        self.title(f"🏗️ Gerador de Estrutura de Pastas - TM  v{APP_VERSION}")
         self.geometry("1400x900")
         self.minsize(1200, 750)
         
@@ -156,18 +158,28 @@ class GeradorEstruturaPastas(ctk.CTk):
         
         titulo = ctk.CTkLabel(
             self.header, 
-            text="🏗️ Gerador de Estrutura de Pastas",
+            text=f"🏗️ Gerador de Estrutura de Pastas  v{APP_VERSION}",
             font=ctk.CTkFont(size=28, weight="bold")
         )
         titulo.pack(side="left")
         
-        assinatura = ctk.CTkLabel(
-            self.header,
+        # Bloco de assinatura (direita do header)
+        sig_frame = ctk.CTkFrame(self.header, fg_color="transparent")
+        sig_frame.pack(side="right", padx=10)
+        
+        ctk.CTkLabel(
+            sig_frame,
             text="TM - Sempre Tecnologia",
-            font=ctk.CTkFont(size=11),
+            font=ctk.CTkFont(size=12, weight="bold"),
+            text_color="#00d4ff"
+        ).pack(anchor="e")
+        
+        ctk.CTkLabel(
+            sig_frame,
+            text="Thiago Nascimento Barbosa",
+            font=ctk.CTkFont(size=10),
             text_color="#666"
-        )
-        assinatura.pack(side="right", padx=10)
+        ).pack(anchor="e")
         
         # ===== BARRA DE CONFIGURAÇÃO =====
         self.config_bar = ctk.CTkFrame(self, fg_color="transparent")
@@ -621,11 +633,15 @@ class GeradorEstruturaPastas(ctk.CTk):
                 
                 key = (area, item)
                 sub_selecionadas = self.subpastas_por_item.get(key, [])
-                for idx_sub, sub in enumerate(sub_selecionadas, 1):
+                service_counter = 0
+                for sub in sub_selecionadas:
                     eh_servico = (sub in SERVICOS_SUGERIDOS) or (sub in self.custom_servicos)
                     
-                    if eh_servico:
-                        texto_sub = f"{ICONES_NIVEL[3]} {idx_item}.{idx_sub} - {sub}"
+                    if sub.lower() == "vista ampla":
+                        texto_sub = f"{ICONES_NIVEL[3]} - {sub}"
+                    elif eh_servico:
+                        service_counter += 1
+                        texto_sub = f"{ICONES_NIVEL[3]} {idx_item}.{service_counter} - {sub}"
                     else:
                         texto_sub = f"{ICONES_NIVEL[3]} - {sub}"
                     
@@ -1021,11 +1037,15 @@ class GeradorEstruturaPastas(ctk.CTk):
                     
                     key = (area, item)
                     subs = self.subpastas_por_item.get(key, [])
-                    for idx_sub, sub in enumerate(subs, 1):
+                    service_counter = 0
+                    for sub in subs:
                         eh_servico = (sub in SERVICOS_SUGERIDOS) or (sub in self.custom_servicos)
                         
-                        if eh_servico:
-                             nome_sub = f"{idx_item}.{idx_sub} - {sub}"
+                        if sub.lower() == "vista ampla":
+                             nome_sub = f"- {sub}"
+                        elif eh_servico:
+                             service_counter += 1
+                             nome_sub = f"{idx_item}.{service_counter} - {sub}"
                         elif sub in SUBPASTAS_SUGERIDAS or sub in self.custom_subpastas:
                              nome_sub = f"- {sub}"
                         else:

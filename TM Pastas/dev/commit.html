@@ -317,6 +317,52 @@
                 </div>
             </div>
 
+            <!-- COMMIT 10 -->
+            <div class="commit">
+                <div class="commit-header">
+                    <span class="commit-time">18/02/2026 - 17:40</span>
+                    <span class="commit-tag">Bugfix</span>
+                </div>
+                <div class="commit-title">🔢 Correção: Numeração "Vista ampla" no contador</div>
+                <div class="commit-desc">
+                    Corrigido bug onde "Vista ampla" era contada na numeração dos serviços:
+                    <ul>
+                        <li>✅ "Vista ampla" agora é ignorada no contador de serviços</li>
+                        <li>✅ Primeiro serviço real começa em .1 (não mais em .2)</li>
+                        <li>✅ Correção aplicada no preview (<code>_atualizar_preview</code>)</li>
+                        <li>✅ Correção aplicada na geração de pastas (<code>_gerar_estrutura</code>)</li>
+                    </ul>
+                    <br>
+                    <strong>Antes vs Depois:</strong>
+                    <pre style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; margin-top: 8px;">
+❌ Antes:                    ✅ Depois:
+1 - SAA                      1 - SAA
+  Vista ampla                   Vista ampla
+  1.2 - Pintura acrílica       1.1 - Pintura acrílica
+  1.3 - Forro                  1.2 - Forro
+                </pre>
+                </div>
+            </div>
+
+
+            <!-- COMMIT 11 -->
+            <div class="commit">
+                <div class="commit-header">
+                    <span class="commit-time">18/02/2026 - 17:45</span>
+                    <span class="commit-tag">Feature</span>
+                </div>
+                <div class="commit-title">🏷️ Versão e Assinatura na Interface</div>
+                <div class="commit-desc">
+                    Adicionada versão e assinatura visível na interface da aplicação:
+                    <ul>
+                        <li>✅ Constante <code>APP_VERSION = "1.1.0"</code> no topo do código</li>
+                        <li>✅ Versão exibida no título da janela e no header</li>
+                        <li>✅ Assinatura com empresa (TM - Sempre Tecnologia) em destaque cyan</li>
+                        <li>✅ Nome do autor (Thiago Nascimento Barbosa) abaixo da empresa</li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
 </body>
 

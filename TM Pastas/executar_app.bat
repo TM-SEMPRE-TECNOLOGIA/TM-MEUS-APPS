@@ -4,8 +4,11 @@ title Gerador de Estrutura de Pastas
 
 echo.
 echo ╔════════════════════════════════════════════════════════════════╗
-echo ║   🏗️  Gerador de Estrutura de Pastas                          ║
+echo ║   🏗️  Gerador de Estrutura de Pastas  v1.1.0                   ║
 echo ║   Levantamentos Fotográficos                                  ║
+echo ║                                                                ║
+echo ║   TM - Sempre Tecnologia                                      ║
+echo ║   Thiago Nascimento Barbosa                                    ║
 echo ╚════════════════════════════════════════════════════════════════╝
 echo.
 
