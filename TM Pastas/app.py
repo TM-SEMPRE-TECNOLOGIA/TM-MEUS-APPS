@@ -146,6 +146,12 @@ class GeradorEstruturaPastas(ctk.CTk):
         self.subitem_atual = None
         self.servico_atual = None
         
+        # Controle de Etapas (Accordion)
+        self.etapa_ativa = 1
+        self.frames_etapas = {}
+        self.headers_etapas = []
+        self.labels_resumo = {}
+        
         # Construir interface
         self._criar_interface()
         
@@ -229,11 +235,11 @@ class GeradorEstruturaPastas(ctk.CTk):
         self.painel_direito = ctk.CTkFrame(self.main_area)
         self.painel_direito.pack(side="right", fill="both", expand=True)
         
-        # ===== COLUNAS DE SELEÇÃO =====
-        self._criar_painel_areas()
-        self._criar_painel_ambientes_servicos()
-        self._criar_painel_subpastas()
-        self._criar_painel_detalhes_nivel4()
+        # ===== COLUNAS DE SELEÇÃO (ACCORDION) =====
+        self._criar_etapa_1()  # Áreas
+        self._criar_etapa_2()  # Ambientes / Serviços
+        self._criar_etapa_3()  # Serviços / Subpastas
+        self._criar_etapa_4()  # Detalhes
         
         # ===== PREVIEW INTERATIVO =====
         self._criar_painel_preview()
@@ -265,23 +271,111 @@ class GeradorEstruturaPastas(ctk.CTk):
         self.btn_limpar.pack(side="right", fill="x", expand=True)
 
     # ============================
+    # LÓGICA DE ACORDEÃO (ETAPAS)
+    # ============================
+
+    def _criar_container_etapa(self, numero, titulo):
+        """Cria um container colapsável para uma etapa"""
+        container = ctk.CTkFrame(self.painel_esquerdo, fg_color="transparent")
+        container.pack(fill="x", padx=5, pady=2)
+        
+        # Botão do Cabeçalho
+        header = ctk.CTkFrame(container, fg_color="#2d2d44", height=40, corner_radius=8)
+        header.pack(fill="x")
+        header.bind("<Button-1>", lambda e, n=numero: self._alternar_etapa(n))
+        
+        # Ícone de número
+        lbl_num = ctk.CTkLabel(
+            header, text=str(numero), 
+            width=24, height=24, corner_radius=12,
+            fg_color="#3b82f6", font=ctk.CTkFont(size=12, weight="bold")
+        )
+        lbl_num.pack(side="left", padx=10, pady=8)
+        lbl_num.bind("<Button-1>", lambda e, n=numero: self._alternar_etapa(n))
+        
+        # Título
+        lbl_tit = ctk.CTkLabel(header, text=titulo, font=ctk.CTkFont(size=13, weight="bold"))
+        lbl_tit.pack(side="left", padx=5)
+        lbl_tit.bind("<Button-1>", lambda e, n=numero: self._alternar_etapa(n))
+        
+        # Resumo (lado direito)
+        resumo = ctk.CTkLabel(header, text="", font=ctk.CTkFont(size=11), text_color="#aaaaaa")
+        resumo.pack(side="right", padx=15)
+        resumo.bind("<Button-1>", lambda e, n=numero: self._alternar_etapa(n))
+        self.labels_resumo[numero] = resumo
+        
+        # Frame de Conteúdo
+        content = ctk.CTkFrame(container, fg_color="transparent")
+        # Por padrão, apenas a etapa 1 começa aberta
+        if numero == 1:
+            content.pack(fill="x", padx=10, pady=5)
+        
+        self.frames_etapas[numero] = content
+        return content
+
+    def _alternar_etapa(self, numero):
+        """Abre uma etapa e recolhe as outras"""
+        # Bloqueios inteligentes
+        if numero > 1 and not self.areas_selecionadas:
+            return
+        if numero > 2 and not (self.area_atual and self.itens_por_area.get(self.area_atual)):
+            return
+        if numero > 3 and not (self.area_atual and self.item_atual and self.subpastas_por_item.get((self.area_atual, self.item_atual))):
+            return
+
+        for n, frame in self.frames_etapas.items():
+            if n == numero:
+                frame.pack(fill="x", padx=10, pady=5)
+                # Scroll para o topo do frame selecionado (opcional)
+            else:
+                frame.pack_forget()
+        self.etapa_ativa = numero
+        self._atualizar_resumos_etapas()
+
+    def _atualizar_resumos_etapas(self):
+        """Atualiza os textos de resumo em cada cabeçalho de etapa"""
+        # Etapa 1
+        num_areas = len(self.areas_selecionadas)
+        self.labels_resumo[1].configure(text=f"{num_areas} selecionada(s)" if num_areas > 0 else "")
+        
+        # Etapa 2
+        if self.area_atual:
+            num_itens = len(self.itens_por_area.get(self.area_atual, []))
+            self.labels_resumo[2].configure(text=f"{num_itens} item(ns)" if num_itens > 0 else "")
+        else:
+            self.labels_resumo[2].configure(text="Aguardando Área")
+            
+        # Etapa 3
+        if self.area_atual and self.item_atual:
+            key = (self.area_atual, self.item_atual)
+            num_subs = len(self.subpastas_por_item.get(key, []))
+            self.labels_resumo[3].configure(text=f"{num_subs} item(ns)" if num_subs > 0 else "")
+        else:
+            self.labels_resumo[3].configure(text="Aguardando Item")
+            
+        # Etapa 4
+        if self.area_atual and self.item_atual and self.subitem_atual:
+            key = (self.area_atual, self.item_atual, self.subitem_atual)
+            num_dets = len(self.detalhes_por_subitem.get(key, []))
+            self.labels_resumo[4].configure(text=f"{num_dets} detalhe(s)" if num_dets > 0 else "")
+        else:
+            self.labels_resumo[4].configure(text="")
+
+    # ============================
     # PAINÉIS DE SELEÇÃO (ESQUERDA)
     # ============================
         
-    def _criar_painel_areas(self):
-        """Cria o painel de seleção de Áreas (Nível 1)"""
-        frame = ctk.CTkFrame(self.painel_esquerdo)
-        frame.pack(fill="x", padx=5, pady=5)
-        
-        ctk.CTkLabel(frame, text="🌎 1. SELECIONE A ÁREA", font=ctk.CTkFont(size=14, weight="bold")).pack(padx=10, pady=(10, 5), anchor="w")
+    def _criar_etapa_1(self):
+        """Etapa 1: Seleção de Áreas"""
+        content = self._criar_container_etapa(1, "SELECIONE A ÁREA")
         
         # Barra de pesquisa
-        self.search_areas = ctk.CTkEntry(frame, placeholder_text="🔍 Filtrar áreas...", height=30)
-        self.search_areas.pack(fill="x", padx=10, pady=(0, 5))
+        self.search_areas = ctk.CTkEntry(content, placeholder_text="🔍 Filtrar áreas...", height=30)
+        self.search_areas.pack(fill="x", pady=(0, 5))
         self.search_areas.bind("<KeyRelease>", lambda e: self._filtrar_areas())
         
-        self.frame_areas_list = ctk.CTkFrame(frame, fg_color="transparent", height=100)
-        self.frame_areas_list.pack(fill="x", padx=10, pady=5)
+        self.frame_areas_list = ctk.CTkFrame(content, fg_color="transparent")
+        self.frame_areas_list.pack(fill="x", pady=5)
         
         self.checkboxes_areas = {}
         self._popular_areas()
@@ -315,43 +409,34 @@ class GeradorEstruturaPastas(ctk.CTk):
         filtro = self.search_areas.get()
         self._popular_areas(filtro)
 
-    def _criar_painel_ambientes_servicos(self):
-        """Cria o painel de Ambientes ou Serviços dentro da Área (Nível 2)"""
-        self.frame_itens_container = ctk.CTkFrame(self.painel_esquerdo)
-        self.frame_itens_container.pack(fill="x", padx=5, pady=5)
+    def _criar_etapa_2(self):
+        """Etapa 2: Ambientes / Serviços"""
+        content = self._criar_container_etapa(2, "AMBIENTES / SERVIÇOS")
         
-        header = ctk.CTkFrame(self.frame_itens_container, fg_color="transparent")
-        header.pack(fill="x", padx=10, pady=(10, 5))
-        
-        ctk.CTkLabel(header, text="📍 2. AMBIENTES / SERVIÇOS", font=ctk.CTkFont(size=14, weight="bold")).pack(side="left")
-        
-        self.label_area_temp = ctk.CTkLabel(header, text="", font=ctk.CTkFont(size=11), text_color="#00d4ff")
-        self.label_area_temp.pack(side="right")
-
-        # Vista ampla da ÁREA
+        # Vista ampla da ÁREA (Toggle inteligente)
         self.cb_va_area = ctk.CTkCheckBox(
-            self.frame_itens_container,
+            content,
             text="📷 Incluir 'Vista ampla' nesta ÁREA",
             command=self._toggle_va_area,
             fg_color="#00875a"
         )
-        self.cb_va_area.pack(anchor="w", padx=15, pady=5)
+        self.cb_va_area.pack(anchor="w", padx=5, pady=5)
 
         # Barra de pesquisa Nível 2
-        self.search_n2 = ctk.CTkEntry(self.frame_itens_container, placeholder_text="🔍 Filtrar ambientes/serviços...", height=30)
-        self.search_n2.pack(fill="x", padx=10, pady=(0, 5))
+        self.search_n2 = ctk.CTkEntry(content, placeholder_text="🔍 Filtrar ambientes/serviços...", height=30)
+        self.search_n2.pack(fill="x", pady=(0, 5))
         self.search_n2.bind("<KeyRelease>", lambda e: self._filtrar_nivel2())
 
         # Tabs para organizar Ambientes vs Serviços Sugeridos
-        self.tab_itens = ctk.CTkTabview(self.frame_itens_container, height=250)
-        self.tab_itens.pack(fill="x", padx=10, pady=5)
+        self.tab_itens = ctk.CTkTabview(content, height=250)
+        self.tab_itens.pack(fill="x", pady=5)
         
         self.tab_itens.add("Ambientes")
         self.tab_itens.add("Serviços")
         
         # Área de adição personalizada Nível 2
-        frame_custom = ctk.CTkFrame(self.frame_itens_container, fg_color="transparent")
-        frame_custom.pack(fill="x", padx=10, pady=5)
+        frame_custom = ctk.CTkFrame(content, fg_color="transparent")
+        frame_custom.pack(fill="x", pady=5)
         
         self.entry_custom_n2 = ctk.CTkEntry(frame_custom, placeholder_text="Novo item...", width=150)
         self.entry_custom_n2.pack(side="left", fill="x", expand=True, padx=(0, 5))
@@ -412,33 +497,25 @@ class GeradorEstruturaPastas(ctk.CTk):
         filtro = self.search_n2.get()
         self._popular_nivel2(filtro)
 
-    def _criar_painel_subpastas(self):
-        """Cria o painel de Subpastas (Nível 3)"""
-        self.frame_sub_container = ctk.CTkFrame(self.painel_esquerdo)
-        self.frame_sub_container.pack(fill="x", padx=5, pady=5)
+    def _criar_etapa_3(self):
+        """Etapa 3: Serviços / Subpastas (Nível 3)"""
+        content = self._criar_container_etapa(3, "SERVIÇOS / SUBPASTAS")
         
-        header = ctk.CTkFrame(self.frame_sub_container, fg_color="transparent")
-        header.pack(fill="x", padx=10, pady=(10, 5))
-        
-        ctk.CTkLabel(header, text="📂 3. SERVIÇOS / SUBPASTAS (NÍVEL 3)", font=ctk.CTkFont(size=14, weight="bold")).pack(side="left")
-        self.label_item_temp = ctk.CTkLabel(header, text="", font=ctk.CTkFont(size=11), text_color="#00d4ff")
-        self.label_item_temp.pack(side="right")
-
         # Barra de pesquisa Nível 3
-        self.search_n3 = ctk.CTkEntry(self.frame_sub_container, placeholder_text="🔍 Filtrar subpastas/serviços...", height=30)
-        self.search_n3.pack(fill="x", padx=10, pady=(0, 5))
+        self.search_n3 = ctk.CTkEntry(content, placeholder_text="🔍 Filtrar subpastas/serviços...", height=30)
+        self.search_n3.pack(fill="x", pady=(0, 5))
         self.search_n3.bind("<KeyRelease>", lambda e: self._filtrar_nivel3())
 
         # Tabs para Subpastas Padrão vs Serviços (Filhos)
-        self.tab_sub = ctk.CTkTabview(self.frame_sub_container, height=250)
-        self.tab_sub.pack(fill="x", padx=10, pady=5)
+        self.tab_sub = ctk.CTkTabview(content, height=250)
+        self.tab_sub.pack(fill="x", pady=5)
         
         self.tab_sub.add("Padrão")
         self.tab_sub.add("Serviços")
 
         # Área de adição personalizada Nível 3
-        frame_custom = ctk.CTkFrame(self.frame_sub_container, fg_color="transparent")
-        frame_custom.pack(fill="x", padx=10, pady=5)
+        frame_custom = ctk.CTkFrame(content, fg_color="transparent")
+        frame_custom.pack(fill="x", pady=5)
         
         self.entry_custom_n3 = ctk.CTkEntry(frame_custom, placeholder_text="Novo item...", width=150)
         self.entry_custom_n3.pack(side="left", fill="x", expand=True, padx=(0, 5))
@@ -501,27 +578,19 @@ class GeradorEstruturaPastas(ctk.CTk):
         filtro = self.search_n3.get()
         self._popular_nivel3(filtro)
 
-    def _criar_painel_detalhes_nivel4(self):
-        """Cria o painel de Detalhes (Nível 4)"""
-        self.frame_detalhes_container = ctk.CTkFrame(self.painel_esquerdo)
-        self.frame_detalhes_container.pack(fill="x", padx=5, pady=5)
-        
-        header = ctk.CTkFrame(self.frame_detalhes_container, fg_color="transparent")
-        header.pack(fill="x", padx=10, pady=(10, 5))
-        
-        ctk.CTkLabel(header, text="🔍 4. DETALHES (NÍVEL 4)", font=ctk.CTkFont(size=14, weight="bold")).pack(side="left")
-        self.label_subItem_temp = ctk.CTkLabel(header, text="", font=ctk.CTkFont(size=11), text_color="#00d4ff")
-        self.label_subItem_temp.pack(side="right")
+    def _criar_etapa_4(self):
+        """Etapa 4: Detalhes (Nível 4)"""
+        content = self._criar_container_etapa(4, "DETALHES")
         
         # Barra de pesquisa Nível 4
-        self.search_n4 = ctk.CTkEntry(self.frame_detalhes_container, placeholder_text="🔍 Filtrar detalhes...", height=30)
-        self.search_n4.pack(fill="x", padx=10, pady=(0, 5))
+        self.search_n4 = ctk.CTkEntry(content, placeholder_text="🔍 Filtrar detalhes...", height=30)
+        self.search_n4.pack(fill="x", pady=(0, 5))
         self.search_n4.bind("<KeyRelease>", lambda e: self._filtrar_nivel4())
         
         # Lista Única (Detalhes)
         self.checkboxes_detalhes = {}
-        self.scroll_detalhes = ctk.CTkScrollableFrame(self.frame_detalhes_container, height=150)
-        self.scroll_detalhes.pack(fill="both", expand=True, padx=10, pady=5)
+        self.scroll_detalhes = ctk.CTkScrollableFrame(content, height=150)
+        self.scroll_detalhes.pack(fill="both", expand=True, pady=5)
         
         self._popular_nivel4()
 
@@ -858,11 +927,16 @@ class GeradorEstruturaPastas(ctk.CTk):
         if area in self.areas_selecionadas:
             self.areas_selecionadas.remove(area)
             if area in self.itens_por_area: del self.itens_por_area[area]
+            if self.area_atual == area:
+                self.area_atual = None
         else:
             self.areas_selecionadas.append(area)
             self.itens_por_area[area] = []
             self.area_atual = area
+            self._alternar_etapa(2)
             self._atualizar_ui_itens()
+        
+        self._atualizar_resumos_etapas()
         self._atualizar_preview()
 
     def _toggle_va_area(self):
@@ -880,6 +954,8 @@ class GeradorEstruturaPastas(ctk.CTk):
         lista = self.itens_por_area[self.area_atual]
         if item in lista:
             lista.remove(item)
+            if self.item_atual == item:
+                self.item_atual = None
         else:
             eh_servico = item in SERVICOS_SUGERIDOS or item in self.custom_servicos
             eh_area_interna = "interna" in self.area_atual.lower()
@@ -897,7 +973,10 @@ class GeradorEstruturaPastas(ctk.CTk):
             
             lista.append(item)
             self.item_atual = item
+            self._alternar_etapa(3)
             self._atualizar_ui_sub()
+        
+        self._atualizar_resumos_etapas()
         self._atualizar_preview()
         
         if self.area_atual:
@@ -915,11 +994,15 @@ class GeradorEstruturaPastas(ctk.CTk):
         
         if sub in self.subpastas_por_item[key]:
             self.subpastas_por_item[key].remove(sub)
+            if self.subitem_atual == sub:
+                self.subitem_atual = None
         else:
             self.subpastas_por_item[key].append(sub)
             self.subitem_atual = sub
+            self._alternar_etapa(4)
             self._atualizar_ui_nivel4()
             
+        self._atualizar_resumos_etapas()
         self._atualizar_preview()
 
     def _toggle_nivel4(self, detalhe):
@@ -938,36 +1021,37 @@ class GeradorEstruturaPastas(ctk.CTk):
         else:
             lista.append(detalhe)
             
+        self._atualizar_resumos_etapas()
         self._atualizar_preview()
 
     def _atualizar_ui_itens(self):
         if not self.area_atual: return
         self.updating_ui = True
         try:
-            self.label_area_temp.configure(text=f"→ {self.area_atual}")
             self.cb_va_area.deselect()
             if self.vista_ampla_geral.get(self.area_atual): self.cb_va_area.select()
             self._popular_nivel2(self.search_n2.get())
         finally:
             self.updating_ui = False
+            self._atualizar_resumos_etapas()
 
     def _atualizar_ui_sub(self):
         if not self.item_atual: return
         self.updating_ui = True
         try:
-            self.label_item_temp.configure(text=f"→ {self.item_atual}")
             self._popular_nivel3(self.search_n3.get())
         finally:
             self.updating_ui = False
+            self._atualizar_resumos_etapas()
 
     def _atualizar_ui_nivel4(self):
         if not self.subitem_atual: return
         self.updating_ui = True
         try:
-             self.label_subItem_temp.configure(text=f"→ {self.subitem_atual}")
              self._popular_nivel4(self.search_n4.get())
         finally:
              self.updating_ui = False
+             self._atualizar_resumos_etapas()
 
     def _adicionar_custom_nivel2(self):
         nome = self.entry_custom_n2.get().strip()
@@ -1102,6 +1186,8 @@ class GeradorEstruturaPastas(ctk.CTk):
         self.search_n3.delete(0, "end")
         self.search_n4.delete(0, "end")
 
+        self._alternar_etapa(1)
+        self._atualizar_resumos_etapas()
         self._atualizar_preview()
         messagebox.showinfo("Limpeza", "Todas as seleções foram removidas.")
 
