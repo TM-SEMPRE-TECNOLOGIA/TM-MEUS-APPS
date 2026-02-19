@@ -31,6 +31,7 @@
             margin-bottom: 10px;
             background: linear-gradient(90deg, #00d4ff, #7b2cbf);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -364,6 +365,38 @@
             </div>
 
         </div>
+
+        <!-- COMMIT 12 -->
+        <div class="commit">
+            <div class="commit-header">
+                <span class="commit-time">19/02/2026 - 00:55</span>
+                <span class="commit-tag">REFACTOR</span>
+            </div>
+            <div class="commit-title">🏗️ Refatoração do Menu Lateral (Accordion UX)</div>
+            <div class="commit-desc">
+                Implementação completa do novo fluxo guiado por etapas e melhorias de UI/UX:
+                <ul>
+                    <li>✅ <strong>Menu em Acordeão:</strong> Interface agora dividida em 4 etapas colapsáveis (Área,
+                        Ambientes, Serviços, Detalhes), reduzindo a carga cognitiva.</li>
+                    <li>✅ <strong>Transições Automáticas:</strong> O menu expande a próxima etapa e recolhe a anterior
+                        automaticamente após a seleção do usuário.</li>
+                    <li>✅ <strong>Bloqueios Inteligentes:</strong> Etapas subsequentes ficam desabilitadas até que os
+                        requisitos anteriores (ex: seleção de Área) sejam cumpridos.</li>
+                    <li>✅ <strong>Resumos Dinâmicos:</strong> Cabeçalhos mostram a contagem de itens selecionados quando
+                        a seção está recolhida.</li>
+                    <li>✅ <strong>Vista Ampla Fixa:</strong> Movida para um componente de toggle dedicado na Etapa 2,
+                        eliminando conflitos com a numeração automática dos serviços.</li>
+                </ul>
+                <strong>Detalhes Técnicos:</strong>
+                <ul>
+                    <li>Substituição dos painéis estáticos pelo helper dinâmico <code>_criar_container_etapa</code>.
+                    </li>
+                    <li>Lógica de transição centralizada no método <code>_alternar_etapa</code> com validação de estado.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
 </body>
 
 </html>
