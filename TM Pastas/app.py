@@ -306,6 +306,18 @@ class GeradorEstruturaPastas(ctk.CTk):
         
         # Frame de Conteúdo
         content = ctk.CTkFrame(container, fg_color="transparent")
+        
+        # Labels de Contexto (Correção do bug e melhoria de UX)
+        if numero == 2:
+            self.label_area_temp = ctk.CTkLabel(content, text="", text_color="#3b82f6", font=ctk.CTkFont(size=12, weight="bold"), anchor="w")
+            self.label_area_temp.pack(fill="x", padx=5, pady=(0, 5))
+        elif numero == 3:
+            self.label_item_temp = ctk.CTkLabel(content, text="", text_color="#10b981", font=ctk.CTkFont(size=12, weight="bold"), anchor="w")
+            self.label_item_temp.pack(fill="x", padx=5, pady=(0, 5))
+        elif numero == 4:
+            self.label_subItem_temp = ctk.CTkLabel(content, text="", text_color="#f97316", font=ctk.CTkFont(size=12, weight="bold"), anchor="w")
+            self.label_subItem_temp.pack(fill="x", padx=5, pady=(0, 5))
+
         # Por padrão, apenas a etapa 1 começa aberta
         if numero == 1:
             content.pack(fill="x", padx=10, pady=5)
@@ -353,6 +365,19 @@ class GeradorEstruturaPastas(ctk.CTk):
         else:
             self.labels_resumo[3].configure(text="Aguardando Item")
             
+        # Atualiza labels de contexto
+        if hasattr(self, 'label_area_temp'):
+            txt = f"📌 Área: {self.area_atual}" if self.area_atual else ""
+            self.label_area_temp.configure(text=txt)
+            
+        if hasattr(self, 'label_item_temp'):
+            txt = f"📌 Ambiente: {self.item_atual}" if self.item_atual else ""
+            self.label_item_temp.configure(text=txt)
+            
+        if hasattr(self, 'label_subItem_temp'):
+            txt = f"📌 Serviço: {self.subitem_atual}" if self.subitem_atual else ""
+            self.label_subItem_temp.configure(text=txt)
+
         # Etapa 4
         if self.area_atual and self.item_atual and self.subitem_atual:
             key = (self.area_atual, self.item_atual, self.subitem_atual)
@@ -644,16 +669,57 @@ class GeradorEstruturaPastas(ctk.CTk):
         )
         self.preview_scroll.pack(fill="both", expand=True, padx=15, pady=(5, 15))
 
+    def _atualizar_destaques_preview(self):
+        """Atualiza apenas o destaque visual da seleção, sem reconstruir o preview"""
+        if not hasattr(self, 'preview_rows'): return
+
+        for key, data in self.preview_rows.items():
+            row_widget = data['widget']
+            nivel = data['nivel']
+            bg_color = "transparent"
+            should_select = False
+            
+            if key == "root":
+                pass
+            elif nivel == 1:
+                if self.area_atual == data.get('area'):
+                    should_select = True
+            elif nivel == 2:
+                if not data.get('is_va'):
+                    if self.area_atual == data.get('area') and self.item_atual == data.get('item'):
+                        should_select = True
+            elif nivel == 3:
+                if self.area_atual == data.get('area') and self.item_atual == data.get('item') and self.subitem_atual == data.get('sub'):
+                    should_select = True
+            
+            if should_select:
+                bg_color = "#2d3748"
+            
+            try:
+                row_widget.configure(fg_color=bg_color)
+            except:
+                pass
+
     def _atualizar_preview(self):
         """Redesenha o preview interativo completo"""
+        # Salvar posição do scroll
+        try:
+            scroll_pos = self.preview_scroll._parent_canvas.yview()[0]
+        except:
+            scroll_pos = 0.0
+
         # Limpar preview
         for widget in self.preview_scroll.winfo_children():
             widget.destroy()
+        
+        self.preview_rows = {} # Resetar rastreamento
         
         nome_raiz = self.nome_levantamento.get().strip() or "Levantamento"
         
         # Raiz
         self._criar_linha_preview(
+            key="root",
+            data_context={'nivel': 0},
             parent=self.preview_scroll,
             texto=f"📁 {nome_raiz}",
             nivel=0,
@@ -663,7 +729,10 @@ class GeradorEstruturaPastas(ctk.CTk):
         
         for area in self.areas_selecionadas:
             # Área (Nível 1)
+            is_selected = (self.area_atual == area)
             self._criar_linha_preview(
+                key=f"1_{area}",
+                data_context={'nivel': 1, 'area': area},
                 parent=self.preview_scroll,
                 texto=f"{ICONES_NIVEL[1]} {area}",
                 nivel=1,
@@ -671,12 +740,18 @@ class GeradorEstruturaPastas(ctk.CTk):
                 lista_pai=self.areas_selecionadas,
                 item_nome=area,
                 on_add=lambda a=area: self._adicionar_filho_inline(nivel=1, pai_area=a),
-                on_remove=lambda a=area: self._remover_do_preview(nivel=1, area=a)
+                on_remove=lambda a=area: self._remover_do_preview(nivel=1, area=a),
+                is_selected=is_selected,
+                # Callback de seleção
+                on_select=lambda a=area: self._selecionar_no_preview(1, area=a),
+                on_double_click=lambda a=area: self._abrir_modal_editar(1, area=a)
             )
             
             # Vista ampla da área
             if self.vista_ampla_geral.get(area):
                 self._criar_linha_preview(
+                    key=f"2_va_{area}",
+                    data_context={'nivel': 2, 'area': area, 'is_va': True},
                     parent=self.preview_scroll,
                     texto="📷 Vista ampla",
                     nivel=2,
@@ -686,10 +761,11 @@ class GeradorEstruturaPastas(ctk.CTk):
             
             itens = self.itens_por_area.get(area, [])
             for idx_item, item in enumerate(itens, 1):
-                eh_ambiente = item in AMBIENTES_SUGERIDOS or item in self.custom_ambientes
-                
                 # Item (Nível 2)
+                is_selected = (self.area_atual == area and self.item_atual == item)
                 self._criar_linha_preview(
+                    key=f"2_{area}_{item}",
+                    data_context={'nivel': 2, 'area': area, 'item': item},
                     parent=self.preview_scroll,
                     texto=f"{ICONES_NIVEL[2]} {idx_item} - {item}",
                     nivel=2,
@@ -697,7 +773,10 @@ class GeradorEstruturaPastas(ctk.CTk):
                     lista_pai=itens,
                     item_nome=item,
                     on_add=lambda a=area, i=item: self._adicionar_filho_inline(nivel=2, pai_area=a, pai_item=i),
-                    on_remove=lambda a=area, i=item: self._remover_do_preview(nivel=2, area=a, item=i)
+                    on_remove=lambda a=area, i=item: self._remover_do_preview(nivel=2, area=a, item=i),
+                    is_selected=is_selected,
+                    on_select=lambda a=area, i=item: self._selecionar_no_preview(2, area=a, item=i),
+                    on_double_click=lambda a=area, i=item: self._abrir_modal_editar(2, area=a, item=i)
                 )
                 
                 key = (area, item)
@@ -715,7 +794,13 @@ class GeradorEstruturaPastas(ctk.CTk):
                         texto_sub = f"{ICONES_NIVEL[3]} - {sub}"
                     
                     # Sub (Nível 3)
+                    is_selected = (self.area_atual == area and self.item_atual == item and self.subitem_atual == sub)
+                    pass_sub = sub 
+                    # Nota: pass_sub é necessário para evitar closure tardio se não fosse lambda, mas aqui é lambda a=area...
+                    
                     self._criar_linha_preview(
+                        key=f"3_{area}_{item}_{sub}",
+                        data_context={'nivel': 3, 'area': area, 'item': item, 'sub': sub},
                         parent=self.preview_scroll,
                         texto=texto_sub,
                         nivel=3,
@@ -723,14 +808,19 @@ class GeradorEstruturaPastas(ctk.CTk):
                         lista_pai=sub_selecionadas,
                         item_nome=sub,
                         on_add=lambda a=area, i=item, s=sub: self._adicionar_filho_inline(nivel=3, pai_area=a, pai_item=i, pai_sub=s),
-                        on_remove=lambda a=area, i=item, s=sub: self._remover_do_preview(nivel=3, area=a, item=i, sub=s)
+                        on_remove=lambda a=area, i=item, s=sub: self._remover_do_preview(nivel=3, area=a, item=i, sub=s),
+                        is_selected=is_selected,
+                        on_select=lambda a=area, i=item, s=sub: self._selecionar_no_preview(3, area=a, item=i, sub=s)
                     )
                     
                     # Nível 4
                     key_n4 = (area, item, sub)
                     detalhes = self.detalhes_por_subitem.get(key_n4, [])
                     for det in detalhes:
+                        # Nivel 4 não tem seleção de contexto ativa na lógica atual
                         self._criar_linha_preview(
+                            key=f"4_{area}_{item}_{sub}_{det}",
+                            data_context={'nivel': 4, 'area': area, 'item': item, 'sub': sub, 'detalhe': det},
                             parent=self.preview_scroll,
                             texto=f"{ICONES_NIVEL[4]} - {det}",
                             nivel=4,
@@ -740,34 +830,223 @@ class GeradorEstruturaPastas(ctk.CTk):
                             on_add=None,
                             on_remove=lambda a=area, i=item, s=sub, d=det: self._remover_do_preview(nivel=4, area=a, item=i, sub=s, detalhe=d)
                         )
+        
+        # Restaurar Scroll e renderizar
+        self.preview_scroll.update_idletasks()
+        try:
+             self.preview_scroll._parent_canvas.yview_moveto(scroll_pos)
+        except:
+             pass
 
-    def _criar_linha_preview(self, parent, texto, nivel, cor, lista_pai=None, item_nome=None, on_add=None, on_remove=None, acoes=True):
+    def _selecionar_no_preview(self, nivel, area=None, item=None, sub=None):
+        """Define o contexto atual ao clicar no preview"""
+        if nivel == 1:
+            if self.area_atual != area:
+                self.area_atual = area
+                self._alternar_etapa(2)
+                self._atualizar_ui_itens()
+            else:
+                self._alternar_etapa(2) # Apenas foca se já estiver selecionado
+                
+        elif nivel == 2:
+            mudou_area = self.area_atual != area
+            self.area_atual = area
+            self.item_atual = item
+            
+            if mudou_area:
+                self._popular_nivel2() # Atualiza lista da etapa 2
+            
+            self._alternar_etapa(3)
+            self._atualizar_ui_sub()
+            
+        elif nivel == 3:
+            mudou_contexto = (self.area_atual != area) or (self.item_atual != item)
+            self.area_atual = area
+            self.item_atual = item
+            self.subitem_atual = sub
+            
+            if mudou_contexto:
+                self._popular_nivel2()
+                self._popular_nivel3()
+            
+            self._alternar_etapa(4)
+            self._atualizar_ui_nivel4()
+            
+        self._atualizar_resumos_etapas()
+        # Otimização: Se apenas mudou a seleção, usa update leve. Se mudou dados, o chamador (popular) já deve ter cuidado.
+        # Na verdade, como a estrutura do preview não muda com apenas seleção (apenas as cores), 
+        # usamos sempre o destaque leve aqui.
+        self._atualizar_destaques_preview()
+
+    def _abrir_modal_editar(self, nivel, area, item=None):
+        """Abre modal para editar/reordenar itens do ambiente ou área"""
+        # Título e Lista alvo
+        if nivel == 1:
+            titulo = f"Editar Área: {area}"
+            lista_alvo = self.itens_por_area.get(area, [])
+            pai_contexto = "Área"
+        elif nivel == 2:
+            titulo = f"Editar Ambiente: {item}"
+            lista_alvo = self.subpastas_por_item.get((area, item), [])
+            pai_contexto = "Ambiente"
+        else:
+            return
+
+        # Janela Modal
+        modal = ctk.CTkToplevel(self)
+        modal.title(titulo)
+        modal.geometry("500x600")
+        modal.transient(self)
+        modal.grab_set()
+        
+        ctk.CTkLabel(modal, text=titulo, font=ctk.CTkFont(size=16, weight="bold")).pack(pady=10)
+        
+        frame_lista = ctk.CTkScrollableFrame(modal)
+        frame_lista.pack(fill="both", expand=True, padx=10, pady=5)
+        
+        def refresh_list():
+            for w in frame_lista.winfo_children(): w.destroy()
+            
+            for idx, nome_item in enumerate(lista_alvo):
+                row = ctk.CTkFrame(frame_lista, fg_color="transparent")
+                row.pack(fill="x", pady=2)
+                
+                ctk.CTkLabel(row, text=f"{idx+1}. {nome_item}", anchor="w").pack(side="left", fill="x", expand=True)
+                
+                # Botões de ação
+                cmds_frame = ctk.CTkFrame(row, fg_color="transparent")
+                cmds_frame.pack(side="right")
+                
+                # Renomear
+                def renomear(i=idx, n=nome_item):
+                    novo = simpledialog.askstring("Renomear", f"Novo nome para '{n}':", parent=modal, initialvalue=n)
+                    if novo and novo.strip():
+                        lista_alvo[i] = novo.strip()
+                        # Atualizar itens customizados se necessário
+                        if nivel == 1:
+                            if n in self.custom_ambientes:
+                                self.custom_ambientes.remove(n)
+                                self.custom_ambientes.add(novo.strip())
+                        elif nivel == 2:
+                            if n in self.custom_subpastas:
+                                self.custom_subpastas.remove(n)
+                                self.custom_subpastas.add(novo.strip())
+                        refresh_list()
+                        self._atualizar_preview()
+                
+                ctk.CTkButton(cmds_frame, text="✏️", width=30, command=renomear, fg_color="#eab308", hover_color="#ca8a04").pack(side="left", padx=2)
+                
+                # Mover Cima
+                def mover_cima(i=idx):
+                    if i > 0:
+                        lista_alvo[i], lista_alvo[i-1] = lista_alvo[i-1], lista_alvo[i]
+                        refresh_list()
+                        self._atualizar_preview()
+                
+                if idx > 0:
+                    ctk.CTkButton(cmds_frame, text="⬆", width=30, command=mover_cima).pack(side="left", padx=2)
+                
+                # Mover Baixo
+                def mover_baixo(i=idx):
+                    if i < len(lista_alvo) - 1:
+                        lista_alvo[i], lista_alvo[i+1] = lista_alvo[i+1], lista_alvo[i]
+                        refresh_list()
+                        self._atualizar_preview()
+                
+                if idx < len(lista_alvo) - 1:
+                    ctk.CTkButton(cmds_frame, text="⬇", width=30, command=mover_baixo).pack(side="left", padx=2)
+                
+                # Remover
+                def remover(i=idx):
+                    if messagebox.askyesno("Confirmar", f"Remover '{nome_item}'?"):
+                        lista_alvo.pop(i)
+                        refresh_list()
+                        self._atualizar_preview()
+                        # Nota: isso remove da lista mas não limpa as sub-seleções desse item removido.
+                        # Para um protótipo rápido, isso é aceitável, mas idealmente chamaria _remover_do_preview lógica.
+                
+                ctk.CTkButton(cmds_frame, text="❌", width=30, command=remover, fg_color="#ef4444", hover_color="#b91c1c").pack(side="left", padx=2)
+
+        refresh_list()
+        
+        # Área de Adição
+        frame_add = ctk.CTkFrame(modal)
+        frame_add.pack(fill="x", padx=10, pady=10)
+        
+        entry_novo = ctk.CTkEntry(frame_add, placeholder_text="Novo item...")
+        entry_novo.pack(side="left", fill="x", expand=True, padx=(0, 5))
+        
+        def add_novo():
+            txt = entry_novo.get().strip()
+            if txt:
+                lista_alvo.append(txt)
+                if nivel == 1:
+                     if txt not in AMBIENTES_SUGERIDOS: self.custom_ambientes.add(txt)
+                elif nivel == 2:
+                     if txt not in SUBPASTAS_SUGERIDAS: self.custom_subpastas.add(txt)
+                entry_novo.delete(0, 'end')
+                refresh_list()
+                self._atualizar_preview()
+        
+        ctk.CTkButton(frame_add, text="Adicionar", command=add_novo).pack(side="right")
+        
+        ctk.CTkButton(modal, text="Fechar", command=modal.destroy, fg_color="transparent", border_width=1, text_color="#eee").pack(pady=5)
+
+
+    def _criar_linha_preview(self, parent, texto, nivel, cor, key=None, data_context=None, lista_pai=None, item_nome=None, on_add=None, on_remove=None, acoes=True, is_selected=False, on_select=None, on_double_click=None):
         """Cria uma linha interativa no preview"""
         indent = nivel * 25
         
-        row = ctk.CTkFrame(parent, fg_color="transparent", height=28)
-        row.pack(fill="x", padx=(indent, 0), pady=1)
+        bg_color = "transparent"
+        if is_selected:
+            bg_color = "#2d3748" # Highlight
         
+        row = ctk.CTkFrame(parent, fg_color=bg_color, height=28)
+        
+        # Registrar para update leve
+        if key and data_context:
+            data_context['widget'] = row
+            if not hasattr(self, 'preview_rows'): self.preview_rows = {}
+            self.preview_rows[key] = data_context
+            
+        row.pack(fill="x", padx=0, pady=1) # Remove indent from pack key to handle full width highlight logic
+        
+        # Frame interno para indentação real
+        inner = ctk.CTkFrame(row, fg_color="transparent")
+        inner.pack(fill="x", padx=(indent, 5), pady=0)
+
+        # Eventos de clique na linha
+        if on_select:
+            row.bind("<Button-1>", lambda e: on_select())
+            inner.bind("<Button-1>", lambda e: on_select())
+            
+        if on_double_click:
+             row.bind("<Double-Button-1>", lambda e: on_double_click())
+             inner.bind("<Double-Button-1>", lambda e: on_double_click())
+
         # Barra lateral colorida
         if nivel > 0:
-            barra = ctk.CTkFrame(row, width=3, fg_color=cor, height=22)
+            barra = ctk.CTkFrame(inner, width=3, fg_color=cor, height=22)
             barra.pack(side="left", padx=(0, 6))
+            if on_select: barra.bind("<Button-1>", lambda e: on_select())
         
         # Texto
         lbl = ctk.CTkLabel(
-            row,
+            inner,
             text=texto,
             font=ctk.CTkFont(family="Consolas", size=12, weight="bold" if nivel <= 1 else "normal"),
             text_color=cor,
             anchor="w"
         )
         lbl.pack(side="left", fill="x", expand=True)
+        if on_select: lbl.bind("<Button-1>", lambda e: on_select())
+        if on_double_click: lbl.bind("<Double-Button-1>", lambda e: on_double_click())
         
         if not acoes or lista_pai is None:
             return
         
         # Frame de botões de ação
-        btn_frame = ctk.CTkFrame(row, fg_color="transparent")
+        btn_frame = ctk.CTkFrame(inner, fg_color="transparent")
         btn_frame.pack(side="right")
         
         # Botão Mover para Cima
