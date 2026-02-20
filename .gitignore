@@ -1,2 +1,5 @@
 extrator-docx/
 TM Gerenciador V-2/
+*.csv
+TM Comparador/output/comparacao_20260219_044227.log.txt
+TM Comparador/output/comparacao_20260219_053039.log.txt
