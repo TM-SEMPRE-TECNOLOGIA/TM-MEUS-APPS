@@ -1,0 +1,12 @@
+PROCESS LOG - Geração de Relatório
+
+Pasta raiz: C:/Users/thiag/Desktop/000 - Minha Demanda/2 - EM ANDAMENTO/VILA TATETUBA 7027 - Separando fotos
+Modelo: C:\Users\thiag\TM-MEUS-APPS\TM Relatorio\templates\MODELO - 0908 - SAO PAULO.docx
+Saída: C:\Users\thiag\TM-MEUS-APPS\TM Relatorio\output
+
+>>> Lendo estrutura de pastas e imagens...
+>>> Estrutura lida completamente.
+(Verifique eventuais erros em: C:\Users\thiag\TM-MEUS-APPS\TM Relatorio\output\erros_pastas.txt)
+>>> Gerando relatório...
+✔ Relatório salvo em: C:\Users\thiag\TM-MEUS-APPS\TM Relatorio\output\RELATÓRIO FOTOGRÁFICO - VILA TATETUBA 7027 - Separando fotos - LEVANTAMENTO PREVENTIVO.docx
+✔ Total de imagens inseridas: 624
