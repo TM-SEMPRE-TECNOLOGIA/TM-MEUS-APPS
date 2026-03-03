@@ -2,11 +2,21 @@ import os
 from dataclasses import dataclass
 from typing import Callable, List, Dict, Any, Optional, Tuple
 
-from ui_preview import preview_conteudo
 from word_utils import inserir_conteudo
+import re
 
 # Ordem preferencial de pastas (nível 1)
 ORDEM_PASTAS = ["- Área externa", "- Área interna", "- Segundo piso"]
+
+def _natural_sort_key(name: str):
+    """Extrai o número inicial do nome para ordenar naturalmente.
+    Ex: '10 - Escadas' -> (10, ' - Escadas')
+        '2 - Atendimento' -> (2, ' - Atendimento')
+    """
+    match = re.match(r'^(\d+)(.*)', name)
+    if match:
+        return (int(match.group(1)), match.group(2))
+    return (float('inf'), name)
 
 
 @dataclass
@@ -48,14 +58,16 @@ def build_content_from_root(pasta_raiz: str, log_errors_path: str, logger: Calla
                 log.write(f"Falha ao decodificar nomes em: {root_dir} ({e})\n")
             continue
 
-        # Ordena apenas o primeiro nível, respeitando ORDEM_PASTAS
+        # Ordena subpastas
         if root_dir == pasta_raiz:
             dirs.sort(
                 key=lambda x: (
                     ORDEM_PASTAS.index(x) if x in ORDEM_PASTAS else len(ORDEM_PASTAS),
-                    x,
+                    _natural_sort_key(x),
                 )
             )
+        else:
+            dirs.sort(key=_natural_sort_key)
 
         path_parts = os.path.relpath(root_dir, pasta_raiz).split(os.sep)
         nome = path_parts[-1]
@@ -95,8 +107,9 @@ def build_content_from_root(pasta_raiz: str, log_errors_path: str, logger: Calla
 
 
 def run_preview(conteudo: List[Any]) -> Optional[List[Any]]:
-    """Abre a janela de preview. Retorna `conteudo_editado` ou None (cancelado)."""
-    return preview_conteudo(conteudo)
+    """No modo web, o preview é gerenciado pelo frontend Next.js.
+    Esta função retorna o conteúdo diretamente."""
+    return conteudo
 
 
 def generate_report(modelo_path: str, conteudo_editado: List[Any], output_docx_path: str, logger: Callable[[str], None] = _default_logger) -> int:

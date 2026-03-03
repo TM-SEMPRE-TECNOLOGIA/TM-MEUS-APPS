@@ -1,31 +1,27 @@
-# Gerador de Relatório Fotográfico (Local) — v2 (Modelos embutidos)
+# TM Relatório - Premium Tool (v3.0)
 
-Este pacote roda **localmente no Windows** e gera um relatório Word a partir de uma **pasta raiz de fotos**, usando um **modelo DOCX** selecionável.
+Este projeto foi modernizado para uma arquitetura **Next.js 15 (Frontend)** e **FastAPI (Backend)**, focando em estética premium e alta performance local.
 
-## Entradas
-- **Pasta raiz (fotos)**: diretório com subpastas e imagens (`.jpg/.jpeg/.png`).
-- **Modelo Word (DOCX)**: escolhido via ComboBox a partir da pasta `templates/`.
-- **Pasta de saída**: onde serão salvos o DOCX final e os logs.
+## 📁 Estrutura do Projeto
+- `nextjs-frontend/`: Aplicação web moderna (Next.js, Tailwind, Framer Motion).
+- `server.py`: Backend em FastAPI responsável pelo processamento local.
+- `Legados/`: Arquivos da arquitetura antiga (CustomTkinter, Vite/React original).
+- `templates/`: Modelos Word (.docx) utilizados como base.
+- `output/`: Pasta padrão para salvar os relatórios gerados.
 
-## Saídas
-Na pasta de saída selecionada:
-- `RELATÓRIO FOTOGRÁFICO - <NOME_DA_PASTA_RAIZ> - LEVANTAMENTO PREVENTIVO.docx`
-- `process_log.txt`
-- `erros_pastas.txt`
+## 🚀 Como Executar (Windows)
+1. Certifique-se de ter o **Python** e o **Node.js** instalados.
+2. Abra a pasta raiz no Explorer.
+3. Dê dois cliques no arquivo **`run.bat`**.
+4. O sistema iniciará o backend e o frontend automaticamente.
+5. Acesse no seu navegador: **[http://localhost:3000](http://localhost:3000)**
 
-## Como usar (Windows)
-1. Extraia esta pasta.
-2. Duplo clique em `run_app.bat`.
-3. No app:
-   - selecione a **pasta raiz**
-   - escolha um **modelo** no seletor (ComboBox)
-   - selecione a **pasta de saída**
-   - clique em **Pré-visualizar** (opcional, recomendado)
-   - clique em **Gerar**
+## 🛠️ Requisitos
+- Python 3.10+
+- Node.js 18+
+- Instalação de dependências (feita automaticamente pelo script na primeira vez ou via pip/npm).
 
-## Modelos
-Os modelos embarcados ficam em `templates/`.
-- Você pode adicionar novos modelos pelo botão **Adicionar modelo…** (ele copia o DOCX para `templates/`).
-
-## Observações
-- O modelo DOCX precisa conter a marca `{{start_here}}` para indicar o ponto de inserção das imagens.
+---
+**TM - Sempre Tecnologia**  
+Desenvolvido por: Thiago Nascimento Barbosa  
+Março de 2026
