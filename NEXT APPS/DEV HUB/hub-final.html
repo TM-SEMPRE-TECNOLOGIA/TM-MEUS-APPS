@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TM Hub — Preview Design System v2</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════
+           TM DESIGN SYSTEM v2 — TOKENS 
+           ═══════════════════════════════════════════════════ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* ── Background ── */
+            --tm-bg: #eef4f2;
+            --tm-bg-card: #ffffff;
+            --tm-bg-hover: #f4faf8;
+            --tm-bg-input: #f4faf8;
+            --tm-bg-sidebar: #ffffff;
+
+            /* ── Brand ── */
+            --tm-primary: #00C896;
+            --tm-primary-hover: #00a87e;
+            --tm-primary-light: #e6faf5;
+            --tm-secondary: #0BBFBF;
+            --tm-accent: #667eea;
+            --tm-gradient: linear-gradient(135deg, #00C896 0%, #0BBFBF 100%);
+
+            /* ── Status ── */
+            --tm-success: #00C896;
+            --tm-danger: #ef4444;
+            --tm-warning: #f59e0b;
+            --tm-info: #0BBFBF;
+
+            /* ── Text ── */
+            --tm-text: #0F1923;
+            --tm-text-muted: #6B7A8D;
+            --tm-text-subtle: #9ca3af;
+
+            /* ── Border ── */
+            --tm-border: #ddeee9;
+            --tm-border-hover: #9dd4c6;
+
+            /* ── Shadow ── */
+            --tm-shadow: 0 1px 3px rgba(0, 200, 150, 0.06), 0 4px 16px rgba(0, 200, 150, 0.04);
+            --tm-shadow-hover: 0 4px 12px rgba(0, 200, 150, 0.13), 0 12px 32px rgba(0, 200, 150, 0.07);
+            --tm-shadow-xl: 0 8px 30px rgba(0, 200, 150, 0.09), 0 20px 50px rgba(0, 200, 150, 0.05);
+
+            /* ── Radius ── */
+            --tm-radius-sm: 6px;
+            --tm-radius-md: 8px;
+            --tm-radius-lg: 14px;
+            --tm-radius-xl: 18px;
+
+            /* ── Font ── */
+            --tm-font: 'DM Sans', system-ui, sans-serif;
+            --tm-font-display: 'Syne', sans-serif;
+        }
+
+        body {
+            font-family: var(--tm-font);
+            background: var(--tm-bg);
+            color: var(--tm-text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           HEADER
+           ═══════════════════════════════════════════════════ */
+        header {
+            height: 60px;
+            background: var(--tm-bg-card);
+            border-bottom: 1px solid var(--tm-border);
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            gap: 1rem;
+            flex-shrink: 0;
+            box-shadow: 0 1px 0 rgba(0, 200, 150, 0.08);
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--tm-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0, 200, 150, 0.35);
+        }
+
+        .logo-text {
+            font-size: 0.92rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            font-family: var(--tm-font-display);
+        }
+
+        .logo-text span {
+            color: var(--tm-primary);
+        }
+
+        .header-divider {
+            width: 1px;
+            height: 22px;
+            background: var(--tm-border);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--tm-bg-input);
+            border: 1.5px solid var(--tm-border);
+            border-radius: var(--tm-radius-md);
+            padding: 0.45rem 0.85rem;
+            flex: 1;
+            max-width: 380px;
+            transition: all 0.15s;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--tm-primary);
+            box-shadow: 0 0 0 3px rgba(0, 200, 150, 0.12);
+        }
+
+        .search-bar svg {
+            color: var(--tm-text-subtle);
+            flex-shrink: 0;
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--tm-text);
+            font-family: var(--tm-font);
+            font-size: 0.82rem;
+            flex: 1;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--tm-text-subtle);
+        }
+
+        .header-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .badge-online {
+            font-size: 0.68rem;
+            color: var(--tm-success);
+            background: rgba(16, 185, 129, 0.08);
+            border: 1.5px solid rgba(16, 185, 129, 0.2);
+            padding: 0.2rem 0.65rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            background: var(--tm-bg-input);
+            border: 1.5px solid var(--tm-border);
+            border-radius: var(--tm-radius-md);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .user-chip:hover {
+            border-color: var(--tm-primary);
+            background: var(--tm-primary-light);
+        }
+
+        .avatar {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--tm-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .user-name {
+            font-size: 0.8rem;
+            color: var(--tm-text-muted);
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           LAYOUT
+           ═══════════════════════════════════════════════════ */
+        .layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           SIDEBAR
+           ═══════════════════════════════════════════════════ */
+        aside {
+            width: 220px;
+            background: var(--tm-bg-sidebar);
+            border-right: 1px solid var(--tm-border);
+            display: flex;
+            flex-direction: column;
+            padding: 1.2rem 0.75rem;
+            gap: 1.5rem;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .sidebar-label {
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: var(--tm-text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0 0.5rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 0.65rem;
+            border-radius: var(--tm-radius-md);
+            font-size: 0.81rem;
+            color: var(--tm-text-muted);
+            cursor: pointer;
+            transition: all 0.12s;
+            text-decoration: none;
+            font-weight: 500;
+            border: 1.5px solid transparent;
+        }
+
+        .sidebar-item:hover {
+            background: var(--tm-bg);
+            color: var(--tm-text);
+        }
+
+        .sidebar-item.active {
+            background: var(--tm-primary-light);
+            color: var(--tm-primary);
+            font-weight: 600;
+            border-color: rgba(0, 200, 150, 0.15);
+        }
+
+        .sidebar-item .icon {
+            font-size: 0.9rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-count {
+            margin-left: auto;
+            font-size: 0.62rem;
+            font-weight: 700;
+            background: var(--tm-bg);
+            color: var(--tm-text-subtle);
+            padding: 0.12rem 0.45rem;
+            border-radius: 10px;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--tm-border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           MAIN
+           ═══════════════════════════════════════════════════ */
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            background: linear-gradient(135deg, #00C896 0%, #0BBFBF 60%, #00a0c8 100%);
+            background-size: 200% 200%;
+            border-radius: var(--tm-radius-xl);
+            padding: 2rem 2.5rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            animation: heroBg 8s ease infinite;
+        }
+
+        @keyframes heroBg {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            right: 80px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .hero-left {
+            z-index: 1;
+        }
+
+        .hero-greeting {
+            font-size: 0.78rem;
+            font-weight: 500;
+            opacity: 0.75;
+            margin-bottom: 0.3rem;
+        }
+
+        .hero-title {
+            font-size: 1.55rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.35rem;
+            font-family: var(--tm-font-display);
+            line-height: 1.2;
+        }
+
+        .hero-title-accent {
+            display: block;
+            font-family: var(--tm-font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.82);
+            letter-spacing: -0.02em;
+            margin-top: 0.1rem;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.65));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmerText 4s linear infinite;
+        }
+
+        @keyframes shimmerText {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .hero-sub {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .hero-right {
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.4rem;
+        }
+
+        .hero-badge {
+            font-size: 0.68rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        .hero-count {
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+
+        /* ── SECTION HEADER ── */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--tm-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: var(--tm-radius-md);
+            font-size: 0.78rem;
+            font-weight: 500;
+            font-family: var(--tm-font);
+            cursor: pointer;
+            border: 1.5px solid var(--tm-border);
+            transition: all 0.15s;
+        }
+
+        .btn-ghost {
+            background: var(--tm-bg-card);
+            color: var(--tm-text-muted);
+        }
+
+        .btn-ghost:hover {
+            background: var(--tm-bg);
+            color: var(--tm-text);
+            border-color: var(--tm-border-hover);
+        }
+
+        .btn-primary {
+            background: var(--tm-gradient);
+            color: #fff;
+            border-color: transparent;
+            font-family: var(--tm-font-display);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-primary:hover {
+            background: var(--tm-primary-hover);
+            box-shadow: 0 4px 14px rgba(0, 200, 150, 0.4);
+            transform: translateY(-1px);
+        }
+
+        /* ── CARDS GRID ── */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+
+        .tool-card {
+            background: var(--tm-bg-card);
+            border: 1.5px solid var(--tm-border);
+            border-radius: var(--tm-radius-lg);
+            padding: 1.4rem;
+            cursor: pointer;
+            transition: all 0.18s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--tm-shadow);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--card-accent, var(--tm-primary));
+            opacity: 0;
+            transition: opacity 0.18s;
+            border-radius: 14px 14px 0 0;
+        }
+
+        .tool-card:hover {
+            border-color: var(--card-accent, var(--tm-primary));
+            transform: translateY(-3px);
+            box-shadow: var(--tm-shadow-hover);
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--icon-bg, rgba(79, 110, 247, 0.08));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 1.5px solid var(--icon-border, rgba(79, 110, 247, 0.15));
+        }
+
+        .card-badge {
+            font-size: 0.63rem;
+            font-weight: 700;
+            padding: 0.2rem 0.55rem;
+            border-radius: 20px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: var(--badge-bg, rgba(79, 110, 247, 0.08));
+            color: var(--badge-color, var(--tm-primary));
+            border: 1px solid var(--badge-border, rgba(79, 110, 247, 0.15));
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--tm-text);
+            letter-spacing: -0.02em;
+            font-family: var(--tm-font-display);
+        }
+
+        .card-desc {
+            font-size: 0.76rem;
+            color: var(--tm-text-muted);
+            line-height: 1.55;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--tm-border);
+            margin-top: auto;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            color: var(--tm-text-subtle);
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--tm-success);
+        }
+
+        .status-dot.offline {
+            background: var(--tm-text-subtle);
+        }
+
+        .card-cta {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--tm-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: gap 0.15s;
+        }
+
+        .tool-card:hover .card-cta {
+            gap: 0.45rem;
+        }
+
+        /* ── STATS ROW ── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: var(--tm-bg-card);
+            border: 1.5px solid var(--tm-border);
+            border-radius: var(--tm-radius-lg);
+            padding: 1.1rem 1.3rem;
+            box-shadow: var(--tm-shadow);
+        }
+
+        .stat-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--tm-text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--tm-text);
+            margin-top: 0.2rem;
+            letter-spacing: -0.03em;
+            font-family: var(--tm-font-display);
+        }
+
+        .stat-sub {
+            font-size: 0.7rem;
+            color: var(--tm-text-muted);
+            margin-top: 0.15rem;
+            font-weight: 500;
+        }
+
+        .stat-value.primary {
+            color: var(--tm-primary);
+        }
+
+        .stat-value.success {
+            color: var(--tm-success);
+        }
+
+        .stat-value.warning {
+            color: var(--tm-warning);
+        }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--tm-border);
+            border-radius: 3px;
+        }
+
+        /* ── ADMIN BADGE ── */
+        .admin-badge {
+            font-size: 0.58rem;
+            font-weight: 800;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            background: rgba(0, 200, 150, 0.08);
+            color: var(--tm-primary);
+            border: 1px solid rgba(0, 200, 150, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* ── CATEGORY PILLS ── */
+        .cat-pills {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .cat-pill {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            background: var(--tm-bg-card);
+            border: 1.5px solid var(--tm-border);
+            color: var(--tm-text-muted);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .cat-pill:hover,
+        .cat-pill.active {
+            background: var(--tm-primary-light);
+            border-color: rgba(0, 200, 150, 0.3);
+            color: var(--tm-primary);
+        }
+
+        /* ═══════════════════════════════════════════════════
+           ANIMATIONS
+           ═══════════════════════════════════════════════════ */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes dotPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 200, 150, 0.45);
+            }
+
+            50% {
+                box-shadow: 0 0 0 4px rgba(0, 200, 150, 0);
+            }
+        }
+
+        header {
+            animation: slideDown 0.4s ease both;
+        }
+
+        aside {
+            animation: slideLeft 0.4s 0.05s ease both;
+        }
+
+        .hero {
+            animation: heroBg 8s ease infinite, fadeUp 0.45s 0.1s ease both;
+        }
+
+        .stats-row {
+            animation: fadeUp 0.45s 0.2s ease both;
+            opacity: 0;
+            animation-fill-mode: both;
+        }
+
+        .section-header {
+            animation: fadeUp 0.45s 0.28s ease both;
+            opacity: 0;
+            animation-fill-mode: both;
+        }
+
+        .cat-pills {
+            animation: fadeUp 0.45s 0.33s ease both;
+            opacity: 0;
+            animation-fill-mode: both;
+        }
+
+        .tools-grid {
+            animation: fadeUp 0.45s 0.38s ease both;
+            opacity: 0;
+            animation-fill-mode: both;
+        }
+
+        .stat-card {
+            opacity: 0;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        .stat-card:nth-child(1) {
+            animation-delay: 0.22s;
+        }
+
+        .stat-card:nth-child(2) {
+            animation-delay: 0.28s;
+        }
+
+        .stat-card:nth-child(3) {
+            animation-delay: 0.34s;
+        }
+
+        .stat-card:nth-child(4) {
+            animation-delay: 0.40s;
+        }
+
+        .tool-card {
+            opacity: 0;
+            animation: cardIn 0.45s ease both;
+        }
+
+        .tool-card:nth-child(1) {
+            animation-delay: 0.44s;
+        }
+
+        .tool-card:nth-child(2) {
+            animation-delay: 0.50s;
+        }
+
+        .tool-card:nth-child(3) {
+            animation-delay: 0.56s;
+        }
+
+        .tool-card:nth-child(4) {
+            animation-delay: 0.62s;
+        }
+
+        .tool-card:nth-child(5) {
+            animation-delay: 0.68s;
+        }
+
+        .tool-card:nth-child(6) {
+            animation-delay: 0.74s;
+        }
+
+        .tool-card:nth-child(7) {
+            animation-delay: 0.80s;
+        }
+
+        .tool-card:nth-child(8) {
+            animation-delay: 0.86s;
+        }
+
+        .tool-card:nth-child(9) {
+            animation-delay: 0.92s;
+        }
+
+        /* shimmer on card hover */
+        .tool-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.45) 50%, transparent 62%);
+            transform: translateX(-120%);
+            transition: transform 0.45s ease;
+            border-radius: var(--tm-radius-lg);
+            pointer-events: none;
+        }
+
+        .tool-card:hover::after {
+            transform: translateX(120%);
+        }
+
+        /* status dot pulse */
+        .status-dot {
+            animation: dotPulse 2.5s ease-in-out infinite;
+        }
+
+        .status-dot.offline {
+            animation: none;
+        }
+
+        /* btn-primary shimmer */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.22) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .btn-primary:hover::after {
+            transform: translateX(100%);
+        }
+
+        /* sidebar items stagger */
+        .sidebar-item {
+            opacity: 0;
+            animation: fadeUp 0.3s ease both;
+        }
+
+        .sidebar-section:nth-child(1) .sidebar-item:nth-child(2) {
+            animation-delay: 0.48s;
+        }
+
+        .sidebar-section:nth-child(1) .sidebar-item:nth-child(3) {
+            animation-delay: 0.52s;
+        }
+
+        .sidebar-section:nth-child(1) .sidebar-item:nth-child(4) {
+            animation-delay: 0.56s;
+        }
+
+        .sidebar-section:nth-child(2) .sidebar-item:nth-child(2) {
+            animation-delay: 0.60s;
+        }
+
+        .sidebar-section:nth-child(2) .sidebar-item:nth-child(3) {
+            animation-delay: 0.63s;
+        }
+
+        .sidebar-section:nth-child(2) .sidebar-item:nth-child(4) {
+            animation-delay: 0.66s;
+        }
+
+        .sidebar-section:nth-child(2) .sidebar-item:nth-child(5) {
+            animation-delay: 0.69s;
+        }
+
+        .sidebar-section:nth-child(2) .sidebar-item:nth-child(6) {
+            animation-delay: 0.72s;
+        }
+
+        .sidebar-bottom .sidebar-item:nth-child(2) {
+            animation-delay: 0.75s;
+        }
+
+        .sidebar-bottom .sidebar-item:nth-child(3) {
+            animation-delay: 0.78s;
+        }
+
+        .sidebar-bottom .sidebar-item:nth-child(4) {
+            animation-delay: 0.81s;
+        }
+
+        /* ═══ PAGE VIEWS ═══ */
+        .page {
+            display: none;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        /* ═══ MODAL ═══ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(15, 25, 35, 0.45);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: var(--tm-bg-card);
+            border-radius: var(--tm-radius-xl);
+            padding: 2rem;
+            width: 90%;
+            max-width: 480px;
+            box-shadow: var(--tm-shadow-xl);
+            border: 1.5px solid var(--tm-border);
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.25s;
+        }
+
+        .modal-overlay.open .modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .modal-title {
+            font-family: var(--tm-font-display);
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .modal-close {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: 1.5px solid var(--tm-border);
+            background: var(--tm-bg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--tm-text-muted);
+            transition: all 0.15s;
+        }
+
+        .modal-close:hover {
+            border-color: var(--tm-danger);
+            color: var(--tm-danger);
+            background: rgba(239, 68, 68, 0.06);
+        }
+
+        /* ═══ TOAST ═══ */
+        .toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .toast {
+            background: var(--tm-bg-card);
+            border: 1.5px solid var(--tm-border);
+            border-radius: var(--tm-radius-md);
+            padding: 0.75rem 1.2rem;
+            box-shadow: var(--tm-shadow-hover);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--tm-text);
+            min-width: 260px;
+            animation: toastIn 0.3s ease, toastOut 0.3s 2.7s ease forwards;
+        }
+
+        .toast-icon {
+            font-size: 1rem;
+        }
+
+        .toast.success {
+            border-left: 3px solid var(--tm-success);
+        }
+
+        .toast.error {
+            border-left: 3px solid var(--tm-danger);
+        }
+
+        .toast.info {
+            border-left: 3px solid var(--tm-info);
+        }
+
+        @keyframes toastIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes toastOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+        }
+
+        /* ═══ NOTIFICATION BELL ═══ */
+        .notif-btn {
+            position: relative;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: var(--tm-bg-input);
+            border: 1.5px solid var(--tm-border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.15s;
+        }
+
+        .notif-btn:hover {
+            border-color: var(--tm-primary);
+            background: var(--tm-primary-light);
+        }
+
+        .notif-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--tm-danger);
+            animation: dotPulse 2s ease infinite;
+        }
+
+        /* ═══ FAVORITES ═══ */
+        .fav-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(0, 0, 0, 0.03);
+            cursor: pointer;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 2;
+            opacity: 0;
+        }
+
+        .tool-card:hover .fav-btn {
+            opacity: 1;
+        }
+
+        .fav-btn.active {
+            opacity: 1;
+            background: rgba(245, 158, 11, 0.12);
+            transform: scale(1.15);
+        }
+
+        /* ═══ FORM ELEMENTS ═══ */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--tm-text-muted);
+        }
+
+        .form-input {
+            padding: 0.6rem 0.85rem;
+            border-radius: var(--tm-radius-md);
+            border: 1.5px solid var(--tm-border);
+            background: var(--tm-bg-input);
+            font-family: var(--tm-font);
+            font-size: 0.82rem;
+            color: var(--tm-text);
+            outline: none;
+            transition: all 0.15s;
+        }
+
+        .form-input:focus {
+            border-color: var(--tm-primary);
+            box-shadow: 0 0 0 3px rgba(0, 200, 150, 0.12);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-hint {
+            font-size: 0.68rem;
+            color: var(--tm-text-subtle);
+        }
+
+        /* ═══ TABLE ═══ */
+        .tm-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        .tm-table th {
+            text-align: left;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--tm-text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.6rem 1rem;
+            border-bottom: 1.5px solid var(--tm-border);
+        }
+
+        .tm-table td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--tm-border);
+            color: var(--tm-text-muted);
+        }
+
+        .tm-table tr:hover td {
+            background: var(--tm-bg-hover);
+        }
+
+        /* ═══ TOGGLE SWITCH ═══ */
+        .toggle {
+            position: relative;
+            width: 40px;
+            height: 22px;
+        }
+
+        .toggle input {
+            display: none;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            cursor: pointer;
+            border-radius: 22px;
+            background: var(--tm-border);
+            transition: all 0.25s;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 3px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #fff;
+            transition: all 0.25s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle input:checked+.toggle-slider {
+            background: var(--tm-primary);
+        }
+
+        .toggle input:checked+.toggle-slider::before {
+            transform: translateX(18px);
+        }
+
+        /* ═══ FILE MANAGER ═══ */
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .file-card {
+            background: var(--tm-bg-card);
+            border: 1.5px solid var(--tm-border);
+            border-radius: var(--tm-radius-lg);
+            padding: 1.2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.18s;
+            box-shadow: var(--tm-shadow);
+        }
+
+        .file-card:hover {
+            border-color: var(--tm-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--tm-shadow-hover);
+        }
+
+        .file-card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-card-name {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--tm-text);
+            margin-bottom: 0.2rem;
+            word-break: break-all;
+        }
+
+        .file-card-meta {
+            font-size: 0.65rem;
+            color: var(--tm-text-subtle);
+        }
+
+        /* ═══ SECURITY ═══ */
+        .sec-card {
+            background: var(--tm-bg-card);
+            border: 1.5px solid var(--tm-border);
+            border-radius: var(--tm-radius-lg);
+            padding: 1.2rem 1.5rem;
+            box-shadow: var(--tm-shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sec-icon {
+            font-size: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .sec-info {
+            flex: 1;
+        }
+
+        .sec-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            font-family: var(--tm-font-display);
+            margin-bottom: 0.15rem;
+        }
+
+        .sec-desc {
+            font-size: 0.73rem;
+            color: var(--tm-text-muted);
+        }
+
+        /* ═══ EMPTY STATE ═══ */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--tm-text-subtle);
+        }
+
+        .empty-state-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            font-size: 0.85rem;
+        }
+
+        /* page fade */
+        @keyframes pageFade {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page.active {
+            animation: pageFade 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ HEADER ═══ -->
+    <header>
+        <div class="logo">
+            <div class="logo-mark">TM</div>
+            <div class="logo-text">HUB <span>TM</span></div>
+        </div>
+        <div class="header-divider"></div>
+        <div class="search-bar">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input type="text" placeholder="Buscar ferramenta..." id="search" />
+        </div>
+        <div class="header-right">
+            <div class="notif-btn" id="notifBtn" title="Notificações">🔔<div class="notif-dot"></div>
+            </div>
+            <div class="badge-online">● Online</div>
+            <div class="user-chip">
+                <div class="avatar">TN</div>
+                <div class="user-name">Thiago N. B.</div>
+                <span class="admin-badge">Admin</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ LAYOUT ═══ -->
+    <div class="layout">
+
+        <!-- ═══ SIDEBAR ═══ -->
+        <aside>
+            <div class="sidebar-section">
+                <div class="sidebar-label">Menu</div>
+                <a class="sidebar-item active">
+                    <span class="icon">⊞</span> Dashboard
+                </a>
+                <a class="sidebar-item">
+                    <span class="icon">🛠</span> Ferramentas
+                    <span class="sidebar-count">9</span>
+                </a>
+                <a class="sidebar-item">
+                    <span class="icon">⭐</span> Favoritos
+                </a>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-label">Categorias</div>
+                <a class="sidebar-item">
+                    <span class="icon">📄</span> Documentos
+                    <span class="sidebar-count">4</span>
+                </a>
+                <a class="sidebar-item">
+                    <span class="icon">📊</span> Análise
+                    <span class="sidebar-count">1</span>
+                </a>
+                <a class="sidebar-item">
+                    <span class="icon">🗂</span> Gestão
+                    <span class="sidebar-count">2</span>
+                </a>
+                <a class="sidebar-item">
+                    <span class="icon">📁</span> Utilidades
+                    <span class="sidebar-count">1</span>
+                </a>
+                <a class="sidebar-item">
+                    <span class="icon">🤖</span> IA
+                    <span class="sidebar-count">1</span>
+                </a>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-label">Admin</div>
+                <a class="sidebar-item">
+                    <span class="icon">📁</span> Arquivos
+                </a>
+                <a class="sidebar-item">
+                    <span class="icon">⚙</span> Configurações
+                </a>
+                <a class="sidebar-item">
+                    <span class="icon">🔐</span> Segurança
+                </a>
+            </div>
+        </aside>
+
+        <!-- ═══ MAIN ═══ -->
+        <main>
+
+            <!-- ════ PAGE: DASHBOARD ════ -->
+            <div class="page active" id="page-dashboard">
+
+                <!-- HERO -->
+                <div class="hero">
+                    <div class="hero-left">
+                        <div class="hero-greeting">Olá, bem-vindo de volta 👋</div>
+                        <div class="hero-title">Central de Ferramentas TM<span class="hero-title-accent">vamos acelerar
+                                seu
+                                trabalho.</span></div>
+                        <div class="hero-sub">Tudo que você precisa em um só lugar com interface unificada</div>
+                    </div>
+                    <div class="hero-right">
+                        <div class="hero-badge">✦ TM · Sempre Tecnologia</div>
+                        <div class="hero-count">Arquitetura Next.js Total</div>
+                    </div>
+                </div>
+
+                <!-- STATS -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-label">Ferramentas</div>
+                        <div class="stat-value success" data-count="9">0</div>
+                        <div class="stat-sub">unificadas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Tecnologia</div>
+                        <div class="stat-value primary">Next.js</div>
+                        <div class="stat-sub">framework base</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Categorias</div>
+                        <div class="stat-value" data-count="5">0</div>
+                        <div class="stat-sub">organizadas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Design</div>
+                        <div class="stat-value" style="font-size:1.4rem;">Light System</div>
+                        <div class="stat-sub">UI Padronizada</div>
+                    </div>
+                </div>
+
+                <!-- FILTERS -->
+                <div class="section-header">
+                    <div class="section-title">Ferramentas disponíveis</div>
+                    <div class="actions">
+                        <button class="btn btn-ghost">🔄 Atualizar</button>
+                        <button class="btn btn-primary">＋ Nova ferramenta</button>
+                    </div>
+                </div>
+
+                <div class="cat-pills">
+                    <span class="cat-pill active">Todos</span>
+                    <span class="cat-pill">📄 Documentos</span>
+                    <span class="cat-pill">📊 Análise</span>
+                    <span class="cat-pill">🗂 Gestão</span>
+                    <span class="cat-pill">📁 Utilidades</span>
+                    <span class="cat-pill">🤖 IA</span>
+                </div>
+
+                <!-- GRID -->
+                <div class="tools-grid" id="grid">
+
+                    <!-- TM Relatorio -->
+                    <div class="tool-card" data-cat="Documentos" data-name="TM Relatorio"
+                        style="--card-accent:#4f6ef7;--icon-bg:rgba(79,110,247,0.08);--icon-border:rgba(79,110,247,0.15);--badge-bg:rgba(79,110,247,0.08);--badge-color:#4f6ef7;--badge-border:rgba(79,110,247,0.2)">
+                        <button class="fav-btn" title="Favoritar">☆</button>
+                        <div class="card-header">
+                            <div class="card-icon">📝</div>
+                            <div class="card-badge">Next.js</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">TM Relatorio</div>
+                            <div class="card-desc">Gera relatórios DOCX profissionais a partir de templates e dados.
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-meta">
+                                <div class="status-dot"></div> Online · Documentos
+                            </div>
+                            <div class="card-cta">Abrir →</div>
+                        </div>
+                    </div>
+
+                    <!-- TM Comparador -->
+                    <div class="tool-card" data-cat="Análise" data-name="TM Comparador"
+                        style="--card-accent:#10b981;--icon-bg:rgba(16,185,129,0.08);--icon-border:rgba(16,185,129,0.15);--badge-bg:rgba(16,185,129,0.08);--badge-color:#059669;--badge-border:rgba(16,185,129,0.2)">
+                        <button class="fav-btn" title="Favoritar">☆</button>
+                        <div class="card-header">
+                            <div class="card-icon">🔀</div>
+                            <div class="card-badge">Next.js</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">TM Comparador</div>
+                            <div class="card-desc">Compara planilhas Excel com documentos DOCX e aponta divergências.
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-meta">
+                                <div class="status-dot"></div> Online · Análise
+                            </div>
+                            <div class="card-cta">Abrir →</div>
+                        </div>
+                    </div>
+
+                    <!-- TM Ordens -->
+                    <div class="tool-card" data-cat="Gestão" data-name="TM Ordens"
+                        style="--card-accent:#f59e0b;--icon-bg:rgba(245,158,11,0.08);--icon-border:rgba(245,158,11,0.15);--badge-bg:rgba(245,158,11,0.08);--badge-color:#d97706;--badge-border:rgba(245,158,11,0.2)">
+                        <button class="fav-btn" title="Favoritar">☆</button>
+                        <div class="card-header">
+                            <div class="card-icon">🗂️</div>
+                            <div class="card-badge">Next.js</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">TM Ordens</div>
+                            <div class="card-desc">Controle completo de ordens de serviço com dashboard e calendário.
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-meta">
+                                <div class="status-dot"></div> Online · Gestão
+                            </div>
+                            <div class="card-cta">Abrir →</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-card" data-cat="Utilidades" data-name="TM Pastas"
+                        style="--card-accent:#06b6d4;--icon-bg:rgba(6,182,212,0.08);--icon-border:rgba(6,182,212,0.15);--badge-bg:rgba(6,182,212,0.08);--badge-color:#0891b2;--badge-border:rgba(6,182,212,0.2)">
+                        <button class="fav-btn" title="Favoritar">☆</button>
+                        <div class="card-header">
+                            <div class="card-icon">📁</div>
+                            <div class="card-badge">Next.js</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">TM Pastas</div>
+                            <div class="card-desc">Cria estruturas de diretórios automaticamente seguindo padrões.</div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-meta">
+                                <div class="status-dot"></div> Online · Utilidades
+                            </div>
+                            <div class="card-cta">Abrir →</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-card" data-cat="IA" data-name="Bot Chat TM"
+                        style="--card-accent:#8b5cf6;--icon-bg:rgba(139,92,246,0.08);--icon-border:rgba(139,92,246,0.15);--badge-bg:rgba(139,92,246,0.08);--badge-color:#7c3aed;--badge-border:rgba(139,92,246,0.2)">
+                        <button class="fav-btn" title="Favoritar">☆</button>
+                        <div class="card-header">
+                            <div class="card-icon">🤖</div>
+                            <div class="card-badge">Next.js</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">Bot Chat TM</div>
+                            <div class="card-desc">Assistente de IA com suporte a upload de documentos PDF e DOCX.</div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-meta">
+                                <div class="status-dot"></div> Online · IA
+                            </div>
+                            <div class="card-cta">Abrir →</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-card" data-cat="Gestão" data-name="Gerenciador de O.S. V2"
+                        style="--card-accent:#f59e0b;--icon-bg:rgba(245,158,11,0.08);--icon-border:rgba(245,158,11,0.15);--badge-bg:rgba(245,158,11,0.08);--badge-color:#d97706;--badge-border:rgba(245,158,11,0.2)">
+                        <button class="fav-btn" title="Favoritar">☆</button>
+                        <div class="card-header">
+                            <div class="card-icon">⚙️</div>
+                            <div class="card-badge">Migrado</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">Gerenciador de O.S. V2</div>
+                            <div class="card-desc">Sistema de gestão com banco de dados, relatórios e dashboard.
+                                (Ex-Vite)</div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-meta">
+                                <div class="status-dot"></div> Next.js · Gestão
+                            </div>
+                            <div class="card-cta">Abrir →</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-card" data-cat="Documentos" data-name="TM Extrator"
+                        style="--card-accent:#22c55e;--icon-bg:rgba(34,197,94,0.08);--icon-border:rgba(34,197,94,0.15);--badge-bg:rgba(34,197,94,0.08);--badge-color:#16a34a;--badge-border:rgba(34,197,94,0.2)">
+                        <button class="fav-btn" title="Favoritar">☆</button>
+                        <div class="card-header">
+                            <div class="card-icon">📄</div>
+                            <div class="card-badge">Migrado</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">TM Extrator</div>
+                            <div class="card-desc">Extrai e analisa itens de documentos PDF/DOCX automaticamente.
+                                (Ex-Vite)</div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-meta">
+                                <div class="status-dot"></div> Next.js · Documentos
+                            </div>
+                            <div class="card-cta">Abrir →</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-card" data-cat="Documentos" data-name="TM Relatorio SP"
+                        style="--card-accent:#ef4444;--icon-bg:rgba(239,68,68,0.08);--icon-border:rgba(239,68,68,0.15);--badge-bg:rgba(239,68,68,0.08);--badge-color:#ef4444;--badge-border:rgba(239,68,68,0.2)">
+                        <button class="fav-btn" title="Favoritar">☆</button>
+                        <div class="card-header">
+                            <div class="card-icon">📸</div>
+                            <div class="card-badge">Next.js</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">TM Relatorio SP</div>
+                            <div class="card-desc">Gerador visual de relatório fotográfico com layout inteligente para
+                                Word.</div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-meta">
+                                <div class="status-dot"></div> Online · Documentos
+                            </div>
+                            <div class="card-cta">Abrir →</div>
+                        </div>
+                    </div>
+
+                    <div class="tool-card" data-cat="UI" data-name="TM Studio Relatorio"
+                        style="--card-accent:#4f6ef7;--icon-bg:rgba(79,110,247,0.08);--icon-border:rgba(79,110,247,0.15);--badge-bg:rgba(79,110,247,0.08);--badge-color:#4f6ef7;--badge-border:rgba(79,110,247,0.2)">
+                        <button class="fav-btn" title="Favoritar">☆</button>
+                        <div class="card-header">
+                            <div class="card-icon">✨</div>
+                            <div class="card-badge">Migrado</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">TM Studio Relatorio</div>
+                            <div class="card-desc">Ferramenta avançada para construção livre de componentes de
+                                relatórios.</div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-meta">
+                                <div class="status-dot"></div> Next.js · UI
+                            </div>
+                            <div class="card-cta">Abrir →</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- /page-dashboard -->
+
+            <!-- ════ PAGE: FAVORITOS ════ -->
+            <div class="page" id="page-favoritos">
+                <div class="section-header">
+                    <div class="section-title">⭐ Seus Favoritos</div>
+                </div>
+                <div class="tools-grid" id="favGrid"></div>
+                <div class="empty-state" id="favEmpty">
+                    <div class="empty-state-icon">⭐</div>
+                    <div class="empty-state-text">Nenhum favorito ainda. Clique no ☆ de um card para adicionar.</div>
+                </div>
+            </div>
+
+            <!-- ════ PAGE: ARQUIVOS ════ -->
+            <div class="page" id="page-arquivos">
+                <div class="section-header">
+                    <div class="section-title">📁 Gerenciador de Arquivos</div>
+                    <div class="actions">
+                        <button class="btn btn-ghost" onclick="toast('info','Nova pasta criada')">📁 Nova Pasta</button>
+                        <button class="btn btn-primary" onclick="toast('success','Arquivo simulado enviado')">⬆
+                            Upload</button>
+                    </div>
+                </div>
+                <div class="files-grid">
+                    <div class="file-card" onclick="toast('info','Abrindo pasta...')">
+                        <div class="file-card-icon">📂</div>
+                        <div class="file-card-name">Projetos</div>
+                        <div class="file-card-meta">5 itens · Pasta</div>
+                    </div>
+                    <div class="file-card" onclick="toast('info','Abrindo pasta...')">
+                        <div class="file-card-icon">📂</div>
+                        <div class="file-card-name">Templates</div>
+                        <div class="file-card-meta">12 itens · Pasta</div>
+                    </div>
+                    <div class="file-card" onclick="toast('info','Abrindo pasta...')">
+                        <div class="file-card-icon">📂</div>
+                        <div class="file-card-name">Backups</div>
+                        <div class="file-card-meta">3 itens · Pasta</div>
+                    </div>
+                    <div class="file-card" onclick="toast('info','Baixando...')">
+                        <div class="file-card-icon">📄</div>
+                        <div class="file-card-name">config.json</div>
+                        <div class="file-card-meta">2.4 KB · JSON</div>
+                    </div>
+                    <div class="file-card" onclick="toast('info','Baixando...')">
+                        <div class="file-card-icon">📊</div>
+                        <div class="file-card-name">relatorio-marco.xlsx</div>
+                        <div class="file-card-meta">156 KB · Excel</div>
+                    </div>
+                    <div class="file-card" onclick="toast('info','Baixando...')">
+                        <div class="file-card-icon">🖼️</div>
+                        <div class="file-card-name">logo-tm.png</div>
+                        <div class="file-card-meta">45 KB · Imagem</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ════ PAGE: CONFIGURAÇÕES ════ -->
+            <div class="page" id="page-config">
+                <div class="section-header">
+                    <div class="section-title">⚙ Configurações</div>
+                    <div class="actions"><button class="btn btn-primary"
+                            onclick="toast('success','Configurações salvas!')">💾 Salvar</button></div>
+                </div>
+                <div
+                    style="background:var(--tm-bg-card);border:1.5px solid var(--tm-border);border-radius:var(--tm-radius-lg);padding:1.5rem;box-shadow:var(--tm-shadow)">
+                    <div
+                        style="font-family:var(--tm-font-display);font-size:0.95rem;font-weight:700;margin-bottom:1.25rem">
+                        Perfil do Usuário</div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">Nome</label><input class="form-input"
+                                value="Thiago Nascimento Barbosa"></div>
+                        <div class="form-group"><label class="form-label">E-mail</label><input class="form-input"
+                                value="thiago@tm.com.br"></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">Empresa</label><input class="form-input"
+                            value="TM — Sempre Tecnologia"></div>
+                    <div
+                        style="font-family:var(--tm-font-display);font-size:0.95rem;font-weight:700;margin:1.5rem 0 1rem">
+                        Preferências</div>
+                    <div style="display:flex;flex-direction:column;gap:0.85rem">
+                        <div
+                            style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid var(--tm-border)">
+                            <div>
+                                <div style="font-size:0.82rem;font-weight:600">Auto-refresh dos apps</div>
+                                <div class="form-hint">Verifica status online a cada 30s</div>
+                            </div>
+                            <label class="toggle"><input type="checkbox" checked><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                        <div
+                            style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid var(--tm-border)">
+                            <div>
+                                <div style="font-size:0.82rem;font-weight:600">Notificações</div>
+                                <div class="form-hint">Receber alertas de apps offline</div>
+                            </div>
+                            <label class="toggle"><input type="checkbox" checked><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                        <div
+                            style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid var(--tm-border)">
+                            <div>
+                                <div style="font-size:0.82rem;font-weight:600">Animações</div>
+                                <div class="form-hint">Efeitos de transição na interface</div>
+                            </div>
+                            <label class="toggle"><input type="checkbox" checked><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0">
+                            <div>
+                                <div style="font-size:0.82rem;font-weight:600">Modo Escuro</div>
+                                <div class="form-hint">Em breve — toggle dark mode</div>
+                            </div>
+                            <label class="toggle"><input type="checkbox" disabled><span class="toggle-slider"
+                                    style="opacity:0.4;cursor:not-allowed"></span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ════ PAGE: SEGURANÇA ════ -->
+            <div class="page" id="page-security">
+                <div class="section-header">
+                    <div class="section-title">🔐 Segurança</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:1rem">
+                    <div class="sec-card">
+                        <div class="sec-icon"
+                            style="background:rgba(0,200,150,0.08);border:1.5px solid rgba(0,200,150,0.15)">🔑</div>
+                        <div class="sec-info">
+                            <div class="sec-title">Alterar Senha</div>
+                            <div class="sec-desc">Última alteração há 30 dias</div>
+                        </div>
+                        <button class="btn btn-ghost" onclick="toast('info','Funcionalidade em breve')">Alterar</button>
+                    </div>
+                    <div class="sec-card">
+                        <div class="sec-icon"
+                            style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.15)">🛡️</div>
+                        <div class="sec-info">
+                            <div class="sec-title">Autenticação 2FA</div>
+                            <div class="sec-desc">Não configurado</div>
+                        </div>
+                        <button class="btn btn-ghost"
+                            onclick="toast('info','Funcionalidade em breve')">Configurar</button>
+                    </div>
+                    <div class="sec-card">
+                        <div class="sec-icon"
+                            style="background:rgba(6,182,212,0.08);border:1.5px solid rgba(6,182,212,0.15)">📋</div>
+                        <div class="sec-info">
+                            <div class="sec-title">Log de Acesso</div>
+                            <div class="sec-desc">3 sessões ativas</div>
+                        </div>
+                        <button class="btn btn-ghost" onclick="toast('info','Visualizando logs...')">Ver Logs</button>
+                    </div>
+                    <div class="sec-card">
+                        <div class="sec-icon"
+                            style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.15)">👥</div>
+                        <div class="sec-info">
+                            <div class="sec-title">Gerenciar Permissões</div>
+                            <div class="sec-desc">Admin · Acesso total</div>
+                        </div>
+                        <button class="btn btn-ghost"
+                            onclick="toast('info','Painel de permissões em breve')">Gerenciar</button>
+                    </div>
+                </div>
+                <div
+                    style="background:var(--tm-bg-card);border:1.5px solid var(--tm-border);border-radius:var(--tm-radius-lg);padding:1.2rem;box-shadow:var(--tm-shadow);margin-top:0.5rem">
+                    <div
+                        style="font-family:var(--tm-font-display);font-size:0.85rem;font-weight:700;margin-bottom:0.75rem">
+                        Sessões Ativas</div>
+                    <table class="tm-table">
+                        <thead>
+                            <tr>
+                                <th>Dispositivo</th>
+                                <th>IP</th>
+                                <th>Última atividade</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>🖥️ Windows Desktop</td>
+                                <td>192.168.1.10</td>
+                                <td>Agora</td>
+                                <td><span style="color:var(--tm-success);font-weight:600;font-size:0.72rem">●
+                                        Ativa</span></td>
+                            </tr>
+                            <tr>
+                                <td>📱 Chrome Mobile</td>
+                                <td>192.168.1.15</td>
+                                <td>2h atrás</td>
+                                <td><span style="color:var(--tm-warning);font-weight:600;font-size:0.72rem">●
+                                        Inativa</span></td>
+                            </tr>
+                            <tr>
+                                <td>💻 Macbook Air</td>
+                                <td>192.168.1.22</td>
+                                <td>1 dia atrás</td>
+                                <td><span style="color:var(--tm-text-subtle);font-weight:600;font-size:0.72rem">●
+                                        Expirada</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ═══ MODAL: Nova Ferramenta ═══ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">＋ Registrar Nova Ferramenta</div>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="form-group"><label class="form-label">Nome do App</label><input class="form-input"
+                    placeholder="Ex: TM Analytics"></div>
+            <div class="form-row">
+                <div class="form-group"><label class="form-label">Porta Frontend</label><input class="form-input"
+                        placeholder="3010"></div>
+                <div class="form-group"><label class="form-label">Porta Backend</label><input class="form-input"
+                        placeholder="5010"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Categoria</label>
+                <select class="form-input">
+                    <option>Documentos</option>
+                    <option>Análise</option>
+                    <option>Gestão</option>
+                    <option>Utilidades</option>
+                    <option>IA</option>
+                    <option>UI</option>
+                </select>
+            </div>
+            <div class="form-group"><label class="form-label">Descrição</label><input class="form-input"
+                    placeholder="Breve descrição da ferramenta..."></div>
+            <div style="display:flex;gap:0.5rem;justify-content:flex-end;margin-top:0.5rem">
+                <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+                <button class="btn btn-primary"
+                    onclick="closeModal();toast('success','Ferramenta registrada com sucesso!')">Registrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ TOAST CONTAINER ═══ -->
+    <div class="toast-container" id="toasts"></div>
+
+    <script>
+        (function () {
+            const favorites = new Set(JSON.parse(localStorage.getItem('tm-favs') || '[]'));
+            const pages = {
+                dashboard: 'page-dashboard', favoritos: 'page-favoritos', ferramentas: 'page-dashboard',
+                arquivos: 'page-arquivos', config: 'page-config', security: 'page-security'
+            };
+
+            // ── PAGE NAVIGATION ──
+            function navTo(pageId) {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                const pg = document.getElementById(pageId);
+                if (pg) pg.classList.add('active');
+                if (pageId === 'page-favoritos') renderFavs();
+            }
+
+            // sidebar click → navigate
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    const txt = this.textContent.trim().toLowerCase();
+                    if (txt.includes('dashboard')) navTo('page-dashboard');
+                    else if (txt.includes('ferramentas')) navTo('page-dashboard');
+                    else if (txt.includes('favoritos')) navTo('page-favoritos');
+                    else if (txt.includes('arquivos')) navTo('page-arquivos');
+                    else if (txt.includes('configura')) navTo('page-config');
+                    else if (txt.includes('seguran')) navTo('page-security');
+                    else if (txt.includes('documentos') || txt.includes('análise') || txt.includes('gestão') || txt.includes('utilidades') || txt.includes('ia')) {
+                        navTo('page-dashboard');
+                        // also activate the matching pill
+                        const catMap = { 'documentos': 'Documentos', 'análise': 'Análise', 'gestão': 'Gestão', 'utilidades': 'Utilidades', 'ia': 'IA' };
+                        for (const [k, v] of Object.entries(catMap)) { if (txt.includes(k)) filterByCat(v); }
+                    }
+                });
+            });
+
+            // ── SEARCH ──
+            document.getElementById('search').addEventListener('input', function () {
+                navTo('page-dashboard');
+                const q = this.value.toLowerCase();
+                document.querySelectorAll('#grid .tool-card').forEach(c => {
+                    const t = c.querySelector('.card-title').textContent.toLowerCase();
+                    const d = c.querySelector('.card-desc').textContent.toLowerCase();
+                    c.style.display = (t.includes(q) || d.includes(q)) ? '' : 'none';
+                });
+            });
+
+            // ── CATEGORY FILTER ──
+            function filterByCat(cat) {
+                document.querySelectorAll('.cat-pill').forEach(p => {
+                    p.classList.toggle('active', p.textContent.includes(cat) || (!cat && p.textContent.includes('Todos')));
+                });
+                document.querySelectorAll('#grid .tool-card').forEach(c => {
+                    if (!cat) { c.style.display = ''; return; }
+                    c.style.display = (c.dataset.cat === cat) ? '' : 'none';
+                });
+            }
+            document.querySelectorAll('.cat-pill').forEach(pill => {
+                pill.addEventListener('click', function () {
+                    const txt = this.textContent.trim();
+                    if (txt === 'Todos') filterByCat(null);
+                    else {
+                        const map = { '📄 Documentos': 'Documentos', '📊 Análise': 'Análise', '🗂 Gestão': 'Gestão', '📁 Utilidades': 'Utilidades', '🤖 IA': 'IA' };
+                        filterByCat(map[txt] || null);
+                    }
+                });
+            });
+
+            // ── FAVORITES ──
+            function saveFavs() { localStorage.setItem('tm-favs', JSON.stringify([...favorites])); }
+            function renderFavs() {
+                const grid = document.getElementById('favGrid');
+                const empty = document.getElementById('favEmpty');
+                grid.innerHTML = '';
+                if (favorites.size === 0) { empty.style.display = 'block'; return; }
+                empty.style.display = 'none';
+                document.querySelectorAll('#grid .tool-card').forEach(c => {
+                    if (favorites.has(c.dataset.name)) {
+                        const clone = c.cloneNode(true);
+                        clone.querySelector('.fav-btn').remove();
+                        clone.style.animationDelay = '0s'; clone.style.opacity = '1';
+                        grid.appendChild(clone);
+                    }
+                });
+            }
+            // init fav buttons
+            document.querySelectorAll('.fav-btn').forEach(btn => {
+                const card = btn.closest('.tool-card');
+                const name = card.dataset.name;
+                if (favorites.has(name)) { btn.classList.add('active'); btn.textContent = '★'; }
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    if (favorites.has(name)) { favorites.delete(name); this.classList.remove('active'); this.textContent = '☆'; toast('info', name + ' removido dos favoritos'); }
+                    else { favorites.add(name); this.classList.add('active'); this.textContent = '★'; toast('success', name + ' adicionado aos favoritos!'); }
+                    saveFavs();
+                });
+            });
+
+            // ── MODAL ──
+            window.openModal = () => document.getElementById('modalOverlay').classList.add('open');
+            window.closeModal = () => document.getElementById('modalOverlay').classList.remove('open');
+            document.getElementById('modalOverlay').addEventListener('click', function (e) { if (e.target === this) closeModal(); });
+            // "Nova ferramenta" button
+            document.querySelectorAll('.btn-primary').forEach(b => { if (b.textContent.includes('Nova ferramenta')) b.addEventListener('click', openModal); });
+
+            // ── TOAST ──
+            window.toast = function (type, msg) {
+                const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+                const t = document.createElement('div');
+                t.className = 'toast ' + type;
+                t.innerHTML = '<span class="toast-icon">' + icons[type] + '</span>' + msg;
+                document.getElementById('toasts').appendChild(t);
+                setTimeout(() => t.remove(), 3200);
+            };
+
+            // ── REFRESH BUTTON ──
+            document.querySelectorAll('.btn-ghost').forEach(b => {
+                if (b.textContent.includes('Atualizar')) b.addEventListener('click', () => { toast('success', 'Status dos apps atualizado!'); });
+            });
+
+            // ── NOTIFICATION BELL ──
+            document.getElementById('notifBtn').addEventListener('click', () => {
+                toast('info', '2 apps precisam de atualização');
+                const dot = document.querySelector('.notif-dot');
+                if (dot) dot.remove();
+            });
+
+            // ── ANIMATED COUNTERS ──
+            document.querySelectorAll('[data-count]').forEach(el => {
+                const target = parseInt(el.dataset.count); let cur = 0;
+                const steps = 40, dur = 900;
+                const timer = setInterval(() => {
+                    cur += target / steps;
+                    if (cur >= target) { cur = target; clearInterval(timer); }
+                    el.textContent = Math.floor(cur);
+                }, dur / steps);
+            });
+
+            // ── CARD CTA CLICK ──
+            document.querySelectorAll('.card-cta').forEach(cta => {
+                cta.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const name = this.closest('.tool-card').querySelector('.card-title').textContent;
+                    toast('info', 'Abrindo ' + name + '...');
+                });
+            });
+            document.querySelectorAll('.tool-card').forEach(card => {
+                card.addEventListener('click', function (e) {
+                    if (e.target.closest('.fav-btn') || e.target.closest('.card-cta')) return;
+                    const name = this.querySelector('.card-title').textContent;
+                    toast('info', 'Abrindo ' + name + '...');
+                });
+            });
+        })();
+    </script>
+
+</body>
+
+</html>

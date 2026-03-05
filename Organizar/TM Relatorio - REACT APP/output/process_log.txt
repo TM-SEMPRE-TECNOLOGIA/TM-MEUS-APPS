@@ -1,9 +1,0 @@
-PROCESS LOG - Geração de Relatório via Web (FastAPI)
-
-Pasta raiz: C:/Users/thiag/Desktop/000 - Minha Demanda/2 - EM ANDAMENTO/MONTE SIAO - 2791 - Separando fotos
-Modelo: C:\Users\thiag\TM-MEUS-APPS\Organizar\TM Relatorio - REACT APP\templates\MODELO - 1507 - MATO GROSSO.docx
-Saída: C:\Users\thiag\TM-MEUS-APPS\Organizar\TM Relatorio - REACT APP\output
-
->>> Gerando relatório...
-[OK] Relatório salvo em: C:\Users\thiag\TM-MEUS-APPS\Organizar\TM Relatorio - REACT APP\output\RELATÓRIO FOTOGRÁFICO - MONTE SIAO - 2791 - Separando fotos - LEVANTAMENTO PREVENTIVO.docx
-[OK] Total de imagens inseridas: 302
