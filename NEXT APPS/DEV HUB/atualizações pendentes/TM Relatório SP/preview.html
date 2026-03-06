@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TM Relatorio SP — Redesenho UX Profissional</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00C896;
+            --primary-hover: #00a87e;
+            --primary-light: #e6faf5;
+            --secondary: #0BBFBF;
+            --secondary-light: #e0f7f7;
+            --accent: #667eea;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-main: #f8faf9;
+            --bg-card: #ffffff;
+            --bg-hover: #f0f3f1;
+            --bg-input: #f4faf8;
+            --text-primary: #0F1923;
+            --text-secondary: #6B7A8D;
+            --text-muted: #9ca3af;
+            --border: #ddeee9;
+            --border-hover: #9dd4c6;
+            --shadow-sm: 0 1px 3px rgba(0, 200, 150, 0.06);
+            --shadow-md: 0 4px 12px rgba(0, 200, 150, 0.13);
+            --shadow-lg: 0 12px 32px rgba(0, 200, 150, 0.07);
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+            --radius-md: 8px;
+            --radius-lg: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-main);
+            color: var(--text-primary);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            height: 64px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            box-shadow: var(--shadow-sm);
+            z-index: 100;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .breadcrumb span:first-child {
+            color: var(--text-secondary);
+        }
+
+        .breadcrumb span:last-child {
+            font-weight: 600;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-family: var(--font-display);
+        }
+
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        aside {
+            width: 250px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-family: var(--font-display);
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            border-left: 4px solid transparent;
+            transition: 0.2s;
+        }
+
+        .step-item.active {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+            border-left-color: var(--primary);
+        }
+
+        .step-item.completed {
+            opacity: 0.6;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-hover);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .active .step-number {
+            background: var(--primary);
+            color: white;
+        }
+
+        .completed .step-number {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-header {
+            margin-bottom: 2rem;
+        }
+
+        .content-title {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--font-display);
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .input-field {
+            background: var(--bg-input);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 0.75rem;
+            font-size: 0.85rem;
+            width: 100%;
+            outline: none;
+        }
+
+        .btn {
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            font-family: var(--font-display);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-hover);
+            border: 1.5px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        /* Step Preview Styles */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: var(--font-display);
+            color: var(--primary);
+            margin: 0.3rem 0;
+        }
+
+        .tool-card {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tool-h {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--bg-hover);
+        }
+
+        .img-item {
+            aspect-ratio: 1;
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .img-item:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .step-content {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+        }
+
+        .step-content.active {
+            display: flex;
+        }
+
+        .info-box {
+            background: var(--primary-light);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .nav-btns {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="breadcrumb"><span>TM Relatório SP</span> <span>/</span> <span
+                id="header-step-name">Configuração</span></div>
+        <button class="btn-download" onclick="alert('📥 Baixando Relatório...')">📥 Baixar Relatório</button>
+    </header>
+    <div class="main-wrapper">
+        <aside>
+            <div class="sidebar-header">
+                <div class="logo-mark">TM</div>
+                <div>
+                    <div style="font-weight: 800; font-size: 0.95rem; font-family: var(--font-display);">TM Relatório
+                    </div><small style="color: var(--primary); font-weight: 700;">PRO ENGINE SP</small>
+                </div>
+            </div>
+            <div style="padding: 1rem;">
+                <p
+                    style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 0.5rem; padding-left: 1rem;">
+                    Processo</p>
+                <div class="step-item active" id="side-step-1" onclick="goToStep(1)">
+                    <div class="step-number">1</div>
+                    <div><strong>Configuração</strong>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Defina origem e template</p>
+                    </div>
+                </div>
+                <div class="step-item" id="side-step-2" onclick="goToStep(2)">
+                    <div class="step-number">2</div>
+                    <div><strong>Preview</strong>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Visualize imagens</p>
+                    </div>
+                </div>
+                <div class="step-item" id="side-step-3" onclick="goToStep(3)">
+                    <div class="step-number">3</div>
+                    <div><strong>Geração</strong>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Gere o relatório</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main>
+            <!-- Passo 1: Configuração -->
+            <section id="step-1" class="step-content active">
+                <div class="content-header">
+                    <h1 class="content-title">Configuração Inicial</h1>
+                    <p style="color: var(--text-secondary);">Defina a origem dos arquivos e o template do relatório</p>
+                </div>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📂</div>
+                            <div class="card-title">
+                                <h3>Diretório Raiz</h3>
+                                <p>Fotos e subpastas originais</p>
+                            </div>
+                        </div>
+                        <input type="text" class="input-field" value="C:\Imagens\Obras_Março" readonly>
+                        <button class="btn btn-secondary">📁 Selecionar Pasta</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--secondary-light); color: var(--secondary);">
+                                📄</div>
+                            <div class="card-title">
+                                <h3>Modelo DOCX</h3>
+                                <p>Template padrão do sistema</p>
+                            </div>
+                        </div>
+                        <select class="input-field">
+                            <option>RELATORIO_MODELO_SP_v2.docx</option>
+                        </select>
+                        <button class="btn btn-secondary">🔍 Procurar Templates</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: rgba(102, 126, 234, 0.1); color: var(--accent);">⚡
+                            </div>
+                            <div class="card-title">
+                                <h3>Ações Rápidas</h3>
+                                <p>Operações do sistema</p>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                            <button class="btn btn-secondary" onclick="alert('🔄 Varredura iniciada...')">🔄
+                                Varredura</button>
+                            <button class="btn btn-primary" onclick="goToStep(2)">✓ Validar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-box"><strong>💡 Dica:</strong> Certifique-se de que o diretório contém as imagens
+                    organizadas por blocos.</div>
+                <div class="nav-btns">
+                    <button class="btn btn-secondary" style="width: auto;">Cancelar</button>
+                    <button class="btn btn-primary" onclick="goToStep(2)"
+                        style="width: auto; padding-left: 3rem; padding-right: 3rem;">Próximo: Preview ➜</button>
+                </div>
+            </section>
+
+            <!-- Passo 2: Preview -->
+            <section id="step-2" class="step-content">
+                <div class="content-header">
+                    <h1 class="content-title">Visualização de Imagens</h1>
+                    <p style="color: var(--text-secondary);">Revise as imagens organizadas por blocos antes de gerar o
+                        documento</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div>Total Imagens</div>
+                        <div class="stat-val">42</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>Blocos Identificados</div>
+                        <div class="stat-val">4</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>Status</div>
+                        <div class="stat-val" style="font-size: 1.2rem; color: var(--success);">✓ Validado</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>Tam. Estimado</div>
+                        <div class="stat-val" style="font-size: 1.2rem;">45.2 MB</div>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-h">
+                        <h3>📍 VILA TATETUBA » BLOCO A</h3><span
+                            style="background: var(--primary-light); color: var(--primary); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700;">12
+                            IMAGENS</span>
+                    </div>
+                    <div class="image-gallery">
+                        <div class="img-item">🖼️</div>
+                        <div class="img-item">🖼️</div>
+                        <div class="img-item">🖼️</div>
+                        <div class="img-item">🖼️</div>
+                        <div class="img-item">🖼️</div>
+                        <div class="img-item">🖼️</div>
+                    </div>
+                </div>
+                <div class="nav-btns">
+                    <button class="btn btn-secondary" onclick="goToStep(1)" style="width: auto;">← Voltar</button>
+                    <button class="btn btn-primary" onclick="goToStep(3)"
+                        style="width: auto; padding-left: 3rem; padding-right: 3rem;">Próximo: Geração ➜</button>
+                </div>
+            </section>
+
+            <!-- Passo 3: Geração -->
+            <section id="step-3" class="step-content">
+                <div class="content-header">
+                    <h1 class="content-title">Finalizar Relatório</h1>
+                    <p style="color: var(--text-secondary);">O seu relatório está pronto para ser compilado.</p>
+                </div>
+                <div class="card" style="text-align: center; padding: 3rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🚀</div>
+                    <h2 style="font-family: var(--font-display); margin-bottom: 0.5rem;">Tudo Pronto!</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">Compilaremos 42 imagens em um
+                        documento DOCX profissional.</p>
+                    <button class="btn btn-primary" onclick="alert('✅ Relatório Gerado com Sucesso!')"
+                        style="max-width: 300px; margin: 0 auto; padding: 1.2rem;">⚡ GERAR RELATÓRIO FINAL</button>
+                </div>
+                <div class="nav-btns">
+                    <button class="btn btn-secondary" onclick="goToStep(2)" style="width: auto;">← Voltar</button>
+                    <div style="display:flex; gap: 1rem;">
+                        <button class="btn btn-secondary" style="width: auto;">Exportar PDF</button>
+                        <button class="btn btn-primary" style="width: auto; background: var(--success);">📥 Baixar
+                            Agora</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function goToStep(step) {
+            // Update Header
+            const stepNames = ['Configuração', 'Preview', 'Geração'];
+            document.getElementById('header-step-name').textContent = stepNames[step - 1];
+
+            // Update Sidebar
+            document.querySelectorAll('.step-item').forEach((item, idx) => {
+                item.classList.remove('active', 'completed');
+                if (idx + 1 === step) item.classList.add('active');
+                if (idx + 1 < step) item.classList.add('completed');
+            });
+
+            // Update Content
+            document.querySelectorAll('.step-content').forEach((section, idx) => {
+                section.classList.remove('active');
+                if (idx + 1 === step) section.classList.add('active');
+            });
+        }
+    </script>
+</body>
+
+</html>
