@@ -1,0 +1,10 @@
+PROCESS LOG - Geração de Relatório via Web (FastAPI)
+
+Pasta raiz: C:/Users/thiag/Desktop/000 - Minha Demanda/2 - EM ANDAMENTO/SAO JOAO DO PARAISO 2633 - (Separando)
+Modelo: C:\Users\thiag\TM-MEUS-APPS\NEXT APPS\TM Relatorio SP\templates\MODELO - 2056 - DIVINOPOLIS - ATUALIZADO.docx
+Tipo: tradicional
+Saída: C:\Users\thiag\TM-MEUS-APPS\NEXT APPS\TM Relatorio SP\output
+
+>>> Gerando relatório...
+[OK] Relatório salvo em: C:\Users\thiag\TM-MEUS-APPS\NEXT APPS\TM Relatorio SP\output\RELATÓRIO FOTOGRÁFICO - SAO JOAO DO PARAISO 2633 - (Separando) - LEVANTAMENTO PREVENTIVO.docx
+[OK] Total de imagens inseridas: 194

@@ -1,8 +1,0 @@
-PROCESS LOG - Geração de Relatório via Web (FastAPI)
-
-Pasta raiz: C:/Users/thiag/Desktop/000 - Minha Demanda/2 - EM ANDAMENTO/VILA TATETUBA 7027 - Finalizando
-Modelo: C:\Users\thiag\teste de relatório\TM Relatorio SP\templates\MODELO - 0908 - SAO PAULO.docx
-Tipo: sp
-Saída: C:\Users\thiag\teste de relatório\TM Relatorio SP\output
-
-[OK] Instâncias e imagens inseridas (SP): 617
