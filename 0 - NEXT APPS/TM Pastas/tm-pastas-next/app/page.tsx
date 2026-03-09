@@ -12,8 +12,14 @@ import InteractivePreview from '../components/Preview/InteractivePreview';
 export default function Page() {
   const {
     nomeLevantamento, setNomeLevantamento,
-    gerarEstruturaZip, limparSelecao,
+    gerarEstruturaZip, limparSelecao, carregarCustomItems
   } = useFolderStore();
+
+  import('react').then((React) => {
+    React.useEffect(() => {
+      carregarCustomItems();
+    }, [carregarCustomItems]);
+  });
 
   return (
     <div className="app-container">

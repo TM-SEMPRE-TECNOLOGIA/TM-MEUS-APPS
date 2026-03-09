@@ -1,6 +1,6 @@
 # Plano de Implementação — Atualização Visual TM Extrator 2.0
 
-Refatorar o frontend do `TM Extrator 2.0` para adotar o Design System moderno (Light Theme) do `TM Hub`, padronizando a experiência do usuário com o restante dos aplicativos da suíte.
+Refatorar o frontend do `TM Extrator 2.0` para adotar o Design System **Ocean Breeze v2.0 (Light Theme)** extraído de `hub-ocean-breeze-v2.html`, padronizando a experiência do usuário com o restante dos aplicativos da suíte.
 
 ## Revisão do Usuário Requerida
 

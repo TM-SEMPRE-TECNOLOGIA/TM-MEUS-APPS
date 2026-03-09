@@ -1,6 +1,6 @@
 # Plano de Implementação — Atualização Visual TM Pastas (Alta Fidelidade)
 
-Atualizar a estética do `TM Pastas` para o padrão moderno (Light Theme) do `TM Hub`, mantendo a estrutura funcional de "Wizard" e "Preview" intacta.
+Atualizar a estética do `TM Pastas` para o padrão **Ocean Breeze v2.0 (Light Theme)** usando `hub-ocean-breeze-v2.html` como guia absoluto, mantendo a estrutura funcional de "Wizard" e "Preview" intacta.
 
 ## Revisão do Usuário Requerida
 

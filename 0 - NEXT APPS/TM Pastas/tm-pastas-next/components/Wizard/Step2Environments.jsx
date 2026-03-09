@@ -18,8 +18,18 @@ export default function Step2Environments() {
     const selecionados = areaAtual ? (itensPorArea[areaAtual] || []) : [];
     const filtroLower = filtro.toLowerCase().trim();
 
-    const todosAmbientes = [...AMBIENTES_SUGERIDOS, ...customAmbientes];
-    const todosServicos = [...SERVICOS_SUGERIDOS, ...customServicos.filter(s => !SERVICOS_SUGERIDOS.includes(s))];
+    const uniqueFilter = (arr) => {
+        const seen = new Set();
+        return arr.filter((item) => {
+            const lower = item.toLowerCase().trim();
+            if (seen.has(lower)) return false;
+            seen.add(lower);
+            return true;
+        });
+    };
+
+    const todosAmbientes = uniqueFilter([...AMBIENTES_SUGERIDOS, ...customAmbientes]);
+    const todosServicos = uniqueFilter([...SERVICOS_SUGERIDOS, ...customServicos]);
 
     const ambientesFiltrados = todosAmbientes.filter(
         a => !filtroLower || a.toLowerCase().includes(filtroLower)

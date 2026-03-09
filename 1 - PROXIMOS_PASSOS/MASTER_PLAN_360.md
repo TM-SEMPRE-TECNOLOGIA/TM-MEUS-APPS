@@ -4,7 +4,7 @@ Conforme extraído dos documentos estratégicos em `MANUS`, a TM não é mais ap
 ### Objetivos Estratégicos:
 - **Fim das "Ilhas Digital"**: Unificar apps que hoje vivem em portas e designs diferentes.
 - **Modelo iLovePDF**: Um portal central onde o usuário encontra tudo, com UX coesa e profissional.
-- **Monetização e Escala**: Preparar a arquitetura (Next.js 16 + FastAPI) para suportar múltiplos módulos e usuários.
+- **Migração para Next.js 16**: Foco total em modernização. Todo o ecossistema será migrado para Next.js. Consulte o `roadmap_migracao_tecnologia.md` para as prioridades.
 
 ---
 
@@ -57,12 +57,12 @@ Realizei uma varredura completa nas pastas movimentadas. O status atual de Plane
 - [x] **Consolidar Rascunhos**: Feitos para todos os 6 aplicativos centrais do Hub.
 
 ### 2. Execução da Refatoração de Design (Ordem Recomendada)
-Tendo em vista os arquivos em `_PROXIMOS_PASSOS` e os 6 apps centrais totalmente prontos agora, a ordem recomendada de aplicação de código (Next.js/Tailwind) para a SaaS UI:
-- [ ] Construir Fundação Base: **TM Hub** (Next.js 16).
-- [ ] Aplicar *Redesign* no **TM Comparador** (Usa framework base Next.js já estruturado).
-- [ ] Aplicar *Redesign* no **TM Relatório** (Padrão).
-- [ ] Aplicar *Redesign* no **TM Pastas**.
-- [ ] Aplicar *Redesign* no **TM Ordens**.
-- [ ] Aplicar *Redesign* no **TM Extrator 2.0** (Migração e Update Visual conjuntos).
-- [ ] Aplicar *Redesign* no **TM Relatório SP**.
-- [ ] Aplicar *Redesign* no **G-2**.
+Tendo em vista o `roadmap_atualizacao_visual.md` recém gerado e a priorização requerida, a ordem de aplicação para a integração do **Ocean Breeze v2.0 (Light)** é:
+- [ ] 1. **TM Relatório SP** (Fluxo de Etapas com Sidebar Light).
+- [ ] 2. **TM Pastas** (Padrão Light Interativo).
+- [ ] 3. **TM Extrator 2.0** (Fluxo guiado via Sidebar Light).
+- [ ] 4. Construir Fundação Base: **TM Hub / DEV HUB** (Baseando-se no `hub-ocean-breeze-v2.html`).
+- [ ] 5. Aplicar *Redesign* no **TM Comparador**.
+- [ ] 6. Aplicar *Redesign* no **TM Relatório** (Padrão).
+- [ ] 7. Aplicar *Redesign* no **TM Ordens**.
+- [ ] 8. Aplicar *Redesign* no **G-2**.

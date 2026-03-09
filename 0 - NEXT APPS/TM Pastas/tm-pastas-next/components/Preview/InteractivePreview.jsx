@@ -122,7 +122,7 @@ export default function InteractivePreview() {
                         <div key={area}>
                             {/* Área (N1) */}
                             <PreviewRow
-                                texto={`${ICONES_NIVEL[1]} ${area}`}
+                                texto={`${ICONES_NIVEL[1]} ${['área externa', 'área interna'].includes(area.toLowerCase().trim()) && !area.trim().startsWith('-') ? '- ' + area.trim() : area}`}
                                 nivel={1}
                                 cor={CORES_NIVEL[1]}
                                 isSelected={areaAtual === area}
@@ -170,13 +170,14 @@ export default function InteractivePreview() {
                                             return subs.map((sub, subIdx) => {
                                                 const ehServico = SERVICOS_SUGERIDOS.includes(sub) || customServicos.includes(sub);
                                                 let textoSub;
-                                                if (sub.toLowerCase() === 'vista ampla') {
-                                                    textoSub = `${ICONES_NIVEL[3]} - ${sub}`;
-                                                } else if (ehServico) {
+                                                const subLower = sub.toLowerCase().trim();
+                                                const subHasHyphen = sub.trim().startsWith('-');
+
+                                                if (ehServico) {
                                                     serviceCounter++;
                                                     textoSub = `${ICONES_NIVEL[3]} ${itemIdx + 1}.${serviceCounter} - ${sub}`;
                                                 } else {
-                                                    textoSub = `${ICONES_NIVEL[3]} - ${sub}`;
+                                                    textoSub = `${ICONES_NIVEL[3]} ${subHasHyphen ? sub.trim() : '- ' + sub.trim()}`;
                                                 }
 
                                                 const detKey = `${area}||${item}||${sub}`;
@@ -200,7 +201,7 @@ export default function InteractivePreview() {
                                                         {detalhes.map((det) => (
                                                             <PreviewRow
                                                                 key={`${area}-${item}-${sub}-${det}`}
-                                                                texto={`${ICONES_NIVEL[4]} ${det}`}
+                                                                texto={`${ICONES_NIVEL[4]} ${['detalhes', 'vista ampla'].includes(det.toLowerCase().trim()) && !det.trim().startsWith('-') ? '- ' + det.trim() : det}`}
                                                                 nivel={4}
                                                                 cor={CORES_NIVEL[4]}
                                                                 onRemove={() => removerDoPreview(4, area, item, sub, det)}

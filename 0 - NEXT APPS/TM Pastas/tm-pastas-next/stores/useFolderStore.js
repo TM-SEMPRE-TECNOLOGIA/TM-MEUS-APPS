@@ -155,25 +155,58 @@ const useFolderStore = create((set, get) => ({
     }),
 
     // ============================
-    // ADICIONAR CUSTOM
+    // ADICIONAR CUSTOM E PERSISTIR
     // ============================
+    carregarCustomItems: async () => {
+        try {
+            const res = await fetch('/api/custom-items');
+            if (res.ok) {
+                const data = await res.json();
+                set({
+                    customAmbientes: data.customAmbientes || [],
+                    customServicos: data.customServicos || [],
+                    customSubpastas: data.customSubpastas || [],
+                    customDetalhes: data.customDetalhes || []
+                });
+            }
+        } catch (error) {
+            console.error('Erro ao carregar itens customizados', error);
+        }
+    },
+
+    salvarItemCustom: async (type, item) => {
+        try {
+            await fetch('/api/custom-items', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'add', key: type, item: item.trim() })
+            });
+        } catch (error) {
+            console.error('Erro ao salvar item', error);
+        }
+    },
+
     adicionarCustomAmbiente: (nome) => set((state) => {
         if (!nome.trim() || state.customAmbientes.includes(nome.trim())) return {};
+        state.salvarItemCustom('customAmbientes', nome);
         return { customAmbientes: [...state.customAmbientes, nome.trim()] };
     }),
 
     adicionarCustomServico: (nome) => set((state) => {
         if (!nome.trim() || state.customServicos.includes(nome.trim())) return {};
+        state.salvarItemCustom('customServicos', nome);
         return { customServicos: [...state.customServicos, nome.trim()] };
     }),
 
     adicionarCustomSubpasta: (nome) => set((state) => {
         if (!nome.trim() || state.customSubpastas.includes(nome.trim())) return {};
+        state.salvarItemCustom('customSubpastas', nome);
         return { customSubpastas: [...state.customSubpastas, nome.trim()] };
     }),
 
     adicionarCustomDetalhe: (nome) => set((state) => {
         if (!nome.trim() || state.customDetalhes.includes(nome.trim())) return {};
+        state.salvarItemCustom('customDetalhes', nome);
         return { customDetalhes: [...state.customDetalhes, nome.trim()] };
     }),
 
@@ -345,11 +378,16 @@ const useFolderStore = create((set, get) => ({
         const root = zip.folder(nomeRaiz);
 
         for (const area of state.areasSelecionadas) {
-            const areaFolder = root.folder(area);
+            let areaNome = area;
+            const areaLower = area.toLowerCase().trim();
+            if (['área externa', 'área interna'].includes(areaLower) && !area.trim().startsWith('-')) {
+                areaNome = `- ${area.trim()}`;
+            }
+            const areaFolder = root.folder(areaNome);
 
             // Vista ampla da área
             if (state.vistaAmplaGeral[area]) {
-                areaFolder.folder('Vista ampla');
+                areaFolder.folder('- Vista ampla');
             }
 
             const itens = state.itensPorArea[area] || [];
@@ -369,13 +407,12 @@ const useFolderStore = create((set, get) => ({
                     const subEhServico = SERVICOS_SUGERIDOS.includes(sub) || state.customServicos.includes(sub);
 
                     let subNome;
-                    if (sub.toLowerCase() === 'vista ampla') {
-                        subNome = sub;
-                    } else if (subEhServico) {
+                    const subHasHyphen = sub.trim().startsWith('-');
+                    if (subEhServico) {
                         subServiceCounter++;
                         subNome = `${serviceCounter}.${subServiceCounter} - ${sub}`;
                     } else {
-                        subNome = sub;
+                        subNome = subHasHyphen ? sub.trim() : `- ${sub.trim()}`;
                     }
 
                     const subFolder = itemFolder.folder(subNome);
@@ -383,7 +420,12 @@ const useFolderStore = create((set, get) => ({
                     const detKey = `${area}||${item}||${sub}`;
                     const detalhes = state.detalhesPorSubitem[detKey] || [];
                     for (const det of detalhes) {
-                        subFolder.folder(det);
+                        let detNome = det;
+                        const detLower = det.toLowerCase().trim();
+                        if (['detalhes', 'vista ampla'].includes(detLower) && !det.trim().startsWith('-')) {
+                            detNome = `- ${det.trim()}`;
+                        }
+                        subFolder.folder(detNome);
                     }
                 }
             }

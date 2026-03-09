@@ -1,6 +1,6 @@
 # Plano de Implementação — Atualização Visual TM Relatório SP
 
-Refatorar o frontend do `TM Relatório SP` para adotar o Design System moderno e claro (Light Theme) do `TM Hub`.
+Refatorar o frontend do `TM Relatório SP` para adotar o Design System **Ocean Breeze v2.0 (Light Theme)** estrito do HUB, referenciando `hub-ocean-breeze-v2.html`.
 
 ## Revisão do Usuário Requerida
 

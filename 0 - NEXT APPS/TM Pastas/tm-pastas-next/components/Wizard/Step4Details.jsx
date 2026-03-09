@@ -19,7 +19,17 @@ export default function Step4Details() {
     const selecionados = key ? (detalhesPorSubitem[key] || []) : [];
     const filtroLower = filtro.toLowerCase().trim();
 
-    const todos = [...SUBPASTAS_SUGERIDAS, ...customDetalhes];
+    const uniqueFilter = (arr) => {
+        const seen = new Set();
+        return arr.filter((item) => {
+            const lower = item.toLowerCase().trim();
+            if (seen.has(lower)) return false;
+            seen.add(lower);
+            return true;
+        });
+    };
+
+    const todos = uniqueFilter([...SUBPASTAS_SUGERIDAS, ...customDetalhes]);
     const filtrados = todos.filter(
         d => !filtroLower || d.toLowerCase().includes(filtroLower)
     );

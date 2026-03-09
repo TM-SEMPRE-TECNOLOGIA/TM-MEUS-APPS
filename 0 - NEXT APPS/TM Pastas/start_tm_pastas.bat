@@ -21,10 +21,10 @@ for %%P in (%PORTAS%) do (
     )
 )
 
-:: 2. Remover arquivo de lock do Next.js que impede a reinicializacao
-if exist "%~dp0tm-pastas-next\.next\dev\lock" (
-    echo Removendo arquivo de lock do Next.js...
-    del /q /f "%~dp0tm-pastas-next\.next\dev\lock" >nul 2>&1
+:: 2. Limpar a pasta de cache (.next) para evitar erro de 'Acesso Negado' em diferentes computadores
+if exist "%~dp0tm-pastas-next\.next" (
+    echo Limpando cache do Next.js...
+    rmdir /s /q "%~dp0tm-pastas-next\.next" >nul 2>&1
 )
 
 :: Pequena pausa para garantir que o Windows liberou os recursos

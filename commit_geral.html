@@ -468,11 +468,11 @@
 
         <div class="stats-bar">
             <div class="stat-item">
-                <div class="stat-value">5</div>
+                <div class="stat-value">7</div>
                 <div class="stat-label">Commits Globais</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value">v2.1</div>
+                <div class="stat-value">v2.2</div>
                 <div class="stat-label">Versão Ecossistema</div>
             </div>
             <div class="stat-item">
@@ -546,7 +546,7 @@
                         <span class="node-label">Migração Extrator Rápido</span>
                     </div>
 
-                    <div class="timeline-node active" onclick="showCard(4, this)">
+                    <div class="timeline-node" onclick="showCard(4, this)">
                         <span class="node-date">08/03</span>
                         <div class="node-dot">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -558,6 +558,54 @@
                         <span class="node-label">Design System v2.0 (Ocean Breeze)</span>
                     </div>
 
+                    <div class="timeline-node active" onclick="showCard(5, this)">
+                        <span class="node-date">08/03</span>
+                        <div class="node-dot">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                            </svg>
+                        </div>
+                        <span class="node-label">Início Fundação TM HUB</span>
+                    </div>
+
+                    <div class="timeline-node" onclick="showCard(6, this)">
+                        <span class="node-date">08/03</span>
+                        <div class="node-dot">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                        </div>
+                        <span class="node-label">HUB: Estratégia SaaS</span>
+                    </div>
+
+                    <div class="timeline-node" onclick="showCard(7, this)">
+                        <span class="node-date">08/03</span>
+                        <div class="node-dot">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                                <line x1="8" y1="21" x2="16" y2="21" />
+                                <line x1="12" y1="17" x2="12" y2="21" />
+                            </svg>
+                        </div>
+                        <span class="node-label">HUB: Paridade Visual 1:1</span>
+                    </div>
+
+                    <div class="timeline-node active" onclick="showCard(8, this)">
+                        <span class="node-date">08/03</span>
+                        <div class="node-dot">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                                <line x1="12" y1="9" x2="12" y2="13" />
+                                <line x1="12" y1="17" x2="12.01" y2="17" />
+                            </svg>
+                        </div>
+                        <span class="node-label">Fix TM Pastas Nomes</span>
+                    </div>
                 </div>
             </div>
 
@@ -633,7 +681,7 @@
                     </ul>
                 </div>
 
-                <div class="detail-card visible" data-card="4">
+                <div class="detail-card" data-card="4">
                     <div class="card-header">
                         <h2 class="card-title">Design System v2.0 (Ocean Breeze)</h2>
                         <span class="version-badge">GLB-05</span>
@@ -686,8 +734,125 @@
                     </ul>
                 </div>
 
+                <div class="detail-card visible" data-card="5">
+                    <div class="card-header">
+                        <h2 class="card-title">TM HUB - Fundação Next.js</h2>
+                        <span class="version-badge">GLB-06</span>
+                    </div>
+                    <p style="color: var(--tm-text); margin-bottom: 16px; font-size: 15px;">Desenvolvimento do portal
+                        central da suíte TM (SaaS Factory).</p>
+                    <ul class="card-features">
+                        <li>
+                            <svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            Inicialização do projeto Next.js 16 (App Router) limpo, dentro da pasta
+                            <code>0 - NEXT APPS/DEV HUB</code>.
+                        </li>
+                        <li>
+                            <svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            Aplicação de tokens Tailwind baseados no Design System Ocean Breeze v2.0 (Verde e Azul
+                            oficiais).
+                        </li>
+                        <li>
+                            <svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            Criação do primeiro log de commits (commit.html) específico da aplicação.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="detail-card" data-card="6">
+                    <div class="card-header">
+                        <h2 class="card-title">Estratégia de Conexão SaaS TM</h2>
+                        <span class="version-badge">GLB-07</span>
+                    </div>
+                    <p style="color: var(--tm-text); margin-bottom: 16px; font-size: 15px;">Definição do roadmap de
+                        integração de todos os apps ao HUB central.</p>
+                    <ul class="card-features">
+                        <li>
+                            <svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            Planejamento de redirecionamento dinâmico e unificação de sessão (SSO roadmap).
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="detail-card" data-card="7">
+                    <div class="card-header">
+                        <h2 class="card-title">Paridade Visual Absoluta (1:1)</h2>
+                        <span class="version-badge">GLB-08</span>
+                    </div>
+                    <p style="color: var(--tm-text); margin-bottom: 16px; font-size: 15px;">Restauração estética
+                        completa do Ocean Breeze v2.0.</p>
+                    <ul class="card-features">
+                        <li>
+                            <svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            Migração arquitetural completa para <b>Pure CSS</b>: Substituição do Tailwind CSS pela folha
+                            de estilos original (`globals.css` com 1400 linhas) para garantir layout idêntico ao design
+                            original.
+                        </li>
+                        <li>
+                            <svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            Implementação de <b>Shimmers</b>, <b>Staggers</b> e animações premium nativas no
+                            Next.js.
+                        </li>
+                        <li>
+                            <svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            Fidelidade total entre o arquivo de mockup (HTML) e a versão funcional (Next.js), validada
+                            visualmente rodando no ambiente de desenvolvimento local (<code>localhost:3000</code>).
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="detail-card visible" data-card="8">
+                    <div class="card-header">
+                        <h2 class="card-title">Correção Nomes de Pastas — TM Pastas v3.1.1</h2>
+                        <span class="version-badge">GLB-09</span>
+                    </div>
+                    <p style="color: var(--tm-text); margin-bottom: 16px; font-size: 15px;">Bugfix na formatação dos
+                        nomes "Detalhes" e "Vista ampla" no app TM Pastas.</p>
+                    <ul class="card-features">
+                        <li>
+                            <svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            Nomes exibidos sem prefixo no app: "Vista ampla" e "Detalhes". Prefixo <code>- </code>
+                            aplicado apenas na geração física da pasta (ZIP).
+                        </li>
+                        <li>
+                            <svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            Correção em <code>constants.js</code>, <code>useFolderStore.js</code> e
+                            <code>Step2Environments.jsx</code>. Eliminação de parênteses indesejados.
+                        </li>
+                    </ul>
+                </div>
+
             </div>
-        </section>
+
+    </div>
+    </section>
 
     </div>
 

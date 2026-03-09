@@ -562,11 +562,11 @@
     <!-- ═══════════ STATS BAR ═══════════ -->
     <div class="stats-bar">
         <div class="stat-item">
-            <div class="stat-value" id="commitCount">20</div>
+            <div class="stat-value" id="commitCount">21</div>
             <div class="stat-label">Commits Totais</div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">v3.1.0</div>
+            <div class="stat-value">v3.1.1</div>
             <div class="stat-label">Versão Atual</div>
         </div>
         <div class="stat-card">
@@ -684,10 +684,15 @@
                     <div class="node-dot">✨</div>
                     <span class="node-label">Realtime D&D</span>
                 </div>
-                <div class="timeline-node active" onclick="showCard(18, this)">
+                <div class="timeline-node" onclick="showCard(18, this)">
                     <span class="node-date">26/02 03:00</span>
                     <div class="node-dot">🚀</div>
                     <span class="node-label">v3.1.0 Next.js 16</span>
+                </div>
+                <div class="timeline-node active" onclick="showCard(19, this)">
+                    <span class="node-date">08/03 18:15</span>
+                    <div class="node-dot">🐛</div>
+                    <span class="node-label">Fix Nomes Pastas</span>
                 </div>
             </div>
         </div>
@@ -904,7 +909,7 @@
             </ul>
         </div>
         <!-- Card 18 -->
-        <div class="detail-card visible" data-card="18">
+        <div class="detail-card" data-card="18">
             <div class="card-header">
                 <h2 class="card-title">🚀 Migração para Next.js 16.1.6 (Completa)</h2><span
                     class="card-badge">Migration</span>
@@ -918,11 +923,25 @@
                 <li><span class="check">✓</span>Limpeza completa da raiz e organização em `tm-pastas-next`</li>
             </ul>
         </div>
+        <!-- Card 19 -->
+        <div class="detail-card visible" data-card="19">
+            <div class="card-header">
+                <h2 class="card-title">🐛 Correção: Nomes de Pastas (Detalhes / Vista ampla)</h2><span
+                    class="card-badge">Bugfix</span>
+            </div>
+            <p class="card-desc">Correção na formatação dos nomes "Detalhes" e "Vista ampla" — exibição limpa no app, prefixo <code>-</code> aplicado apenas na criação física da pasta.</p>
+            <ul class="card-features">
+                <li><span class="check">✓</span>Nomes exibidos sem prefixo no app: <strong>"Vista ampla"</strong> e <strong>"Detalhes"</strong></li>
+                <li><span class="check">✓</span>Prefixo <code>- </code> adicionado automaticamente na geração do ZIP</li>
+                <li><span class="check">✓</span>Correção em <strong>constants.js</strong>, <strong>useFolderStore.js</strong> e <strong>Step2Environments.jsx</strong></li>
+                <li><span class="check">✓</span>Eliminação de parênteses indesejados nos nomes de pasta</li>
+            </ul>
+        </div>
 
         <!-- ═══════════ FOOTER ═══════════ -->
         <footer class="footer">
             <div class="footer-divider"></div>
-            <div class="footer-status">Versão 3.1.0 Stable</div>
+            <div class="footer-status">Versão 3.1.1 Stable</div>
             <div class="footer-company" style="margin-top: 16px;">TM - Sempre Tecnologia</div>
             <div class="footer-author">Desenvolvido por: Thiago Nascimento Barbosa</div>
         </footer>

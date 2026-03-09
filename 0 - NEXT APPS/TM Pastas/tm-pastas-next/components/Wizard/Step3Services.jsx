@@ -19,8 +19,18 @@ export default function Step3Services() {
     const selecionados = key ? (subpastasPorItem[key] || []) : [];
     const filtroLower = filtro.toLowerCase().trim();
 
-    const todosPadrao = [...SUBPASTAS_SUGERIDAS, ...customSubpastas];
-    const todosServicos = [...SERVICOS_SUGERIDOS, ...customServicos.filter(s => !SERVICOS_SUGERIDOS.includes(s))];
+    const uniqueFilter = (arr) => {
+        const seen = new Set();
+        return arr.filter((item) => {
+            const lower = item.toLowerCase().trim();
+            if (seen.has(lower)) return false;
+            seen.add(lower);
+            return true;
+        });
+    };
+
+    const todosPadrao = uniqueFilter([...SUBPASTAS_SUGERIDAS, ...customSubpastas]);
+    const todosServicos = uniqueFilter([...SERVICOS_SUGERIDOS, ...customServicos]);
 
     const padraoFiltrados = todosPadrao.filter(
         s => !filtroLower || s.toLowerCase().includes(filtroLower)
