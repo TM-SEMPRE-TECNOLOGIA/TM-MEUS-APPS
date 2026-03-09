@@ -26,8 +26,24 @@ def set_cell_background(cell, color="D9D9D9"):
     shd.set(qn('w:fill'), color)
     tcPr.append(shd)
 
-def inserir_conteudo_sp(modelo_path, conteudo, output_path):
+def inserir_conteudo_sp(modelo_path, conteudo, output_path, selected_description=None):
     doc = Document(modelo_path)
+
+    # Substituição do placeholder {Desc_here} no documento inteiro (parágrafos e tabelas)
+    if selected_description:
+        # Substituir nos parágrafos
+        for p in doc.paragraphs:
+            if "{Desc_here}" in p.text:
+                p.text = p.text.replace("{Desc_here}", selected_description)
+        
+        # Substituir nas tabelas (caso o placeholder esteja dentro de uma célula)
+        for table in doc.tables:
+            for row in table.rows:
+                for cell in row.cells:
+                    for p in cell.paragraphs:
+                        if "{Desc_here}" in p.text:
+                            p.text = p.text.replace("{Desc_here}", selected_description)
+
     contador_imagens = 0
     paragrafo_insercao_index = None
 
@@ -39,7 +55,7 @@ def inserir_conteudo_sp(modelo_path, conteudo, output_path):
     if paragrafo_insercao_index is None:
         print("[AVISO] Marca '{{start_here}}' não encontrada.")
         return 0
-
+    
     # Aplica otimização de imagens (reutiliza a lógica do Tradicional)
     conteudo_otimizado = otimizar_layout(conteudo)
 
@@ -98,12 +114,6 @@ def inserir_conteudo_sp(modelo_path, conteudo, output_path):
             tabela_dados = item["tabela_medicao"]
             
             if tabela_dados["tipo"] == "pintura":
-                # Título da Tabela
-                # p_titulo = doc.paragraphs[paragrafo_insercao_index].insert_paragraph_before('')
-                # p_titulo.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-                # set_cell_background(p_titulo.insert_paragraph_before('').add_run().element, "D9D9D9") # Nao funciona em para
-                # O título vai dentro de uma célula mesclada no topo
-                
                 tabela = doc.add_table(rows=2, cols=5)
                 doc.paragraphs[paragrafo_insercao_index]._p.addnext(tabela._tbl)
                 
@@ -126,7 +136,7 @@ def inserir_conteudo_sp(modelo_path, conteudo, output_path):
                 run_t = titulo_cel.paragraphs[0].runs[0]
                 run_t.font.bold = True
                 run_t.font.size = Pt(10)
-                set_cell_background(titulo_cel, "808080") # Cinza escuro como na imagem
+                set_cell_background(titulo_cel, "808080")
 
                 # Linha de Cabeçalho
                 hdr_cells = tabela.rows[1].cells
@@ -148,7 +158,7 @@ def inserir_conteudo_sp(modelo_path, conteudo, output_path):
                     row_cells[1].text = formatar_moeda_texto(med["largura"])
                     row_cells[2].text = formatar_moeda_texto(med["altura"])
                     row_cells[3].text = formatar_moeda_texto(med["desconto"])
-                    row_cells[4].text = formatar_moeda_texto(med["subtotal"]) # Gross area
+                    row_cells[4].text = formatar_moeda_texto(med["subtotal"])
                     
                     for c in row_cells:
                         c.paragraphs[0].alignment = WD_PARAGRAPH_ALIGNMENT.CENTER

@@ -815,6 +815,20 @@
                     <div class="node-dot">✨</div>
                     <span class="node-label">UX Premium & Download</span>
                 </div>
+
+                <!-- Node 8 -->
+                <div class="timeline-node" onclick="showCard(7, this)">
+                    <span class="node-date">09/03/2026</span>
+                    <div class="node-dot">🗂️</div>
+                    <span class="node-label">Ordenação Perfeita</span>
+                </div>
+
+                <!-- Node 9 -->
+                <div class="timeline-node active" onclick="showCard(8, this)">
+                    <span class="node-date">09/03/2026</span>
+                    <div class="node-dot">📄</div>
+                    <span class="node-label">Descrições Dinâmicas</span>
+                </div>
             </div>
         </div>
     </section>
@@ -997,6 +1011,43 @@
                 <li><span class="check">✓</span><strong>Footer Reinventado:</strong> Tipografia
                     <code>tracking-wide</code> elegante e status de versão destacado.
                 </li>
+            </ul>
+        </div>
+
+        <!-- Card 7 - Ordenação Perfeita -->
+        <div class="detail-card" data-card="7">
+            <div class="card-header">
+                <h2 class="card-title">🗂 Nova Ordenação Perfeita</h2>
+                <span class="card-badge">Backend</span>
+            </div>
+            <p class="card-desc">Lógica de hierarquia unificada usando a Nova Proposta Perfeita para varreduras.</p>
+            <ul class="card-features">
+                <li><span class="check">✓</span><strong>Vista Ampla Priorizada:</strong> Sempre index 0, seja maiúsculo
+                    ou minúsculo.</li>
+                <li><span class="check">✓</span><strong>Números Naturais:</strong> Mantida a inteligência sequencial
+                    para (01.01).</li>
+                <li><span class="check">✓</span><strong>Isolamento dos Detalhes:</strong> A pasta `- Detalhes` agora
+                    será agrupada apenas no final do processamento das medições e registros isolados.</li>
+                <li><span class="check">✓</span><strong>Padrão Multiplataforma:</strong> Aplicado com consistência entre
+                    Legado Tradicional e o modelo SP.</li>
+            </ul>
+        </div>
+
+        <!-- Card 8 - Descrições Dinâmicas -->
+        <div class="detail-card visible" data-card="8">
+            <div class="card-header">
+                <h2 class="card-title">📄 Descrições Dinâmicas via UI</h2>
+                <span class="card-badge">Novo</span>
+            </div>
+            <p class="card-desc">Implementação de injeção dinâmica de conteúdo no Word baseado em seleção do usuário.
+            </p>
+            <ul class="card-features">
+                <li><span class="check">✓</span><strong>Frontend:</strong> Dropdown estilizado para escolha entre 4
+                    modelos de descrições técnicas.</li>
+                <li><span class="check">✓</span><strong>Backend:</strong> Motor Regex para localização global do
+                    placeholder <code>{Desc_here}</code> em tabelas e parágrafos.</li>
+                <li><span class="check">✓</span><strong>Flexibilidade:</strong> Sistema compatível com os geradores
+                    Tradicional e SP (Sincronizado).</li>
             </ul>
         </div>
 

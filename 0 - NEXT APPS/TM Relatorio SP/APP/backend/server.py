@@ -41,6 +41,15 @@ class GenerateRequest(BaseModel):
     pasta_saida: str
     conteudo: list
     tipo_relatorio: str = "tradicional"
+    selected_description_key: Optional[str] = None
+
+# Descrições dinâmicas para o placeholder {Desc_here}
+DESCRICOES_OPCOES = {
+    "Desc 1": "Descrição do serviço: Informamos que foi realizada visita técnica à agência para fins de levantamento preventivo. A atividade contou com o acompanhamento do gerente [Nome do Gerente] – Matrícula [Número da Matrícula], que esteve presente durante todo o procedimento. Durante a vistoria, foram identificadas necessidades de intervenção nos seguintes itens.",
+    "Desc 2": "Descrição do serviço: No cumprimento das atividades programadas, nosso técnico realizou uma visita à agência para a execução do levantamento preventivo. O gerente [Nome do Gerente] – Matrícula [Número da Matrícula] acompanhou todas as etapas do procedimento. Após a avaliação, verificou-se a necessidade de intervenção nos seguintes itens.",
+    "Desc 3": "Descrição do serviço: Informamos que nosso técnico realizou uma visita à agência para a execução do levantamento preventivo. Durante a visita, o gerente [Nome do Gerente] – Matrícula [Número da Matrícula] esteve presente, acompanhando todo o procedimento. Constatou-se a necessidade de intervenção nos seguintes itens.",
+    "Desc 4": "Descrição do serviço: Nosso técnico realizou uma visita à agência para a execução do levantamento preventivo. O gerente [Nome do Gerente] – Matrícula [Número da Matrícula] acompanhou todo o processo. Durante a vistoria, identificamos a necessidade de intervenção nos seguintes itens."
+}
 
 class OpenFolderRequest(BaseModel):
     path: str
@@ -120,6 +129,11 @@ async def generate_docx(data: GenerateRequest):
     pasta_saida = data.pasta_saida.strip()
     conteudo_editado = data.conteudo
     
+    # Resolve a descrição baseada na chave enviada pelo frontend
+    selected_description = None
+    if data.selected_description_key:
+        selected_description = DESCRICOES_OPCOES.get(data.selected_description_key)
+    
     if not all([pasta_raiz, modelo_nome, pasta_saida, conteudo_editado]):
         raise HTTPException(status_code=400, detail="Faltam parâmetros")
         
@@ -150,10 +164,10 @@ async def generate_docx(data: GenerateRequest):
         
         if data.tipo_relatorio == "sp":
             from word_utils_sp import inserir_conteudo_sp
-            total_images = inserir_conteudo_sp(modelo_path, conteudo_editado, output_docx)
+            total_images = inserir_conteudo_sp(modelo_path, conteudo_editado, output_docx, selected_description=selected_description)
             file_logger(f"[OK] Instâncias e imagens inseridas (SP): {total_images}")
         else:
-            total_images = generate_report(modelo_path, conteudo_editado, output_docx, logger=file_logger)
+            total_images = generate_report(modelo_path, conteudo_editado, output_docx, logger=file_logger, selected_description=selected_description)
         
         return {
             "message": "Relatório gerado com sucesso",

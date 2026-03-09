@@ -13,6 +13,17 @@ def _natural_sort_key(name: str):
         return (int(match.group(1)), match.group(2))
     return (float('inf'), name)
 
+def folder_sort_key(name: str):
+    name_lower = name.lower()
+    if "vista ampla" in name_lower:
+        return (0, name_lower)
+    match = re.match(r'^(\d+)(.*)', name)
+    if match:
+        return (1, int(match.group(1)), match.group(2))
+    if "detalhes" in name_lower:
+        return (3, name_lower)
+    return (2, name_lower)
+
 def _default_logger(_: str) -> None:
     pass
 
@@ -39,22 +50,17 @@ def build_content_sp(pasta_raiz: str, log_errors_path: str, logger: Callable[[st
                 log.write(f"Falha ao decodificar nomes em: {root_dir} ({e})\n")
             continue
 
-        # Ordena subpastas: Prioriza "- Vista ampla" se existir
-        if "- Vista ampla" in dirs:
-            dirs.remove("- Vista ampla")
-            dirs.insert(0, "- Vista ampla")
-
+        # Ordena subpastas baseando-se na nova proposta Perfeita
         if root_dir == pasta_raiz:
             dirs.sort(
                 key=lambda x: (
                     0 if x == "- Vista ampla" else 1,
                     ORDEM_PASTAS.index(x) if x in ORDEM_PASTAS else len(ORDEM_PASTAS),
-                    _natural_sort_key(x),
+                    folder_sort_key(x),
                 )
             )
         else:
-            # Já inserimos Vista Ampla no início se existir, agora ordena o resto
-            pass 
+            dirs.sort(key=folder_sort_key) 
 
         path_parts = os.path.relpath(root_dir, pasta_raiz).split(os.sep)
         nome = path_parts[-1]

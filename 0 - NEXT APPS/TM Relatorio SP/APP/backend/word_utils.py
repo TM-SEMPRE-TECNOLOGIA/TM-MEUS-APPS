@@ -113,8 +113,24 @@ def aplicar_estilo(run, size_pt, is_bold=False):
     run.font.bold = is_bold
 
 
-def inserir_conteudo(modelo_path, conteudo, output_path):
+def inserir_conteudo(modelo_path, conteudo, output_path, selected_description=None):
     doc = Document(modelo_path)
+
+    # Substituição do placeholder {Desc_here} no documento inteiro (parágrafos e tabelas)
+    if selected_description:
+        # Substituir nos parágrafos
+        for p in doc.paragraphs:
+            if "{Desc_here}" in p.text:
+                p.text = p.text.replace("{Desc_here}", selected_description)
+        
+        # Substituir nas tabelas (caso o placeholder esteja dentro de uma célula)
+        for table in doc.tables:
+            for row in table.rows:
+                for cell in row.cells:
+                    for p in cell.paragraphs:
+                        if "{Desc_here}" in p.text:
+                            p.text = p.text.replace("{Desc_here}", selected_description)
+
     contador_imagens = 0
     paragrafo_insercao_index = None
 

@@ -33,6 +33,14 @@ export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [selectedDescription, setSelectedDescription] = useState('Desc 1');
+
+  const descriptionsOptions = [
+    { id: 'Desc 1', label: 'Descrição 1' },
+    { id: 'Desc 2', label: 'Descrição 2' },
+    { id: 'Desc 3', label: 'Descrição 3' },
+    { id: 'Desc 4', label: 'Descrição 4' },
+  ];
 
   const logEndRef = useRef<HTMLDivElement>(null);
 
@@ -127,7 +135,8 @@ export default function Home() {
           modelo: modeloSelecionado,
           pasta_saida: pastaSaida || "output",
           conteudo: conteudo,
-          tipo_relatorio: tipoRelatorio
+          tipo_relatorio: tipoRelatorio,
+          selected_description_key: selectedDescription
         })
       });
       const data = await res.json();
@@ -333,6 +342,41 @@ export default function Home() {
               >
                 Scan Templates
               </button>
+            </div>
+          </motion.div>
+
+          {/* Step ?: Description Selection */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="premium-card flex flex-col gap-5 border-l-4 border-l-brand-secondary/60 group overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-brand-secondary/5 rounded-full -mr-12 -mt-12 transition-transform group-hover:scale-150 duration-500" />
+            <div className="flex items-center gap-3 relative z-10">
+              <div className="w-10 h-10 rounded-lg bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shadow-inner shadow-brand-secondary/20">
+                <FileText size={20} />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider">Descrição do Serviço</h3>
+                <p className="text-[10px] text-gray-500 font-medium tracking-tight">Selecione o texto do placeholder.</p>
+              </div>
+            </div>
+            <div className="space-y-3 relative z-10">
+              <div className="relative group/input">
+                <select
+                  className="input-field appearance-none cursor-pointer pr-10"
+                  value={selectedDescription}
+                  onChange={(e) => setSelectedDescription(e.target.value)}
+                >
+                  {descriptionsOptions.map(opt => (
+                    <option key={opt.id} value={opt.id}>{opt.label}</option>
+                  ))}
+                </select>
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 group-hover/input:text-brand-secondary transition-colors">
+                  <LayoutGrid size={14} />
+                </div>
+              </div>
             </div>
           </motion.div>
 

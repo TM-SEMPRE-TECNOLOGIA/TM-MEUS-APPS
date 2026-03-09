@@ -8,15 +8,24 @@ import re
 # Ordem preferencial de pastas (nível 1)
 ORDEM_PASTAS = ["- Área externa", "- Área interna", "- Segundo piso"]
 
-def _natural_sort_key(name: str):
-    """Extrai o número inicial do nome para ordenar naturalmente.
-    Ex: '10 - Escadas' -> (10, ' - Escadas')
-        '2 - Atendimento' -> (2, ' - Atendimento')
-    """
+def folder_sort_key(name: str):
+    name_lower = name.lower()
+    
+    # 1. Prioriza "Vista ampla"
+    if "vista ampla" in name_lower:
+        return (0, name_lower)
+        
+    # 2. Pastas com númeração sequencial (01.01, etc)
     match = re.match(r'^(\d+)(.*)', name)
     if match:
-        return (int(match.group(1)), match.group(2))
-    return (float('inf'), name)
+        return (1, int(match.group(1)), match.group(2))
+        
+    # 4. Detalhes sempre no fim
+    if "detalhes" in name_lower:
+        return (3, name_lower)
+        
+    # 3. Restante (alfabético normal)
+    return (2, name_lower)
 
 
 @dataclass
@@ -58,16 +67,17 @@ def build_content_from_root(pasta_raiz: str, log_errors_path: str, logger: Calla
                 log.write(f"Falha ao decodificar nomes em: {root_dir} ({e})\n")
             continue
 
-        # Ordena subpastas
+        # Ordena subpastas baseando-se na nova proposta Perfeita
         if root_dir == pasta_raiz:
             dirs.sort(
                 key=lambda x: (
+                    0 if x == "- Vista ampla" else 1,
                     ORDEM_PASTAS.index(x) if x in ORDEM_PASTAS else len(ORDEM_PASTAS),
-                    _natural_sort_key(x),
+                    folder_sort_key(x),
                 )
             )
         else:
-            dirs.sort(key=_natural_sort_key)
+            dirs.sort(key=folder_sort_key)
 
         path_parts = os.path.relpath(root_dir, pasta_raiz).split(os.sep)
         nome = path_parts[-1]
@@ -112,10 +122,10 @@ def run_preview(conteudo: List[Any]) -> Optional[List[Any]]:
     return conteudo
 
 
-def generate_report(modelo_path: str, conteudo_editado: List[Any], output_docx_path: str, logger: Callable[[str], None] = _default_logger) -> int:
+def generate_report(modelo_path: str, conteudo_editado: List[Any], output_docx_path: str, logger: Callable[[str], None] = _default_logger, selected_description: Optional[str] = None) -> int:
     """Gera o DOCX final usando o modelo e o conteúdo editado. Retorna total de imagens inseridas."""
     logger(">>> Gerando relatório...")
-    total = inserir_conteudo(modelo_path, conteudo_editado, output_docx_path)
+    total = inserir_conteudo(modelo_path, conteudo_editado, output_docx_path, selected_description=selected_description)
     logger(f"[OK] Relatório salvo em: {output_docx_path}")
     logger(f"[OK] Total de imagens inseridas: {total}")
     return total
@@ -127,6 +137,7 @@ def run_all(
     pasta_saida: str,
     logger: Callable[[str], None] = _default_logger,
     conteudo_aprovado: Optional[List[Any]] = None,
+    selected_description: Optional[str] = None,
 ) -> RunResult:
     """Pipeline completo: varre pasta -> (preview) -> gera docx + logs."""
     os.makedirs(pasta_saida, exist_ok=True)
@@ -158,7 +169,7 @@ def run_all(
     else:
         conteudo_editado = conteudo_aprovado
 
-    total_images = generate_report(modelo_path, conteudo_editado, output_docx, logger=file_logger)
+    total_images = generate_report(modelo_path, conteudo_editado, output_docx, logger=file_logger, selected_description=selected_description)
 
     return RunResult(
         output_docx=output_docx,
