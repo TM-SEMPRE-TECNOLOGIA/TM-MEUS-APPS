@@ -1,0 +1,13 @@
+{
+  "customAmbientes": [
+    "Telhado",
+    "Corredor de acesso",
+    "Casa de máquinas",
+    "Recepção"
+  ],
+  "customServicos": [
+    "Alarme de emergência"
+  ],
+  "customSubpastas": [],
+  "customDetalhes": []
+}

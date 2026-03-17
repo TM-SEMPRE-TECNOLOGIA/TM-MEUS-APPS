@@ -12,7 +12,7 @@ Conforme extraído dos documentos estratégicos em `MANUS`, a TM não é mais ap
 
 | App | Organização de Pastas | Estado Visual | Próximo Passo |
 |-----|-----------------------|---------------|---------------|
-| **TM Hub (Core)** | 🔴 Apenas Mockup HTML | ☀️ Light | **Implementar Next.js Hub** |
+| **TM Hub (Core)** | ✅ Next.js / React | ☀️ Light (Ocean Breeze 2.0) | **Fundação Concluída** |
 | **TM Extrator 2.0** | ✅ APP/DEV/DOCS | 🌑 Dark | Migrar p/ Next.js Light |
 | **TM Extrator (v1)** | ✅ APP/DEV/LEGADO | 🌑 Dark | Incorporar ao Core 2.0 |
 | **TM Relatorio SP** | 🟡 Parcial | 🌑 Dark | Padronizar pastas e Light UI |
@@ -61,7 +61,7 @@ Tendo em vista o `roadmap_atualizacao_visual.md` recém gerado e a priorização
 - [ ] 1. **TM Relatório SP** (Fluxo de Etapas com Sidebar Light).
 - [ ] 2. **TM Pastas** (Padrão Light Interativo).
 - [ ] 3. **TM Extrator 2.0** (Fluxo guiado via Sidebar Light).
-- [ ] 4. Construir Fundação Base: **TM Hub / DEV HUB** (Baseando-se no `hub-ocean-breeze-v2.html`).
+- [x] 4. Construir Fundação Base: **TM Hub** (Concluído: Ocean Breeze v2.0 Light).
 - [ ] 5. Aplicar *Redesign* no **TM Comparador**.
 - [ ] 6. Aplicar *Redesign* no **TM Relatório** (Padrão).
 - [ ] 7. Aplicar *Redesign* no **TM Ordens**.

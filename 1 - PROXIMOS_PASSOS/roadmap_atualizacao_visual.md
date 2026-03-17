@@ -22,9 +22,9 @@ Este documento define a ordem prioritária de atualização visual das aplicaç�
    - **Objetivo:** Refatoração do Dropzone e fluxo de extração para o Padrão de Sidebar.
    - **Local:** `1 - PROXIMOS_PASSOS/TM Extrator 2.0`
 
-4. **TM Hub (Core)**
+4. **TM Hub (Core) - ✅ CONCLUÍDO**
    - **Objetivo:** Consolidação da fundação base no DEV HUB seguindo estritamente `hub-ocean-breeze-v2.html`.
-   - **Local:** `0 - NEXT APPS/DEV HUB`
+   - **Local:** `.NEXT APPS/DEv HUB - PROJETO/tm-hub-next`
 
 5. **TM Comparador**
    - **Objetivo:** Redesign total para o padrão Light Ocean Breeze.

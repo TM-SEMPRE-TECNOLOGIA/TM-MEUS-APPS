@@ -39,3 +39,19 @@ Todos os aplicativos do ecossistema TM devem seguir o **Design System Ocean Bree
 - Ícones: **SVG inline** (Lucide/Phosphor). Nunca emojis como ícones de sistema.
 - Dark mode obrigatório via `html.dark`.
 
+## 🛠️ Regras de Transparência e Ferramentas (TURBO DEV)
+
+Para garantir o alinhamento técnico e o uso eficiente dos recursos, toda interação com o repositório deve respeitar as seguintes diretrizes:
+
+1. **Declaração de Ferramentas**: Sempre que utilizar uma ferramenta, skill, contexto ou tecnologia proveniente dos repositórios em `TURBO DEV`, a IA deve declarar explicitamente:
+    - **O que está sendo usado** (Ferramenta/Skill/Contexto).
+    - **A origem** (Caminho no TURBO DEV).
+    - **O propósito** (Como isso ajuda no objetivo atual).
+
+2. **Planejamento Técnico (PREVC)**:
+    - O planejamento deve seguir preferencialmente as diretrizes em `TURBO DEV/antigravity-awesome-skills/skills/plan-writing`.
+    - Para refinamentos visuais premium sem fugir do padrão TM, deve-se consultar `TURBO DEV/ui-ux-pro-max-skill`.
+    - A `Skill_geral_prompt.md` na raiz serve como o esqueleto base para converter intenções em prompts estruturados.
+
+3. **Evolução Contínua**: O sistema deve sempre avaliar se a ferramenta atual é a melhor disponível no ecossistema `TURBO DEV` antes de iniciar uma tarefa complexa.
+
