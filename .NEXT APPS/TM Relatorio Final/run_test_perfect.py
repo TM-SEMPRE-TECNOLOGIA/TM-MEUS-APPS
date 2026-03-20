@@ -3,7 +3,7 @@ import sys
 import re
 
 # Adicionar backend ao path para importar word_utils
-backend_path = os.path.abspath(r"C:\Users\thiag\TM-MEUS-APPS\0 - NEXT APPS\TM Relatorio SP\APP\backend")
+backend_path = os.path.abspath(r"C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\NX Relatorios SP\APP\backend")
 if backend_path not in sys.path:
     sys.path.insert(0, backend_path)
 
@@ -80,10 +80,10 @@ def build_content_perfect(pasta_raiz: str) -> list:
 
 
 if __name__ == "__main__":
-    pasta_raiz = r"C:\Users\thiag\TM-MEUS-APPS\0 - NEXT APPS\TM Relatorio Final\ITAMONTE - (Relatório sendo feito)"
+    pasta_raiz = r"C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\TM Relatorio Final\ITAMONTE - (Relatório sendo feito)"
     modelo_path = os.path.join(backend_path, "templates", "MODELO - 0908 - SAO PAULO.docx")
 
-    pasta_saida = r"C:\Users\thiag\TM-MEUS-APPS\0 - NEXT APPS\TM Relatorio Final"
+    pasta_saida = r"C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\TM Relatorio Final"
     
     os.makedirs(pasta_saida, exist_ok=True)
     nome_pasta_raiz = os.path.basename(pasta_raiz.strip(os.sep))
