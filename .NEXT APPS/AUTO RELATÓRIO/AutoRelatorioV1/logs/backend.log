@@ -1,0 +1,59 @@
+
+============================================================
+Sessão iniciada em 2026-03-26T17:13:47.740964
+============================================================
+
+Traceback (most recent call last):
+  File [35m"C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELAT�RIO\AutoRelatorioV1\APP\backend\server.py"[0m, line [35m6[0m, in [35m<module>[0m
+    from fastapi import FastAPI, Request, File, UploadFile, HTTPException, Query
+[1;35mModuleNotFoundError[0m: [35mNo module named 'fastapi'[0m
+
+============================================================
+Sessão iniciada em 2026-03-26T17:22:05.357602
+============================================================
+
+Form data requires "python-multipart" to be installed.
+You can install "python-multipart" with:
+pip install python-multipart
+Traceback (most recent call last):
+  File [35m"C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELAT�RIO\AutoRelatorioV1\APP\backend\server.py"[0m, line [35m66[0m, in [35m<module>[0m
+    @[31mapp.post[0m[1;31m("/api/upload-template")[0m
+     [31m~~~~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELAT�RIO\AutoRelatorioV1\APP\backend\.venv\Lib\site-packages\fastapi\routing.py"[0m, line [35m1450[0m, in [35mdecorator[0m
+    [31mself.add_api_route[0m[1;31m([0m
+    [31m~~~~~~~~~~~~~~~~~~[0m[1;31m^[0m
+        [1;31mpath,[0m
+        [1;31m^^^^^[0m
+    ...<23 lines>...
+        [1;31mgenerate_unique_id_function=generate_unique_id_function,[0m
+        [1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+    [1;31m)[0m
+    [1;31m^[0m
+  File [35m"C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELAT�RIO\AutoRelatorioV1\APP\backend\.venv\Lib\site-packages\fastapi\routing.py"[0m, line [35m1386[0m, in [35madd_api_route[0m
+    route = route_class(
+        self.prefix + path,
+    ...<27 lines>...
+        ),
+    )
+  File [35m"C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELAT�RIO\AutoRelatorioV1\APP\backend\.venv\Lib\site-packages\fastapi\routing.py"[0m, line [35m949[0m, in [35m__init__[0m
+    self.dependant = [31mget_dependant[0m[1;31m([0m
+                     [31m~~~~~~~~~~~~~[0m[1;31m^[0m
+        [1;31mpath=self.path_format, call=self.endpoint, scope="function"[0m
+        [1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+    [1;31m)[0m
+    [1;31m^[0m
+  File [35m"C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELAT�RIO\AutoRelatorioV1\APP\backend\.venv\Lib\site-packages\fastapi\dependencies\utils.py"[0m, line [35m311[0m, in [35mget_dependant[0m
+    param_details = analyze_param(
+        param_name=param_name,
+    ...<2 lines>...
+        is_path_param=is_path_param,
+    )
+  File [35m"C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELAT�RIO\AutoRelatorioV1\APP\backend\.venv\Lib\site-packages\fastapi\dependencies\utils.py"[0m, line [35m535[0m, in [35manalyze_param[0m
+    [31mensure_multipart_is_installed[0m[1;31m()[0m
+    [31m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[1;31m^^[0m
+  File [35m"C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELAT�RIO\AutoRelatorioV1\APP\backend\.venv\Lib\site-packages\fastapi\dependencies\utils.py"[0m, line [35m120[0m, in [35mensure_multipart_is_installed[0m
+    raise RuntimeError(multipart_not_installed_error) from None
+[1;35mRuntimeError[0m: [35mForm data requires "python-multipart" to be installed.
+You can install "python-multipart" with:
+pip install python-multipart
+[0m
