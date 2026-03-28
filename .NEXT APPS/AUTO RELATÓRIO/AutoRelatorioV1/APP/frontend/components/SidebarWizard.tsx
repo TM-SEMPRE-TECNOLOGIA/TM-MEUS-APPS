@@ -48,9 +48,10 @@ export default function SidebarWizard({
   const steps = [
     {
       id: 1,
+      isLocked: false,
       title: "Diretório Raiz",
       subtitle: "CONFIGURAÇÃO DE ORIGEM",
-      icon: <div className="w-8 h-8 rounded-full bg-teal-600 flex items-center justify-center text-white text-xs font-bold">01</div>,
+      icon: <div className="w-8 h-8 rounded-full bg-brand-primary flex items-center justify-center text-white text-xs font-bold">01</div>,
       content: (
         <div className="space-y-6 pt-2">
           <div>
@@ -58,13 +59,13 @@ export default function SidebarWizard({
             <div className="flex gap-1 bg-slate-100 p-1 rounded-lg">
               <button
                 onClick={(e) => { e.stopPropagation(); setTipoRelatorio('tradicional'); }}
-                className={`flex-1 py-2 px-3 text-[11px] font-bold rounded-md transition-all ${tipoRelatorio === 'tradicional' ? 'bg-white text-teal-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                className={`flex-1 py-2 px-3 text-[11px] font-bold rounded-md transition-all ${tipoRelatorio === 'tradicional' ? 'bg-white text-brand-secondary shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
               >
                 Tradicional
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); setTipoRelatorio('sp'); }}
-                className={`flex-1 py-2 px-3 text-[11px] font-bold rounded-md transition-all ${tipoRelatorio === 'sp' ? 'bg-white text-teal-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                className={`flex-1 py-2 px-3 text-[11px] font-bold rounded-md transition-all ${tipoRelatorio === 'sp' ? 'bg-white text-brand-secondary shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
               >
                 Organizado SP
               </button>
@@ -83,7 +84,7 @@ export default function SidebarWizard({
               />
               <button 
                 onClick={(e) => { e.stopPropagation(); selectFolder('raiz'); }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-teal-600 hover:text-teal-700 transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-primary hover:text-brand-secondary transition-colors"
               >
                  <FolderOpen size={16} />
               </button>
@@ -92,7 +93,7 @@ export default function SidebarWizard({
 
           <button
             onClick={(e) => { e.stopPropagation(); selectFolder('raiz'); }}
-            className="btn-primary w-full py-4 text-xs font-black uppercase tracking-widest bg-teal-600 hover:bg-teal-700 shadow-teal-600/20"
+            className="btn-primary w-full py-4 text-xs font-black uppercase tracking-widest bg-brand-primary hover:bg-brand-secondary shadow-brand-primary/20"
           >
             Configurar Origem
           </button>
@@ -100,7 +101,7 @@ export default function SidebarWizard({
           <button
             onClick={(e) => { e.stopPropagation(); handleScan(); }}
             disabled={!pastaRaiz || loading}
-            className={`btn-secondary w-full py-4 text-xs font-black uppercase tracking-widest border-2 border-teal-600/20 text-teal-700 hover:bg-teal-50 mt-2 ${!pastaRaiz ? 'opacity-30' : ''}`}
+            className={`btn-secondary w-full py-4 text-xs font-black uppercase tracking-widest border-2 border-brand-primary/20 text-brand-secondary hover:bg-slate-100 mt-2 ${!pastaRaiz ? 'opacity-30' : ''}`}
           >
             {loading ? 'Escaneando...' : 'Iniciar Varredura'}
           </button>
@@ -109,13 +110,15 @@ export default function SidebarWizard({
     },
     {
       id: 2,
+      isLocked: !hasConteudo,
       title: "Modelo DOCX",
       subtitle: "PRÓXIMA ETAPA",
-      icon: <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400"><FileText size={16} /></div>,
+      icon: <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${!hasConteudo ? 'bg-slate-100 text-slate-300' : 'bg-brand-primary/10 text-brand-primary'}`}><FileText size={16} /></div>,
       content: (
         <div className="space-y-4 pt-4 border-t border-slate-100">
           <select
-            className="input-field h-11 text-xs"
+            className="w-full h-11 px-3 text-xs bg-slate-50 border border-slate-200 rounded-lg outline-none focus:bg-white focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10 transition-all font-bold text-slate-700 cursor-pointer appearance-none shadow-sm"
+            style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`, backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em', paddingRight: '2.5rem' }}
             value={modeloSelecionado}
             onChange={(e) => setModeloSelecionado(e.target.value)}
           >
@@ -133,13 +136,15 @@ export default function SidebarWizard({
     },
     {
       id: 3,
+      isLocked: !hasConteudo || !modeloSelecionado,
       title: "Parâmetros",
       subtitle: "CONFIGURAÇÕES ADICIONAIS",
-      icon: <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400"><Settings size={16} /></div>,
+      icon: <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${!hasConteudo || !modeloSelecionado ? 'bg-slate-100 text-slate-300' : 'bg-brand-primary/10 text-brand-primary'}`}><Settings size={16} /></div>,
       content: (
         <div className="space-y-4 pt-4 border-t border-slate-100">
           <select
-            className="input-field h-11 text-xs"
+            className="w-full h-11 px-3 text-xs bg-slate-50 border border-slate-200 rounded-lg outline-none focus:bg-white focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10 transition-all font-bold text-slate-700 cursor-pointer appearance-none shadow-sm"
+            style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`, backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em', paddingRight: '2.5rem' }}
             value={selectedDescription}
             onChange={(e) => setSelectedDescription(e.target.value)}
           >
@@ -150,15 +155,16 @@ export default function SidebarWizard({
     },
     {
       id: 4,
+      isLocked: !hasConteudo || !modeloSelecionado,
       title: "Visualização",
       subtitle: "RESULTADO FINAL",
-      icon: <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400"><Eye size={16} /></div>,
+      icon: <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${!hasConteudo || !modeloSelecionado ? 'bg-slate-100 text-slate-300' : 'bg-brand-primary/10 text-brand-primary'}`}><Eye size={16} /></div>,
       content: (
         <div className="space-y-4 pt-4 border-t border-slate-100">
           <button
             onClick={(e) => { e.stopPropagation(); handleGenerate(); }}
             disabled={isGenerating || !hasConteudo}
-            className={`btn-primary w-full py-4 text-xs font-black uppercase tracking-widest bg-teal-600 hover:bg-teal-700 shadow-teal-600/20 ${!hasConteudo ? 'opacity-30 grayscale cursor-not-allowed' : ''}`}
+            className={`btn-primary w-full py-4 text-xs font-black uppercase tracking-widest hover:bg-brand-secondary shadow-brand-primary/20 ${!hasConteudo ? 'opacity-30 grayscale cursor-not-allowed' : ''}`}
           >
             Gerar Relatório
           </button>
@@ -173,8 +179,14 @@ export default function SidebarWizard({
         <motion.div
           key={step.id}
           layout
-          onClick={() => setActiveStep(activeStep === step.id ? 0 : step.id)}
-          className={`premium-card !p-6 cursor-pointer border-2 transition-all duration-500 ${activeStep === step.id ? 'border-teal-600/20 bg-white ring-4 ring-teal-600/5' : 'border-transparent bg-slate-50 opacity-80 hover:opacity-100'}`}
+          onClick={() => !step.isLocked && setActiveStep(activeStep === step.id ? 0 : step.id)}
+          className={`premium-card p-5 border-2 transition-all duration-400 ${
+            step.isLocked 
+              ? 'opacity-40 grayscale pointer-events-none border-transparent bg-slate-50/40' 
+              : activeStep === step.id 
+                ? 'border-brand-primary/30 bg-white ring-2 ring-brand-primary/5 shadow-md cursor-default' 
+                : 'border-transparent bg-slate-50/80 hover:bg-white cursor-pointer hover:shadow-sm'
+          }`}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -202,12 +214,6 @@ export default function SidebarWizard({
         </motion.div>
       ))}
       
-      {/* Visual Placeholder for the bottom of Sidebar in Desktop image */}
-      <div className="mt-auto pt-6 opacity-20 hidden lg:block">
-        <div className="h-24 border-2 border-dashed border-slate-300 rounded-3xl flex items-center justify-center">
-           <div className="w-8 h-8 rounded-full bg-slate-300" />
-        </div>
-      </div>
     </aside>
   );
 }

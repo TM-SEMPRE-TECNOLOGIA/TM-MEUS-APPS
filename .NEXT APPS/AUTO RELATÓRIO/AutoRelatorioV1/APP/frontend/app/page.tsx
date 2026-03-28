@@ -182,13 +182,13 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 flex flex-col font-sans selection:bg-teal-600/10">
+    <div className="min-h-screen bg-slate-50/50 flex flex-col font-sans selection:bg-brand-primary/10">
       
       {/* Header Premium - Desktop Reference */}
       <header className="h-20 bg-white border-b border-slate-100 flex items-center px-10 sticky top-0 z-50">
         <div className="flex items-center gap-10">
           <div className="flex items-center gap-3">
-             <div className="w-10 h-10 rounded-xl bg-teal-600 flex items-center justify-center shadow-lg shadow-teal-600/20">
+             <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center shadow-lg shadow-brand-primary/20">
                 <FileText className="text-white" size={20} />
              </div>
              <div className="flex flex-col">
@@ -202,10 +202,10 @@ export default function Home() {
                <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`relative h-full px-2 text-[13px] font-bold transition-colors ${activeTab === tab ? 'text-teal-600' : 'text-slate-400 hover:text-slate-600'}`}
+                className={`relative h-full px-2 text-[13px] font-bold transition-colors ${activeTab === tab ? 'text-brand-primary' : 'text-slate-400 hover:text-slate-600'}`}
                >
                  {tab}
-                 {activeTab === tab && <motion.div layoutId="tab" className="absolute bottom-0 left-0 right-0 h-[3px] bg-teal-600 rounded-t-full" />}
+                 {activeTab === tab && <motion.div layoutId="tab" className="absolute bottom-0 left-0 right-0 h-[3px] bg-brand-primary rounded-t-full" />}
                </button>
              ))}
           </nav>
@@ -218,7 +218,7 @@ export default function Home() {
            <button 
             disabled={!docGerado} 
             onClick={handleDownload}
-            className={`h-11 px-6 bg-teal-600 text-white text-[12px] font-bold rounded-xl shadow-lg shadow-teal-600/20 hover:bg-teal-700 transition-colors ${!docGerado ? 'opacity-40 cursor-not-allowed' : ''}`}
+            className={`h-11 px-6 bg-brand-primary text-white text-[12px] font-bold rounded-xl shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary transition-colors ${!docGerado ? 'opacity-40 cursor-not-allowed' : ''}`}
            >
               Baixar Relatório
            </button>

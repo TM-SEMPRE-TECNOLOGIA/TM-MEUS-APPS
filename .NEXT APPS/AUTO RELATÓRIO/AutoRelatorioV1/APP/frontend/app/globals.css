@@ -1,121 +1,118 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-primary: #10b981; /* Verde Esmeralda Vibrante */
-  --color-brand-secondary: #0ea5e9; /* Sky Blue */
-  --color-brand-accent: #6366f1; /* Indigo */
+  --color-brand-primary: #003694; /* Azul Industrial */
+  --color-brand-secondary: #002266; /* Azul Mais Escuro */
+  --color-brand-accent: #8a5100; /* Laranja Ouro */
   --color-bg-dark: #0f172a;
-  --color-border-glass: rgba(255, 255, 255, 0.1);
+  --color-border-glass: rgba(0, 54, 148, 0.08);
+  --font-sans: 'Manrope', 'Inter', sans-serif;
+  --font-mono: 'Space Grotesk', monospace;
 }
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --brand-primary: #10b981;
-  --brand-secondary: #0ea5e9;
-  --brand-accent: #6366f1;
+  --background: #fdfdfd;
+  --foreground: #1e293b;
+  --brand-primary: #003694;
+  --brand-secondary: #002266;
+  --brand-accent: #8a5100;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'DM Sans', Arial, sans-serif;
+  font-family: var(--font-sans);
   background-image:
-    radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.03) 0%, transparent 40%),
-    radial-gradient(circle at 90% 90%, rgba(14, 165, 233, 0.03) 0%, transparent 40%);
+    radial-gradient(circle at 10% 10%, rgba(0, 54, 148, 0.02) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(138, 81, 0, 0.01) 0%, transparent 40%);
   background-attachment: fixed;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom premium classes using @utility for v4 */
 @utility glass-panel {
-  background-color: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.05);
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 54, 148, 0.08); /* Borda muito sutil do blueprint */
+  box-shadow: 0 8px 32px 0 rgba(0, 54, 148, 0.03);
+  border-radius: 0.75rem;
 }
 
 @utility premium-card {
-  background-color: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 1.25rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 54, 148, 0.08);
+  border-radius: 0.5rem; /* Bordas mais secas (8px) para look técnico */
   padding: 1.5rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 54, 148, 0.02);
 
   &:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 20px 40px rgba(16, 185, 129, 0.08), 0 8px 16px rgba(16, 185, 129, 0.04);
-    border-color: rgba(16, 185, 129, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 54, 148, 0.06);
+    border-color: rgba(0, 54, 148, 0.15);
   }
 }
 
 @utility glow-text {
-  background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
+  background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-accent) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility btn-primary {
-  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+  background: var(--brand-primary);
   color: white;
   font-weight: 800;
   padding: 0.75rem 1.5rem;
-  border-radius: 1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.15);
+  border-radius: 0.5rem; /* Seco (Industrial) */
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 54, 148, 0.15);
   border: none;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 25px rgba(16, 185, 129, 0.25);
-    filter: brightness(1.1);
+    background: var(--brand-secondary);
+    box-shadow: 0 6px 16px rgba(0, 54, 148, 0.25);
   }
 
   &:active {
-    transform: translateY(0);
+    transform: translateY(1px);
   }
 }
 
 @utility btn-secondary {
   background: white;
-  border: 1.5px solid rgba(14, 165, 233, 0.15);
-  color: #0ea5e9;
+  border: 1px solid rgba(0, 54, 148, 0.15);
+  color: var(--brand-primary);
   padding: 0.75rem 1.5rem;
-  border-radius: 1rem;
-  transition: all 0.3s;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 
   &:hover {
-    background: rgba(14, 165, 233, 0.03);
-    border-color: rgba(14, 165, 233, 0.4);
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
+    background: rgba(0, 54, 148, 0.02);
+    border-color: rgba(0, 54, 148, 0.3);
   }
 }
 
 @utility input-field {
   width: 100%;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1.5px solid rgba(226, 232, 240, 0.8);
-  border-radius: 1rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 54, 148, 0.15); /* Industrial sutil */
+  border-radius: 0.5rem; /* Seco e técnico */
   padding: 0.75rem 1.25rem;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #1e293b;
   outline: none;
-  transition: all 0.3s;
+  transition: all 0.2s ease;
 
   &:focus {
     border-color: var(--brand-primary);
-    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
-    background: #ffffff;
-    transform: scale(1.01);
+    box-shadow: 0 0 0 3px rgba(0, 54, 148, 0.1);
   }
 }
 

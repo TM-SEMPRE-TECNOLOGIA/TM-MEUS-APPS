@@ -10,22 +10,22 @@ interface PreviewGridProps {
 
 export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
   
-  // FunÃ§Ã£o para limpar o texto de marcadores tÃ©cnicos desnecessÃ¡rios
+  // Função para limpar o texto de marcadores técnicos desnecessários
   const cleanCategoryText = (text: string) => {
     return text
-      .replace(/Â»/g, '') // Remove setas
-      .replace(/^\s*[\-\d]+\s*-\s*/, '') // Remove nÃºmeros e traÃ§os iniciais (ex: "1 - ", "Â»- ")
-      .replace(/^- /, '') // Remove traÃ§os isolados
+      .replace(/»/g, '') // Remove setas
+      .replace(/^\s*[\-\d]+\s*-\s*/, '') // Remove números e traços iniciais (ex: "1 - ", "»- ")
+      .replace(/^- /, '') // Remove traços isolados
       .trim();
   };
 
-  // FunÃ§Ã£o para mapear Ã­cones baseada em palavras-chave (mais sÃ³bria)
+  // Função para mapear ícones baseada em palavras-chave (mais sóbria)
   const getIconForText = (text: string) => {
     const clean = text.toLowerCase();
-    if (clean.includes('Ã¡rea')) return <MapPin size={14} className="text-teal-500/80" />;
+    if (clean.includes('área')) return <MapPin size={14} className="text-brand-primary/80" />;
     if (clean.includes('vista') || clean.includes('ampla')) return <Eye size={14} className="text-slate-400" />;
     if (clean.includes('pintura')) return <Paintbrush size={14} className="text-slate-400" />;
-    if (clean.includes('mediÃ§Ã£o') || clean.includes('total')) return <Target size={14} className="text-teal-600/60" />;
+    if (clean.includes('medição') || clean.includes('total')) return <Target size={14} className="text-brand-primary/60" />;
     return <div className="w-1 h-1 rounded-full bg-slate-300" />;
   };
 
@@ -33,10 +33,10 @@ export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
     <div className="glass-panel rounded-2xl flex-1 flex flex-col shadow-[0_32px_64px_-16px_rgba(0,0,0,0.05)] relative overflow-hidden bg-white border-slate-100">
       <div className="px-8 py-5 border-b border-slate-50 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-6 h-6 flex items-center justify-center text-teal-600">
+          <div className="w-6 h-6 flex items-center justify-center text-brand-primary">
             <LayoutGrid size={18} strokeWidth={2.5} />
           </div>
-          <h3 className="font-bold text-[13px] text-slate-700">VisualizaÃ§Ã£o da Estrutura</h3>
+          <h3 className="font-bold text-[13px] text-slate-700">Visualização da Estrutura</h3>
         </div>
         <div className="flex gap-1.5">
            {[1,2,3].map(i => <div key={i} className="w-2 h-2 rounded-full bg-slate-200" />)}
@@ -61,7 +61,7 @@ export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
                     key={idx} 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className={`relative aspect-square rounded-xl border-2 overflow-hidden bg-slate-50 transition-all hover:ring-4 hover:ring-teal-500/10 group ${isFachada ? 'border-teal-500 shadow-md' : 'border-slate-100 shadow-sm'}`}
+                    className={`relative aspect-square rounded-xl border-2 overflow-hidden bg-slate-50 transition-all hover:ring-4 hover:ring-brand-primary/10 group ${isFachada ? 'border-brand-primary shadow-md' : 'border-slate-100 shadow-sm'}`}
                    >
                      <img 
                       src={`${apiUrl}/api/thumbnail?path=${encodeURIComponent(imgPath)}`} 
@@ -69,14 +69,14 @@ export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
                       alt="Preview"
                      />
                      {isFachada && (
-                       <div className="absolute top-2 left-2 bg-teal-600 text-white text-[8px] font-black px-2 py-0.5 rounded shadow-lg uppercase tracking-wider">
+                       <div className="absolute top-2 left-2 bg-brand-primary text-white text-[8px] font-black px-2 py-0.5 rounded shadow-lg uppercase tracking-wider">
                          Fachada
                        </div>
                      )}
                    </motion.div>
                  );
                } else if (isString) {
-                  const isSub = item.includes('Â»');
+                  const isSub = item.includes('»');
                   const cleanItem = cleanCategoryText(item);
                   return (
                     <div key={idx} className={`col-span-full py-4 mt-8 first:mt-0 flex items-center gap-4 ${isSub ? 'pl-8' : ''}`}>
@@ -93,20 +93,20 @@ export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
                   return (
                     <div key={idx} className="col-span-full py-5 px-6 bg-slate-50/50 border border-slate-100 rounded-2xl my-4 text-slate-600 font-medium text-[13px] leading-relaxed italic pr-12 relative">
                         <div className="absolute right-6 top-6 text-slate-200"><Info size={24} /></div>
-                        â€œ{descText.replace(/<RED>|<\/RED>/g, '')}â€
+                        "{descText.replace(/<RED>|<\/RED>/g, '')}â€
                     </div>
                   );
                } else if (tableData) {
                   return (
-                    <div key={idx} className="col-span-full md:col-span-4 lg:col-span-3 py-5 px-6 bg-teal-600 text-white rounded-2xl flex items-center justify-between shadow-xl shadow-teal-600/20 my-4 transform hover:scale-[1.02] transition-transform">
+                    <div key={idx} className="col-span-full md:col-span-4 lg:col-span-3 py-5 px-6 bg-brand-primary text-white rounded-2xl flex items-center justify-between shadow-xl shadow-brand-primary/20 my-4 transform hover:scale-[1.02] transition-transform">
                        <div className="flex flex-col">
-                          <span className="text-[9px] font-black uppercase tracking-[0.25em] opacity-60 mb-1">MediÃ§Ã£o Estimada</span>
-                          <span className="text-[14px] font-black uppercase tracking-widest">{tableData.tipo === 'pintura' ? 'Consumo de Pintura' : 'MobÃ­lia'}</span>
+                          <span className="text-[9px] font-black uppercase tracking-[0.25em] opacity-60 mb-1">Medição Estimada</span>
+                          <span className="text-[14px] font-black uppercase tracking-widest">{tableData.tipo === 'pintura' ? 'Consumo de Pintura' : 'Mobília'}</span>
                        </div>
                        <div className="flex gap-3">
                           {tableData.medidas.map((m: any, midx: number) => (
                              <div key={midx} className="bg-white/10 px-4 py-2 rounded-xl backdrop-blur-md border border-white/10 flex flex-col items-center">
-                                <span className="text-[14px] font-black">{m.total ? `${m.total.toFixed(1)}mÂ²` : m.total_un ? `${m.total_un}UN` : ''}</span>
+                                <span className="text-[14px] font-black">{m.total ? `${m.total.toFixed(1)}m²` : m.total_un ? `${m.total_un}UN` : ''}</span>
                                 <span className="text-[8px] font-bold uppercase opacity-60 leading-none">{m.nome?.split('_').pop() ?? ''}</span>
                              </div>
                           ))}
@@ -133,9 +133,9 @@ export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
             >
               <ClipboardCheck size={48} className="text-slate-200" strokeWidth={1} />
             </motion.div>
-            <h4 className="text-xl font-bold text-slate-800 mb-2">Aguardando AnÃ¡lise</h4>
+            <h4 className="text-xl font-bold text-slate-800 mb-2">Aguardando Análise</h4>
             <p className="text-[13px] text-slate-400 max-w-sm leading-relaxed font-medium">
-              Insira o diretÃ³rio raiz e clique em configurar para que o motor possa mapear a Ã¡rvore de arquivos do projeto e gerar a prÃ©via estrutural.
+              Insira o diretório raiz e clique em configurar para que o motor possa mapear a árvore de arquivos do projeto e gerar a prévia estrutural.
             </p>
           </div>
         )}

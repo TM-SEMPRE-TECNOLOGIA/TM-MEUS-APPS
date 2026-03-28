@@ -28,7 +28,7 @@ export default function ConsoleWatcher({ logs }: ConsoleWatcherProps) {
             <div className="w-2.5 h-2.5 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.4)]" />
             <div className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
           </div>
-          <span className="text-[10px] font-black text-teal-400/80 tracking-widest uppercase flex items-center gap-2">
+          <span className="text-[10px] font-black text-brand-accent/80 tracking-widest uppercase flex items-center gap-2">
             MOTOR ENGINE CONSOLE
           </span>
         </div>
@@ -53,8 +53,8 @@ export default function ConsoleWatcher({ logs }: ConsoleWatcherProps) {
               key={i} 
               className={`flex gap-3 leading-relaxed ${
                 log.type === 'error' ? 'text-red-400' : 
-                log.type === 'success' ? 'text-teal-400' : 
-                'text-teal-400/60'
+                log.type === 'success' ? 'text-brand-accent' : 
+                'text-brand-accent/60'
               }`}
             >
               <span className="opacity-30 flex-shrink-0">
@@ -71,7 +71,7 @@ export default function ConsoleWatcher({ logs }: ConsoleWatcherProps) {
 
       <div className="px-6 py-1.5 bg-black/40 border-t border-white/[0.02] flex justify-between items-center">
          <div className="flex gap-4 text-[9px] font-medium text-slate-500">
-            <span>Motor Engine Console | System Status: <span className="text-teal-500">Active</span></span>
+            <span>Motor Engine Console | System Status: <span className="text-brand-primary">Active</span></span>
          </div>
          <div className="text-[9px] font-medium text-slate-500 uppercase tracking-tighter">
             Uptime: 00:00:03
