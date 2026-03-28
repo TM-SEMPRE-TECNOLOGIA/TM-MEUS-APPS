@@ -1667,3 +1667,14 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://127.0.0.1:5000 (Press CTRL+C to quit)
 INFO:     127.0.0.1:58232 - "GET /docs HTTP/1.1" 200 OK
 INFO:     127.0.0.1:53599 - "GET /api/templates HTTP/1.1" 200 OK
+
+============================================================
+Sessão iniciada em 2026-03-28T00:45:57.634432
+============================================================
+
+INFO:     Started server process [24260]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51397 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61515 - "GET /api/templates HTTP/1.1" 200 OK

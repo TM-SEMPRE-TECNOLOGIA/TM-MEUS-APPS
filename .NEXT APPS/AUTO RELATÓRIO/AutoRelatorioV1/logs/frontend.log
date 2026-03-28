@@ -1009,3 +1009,22 @@ Sessão iniciada em 2026-03-28T00:12:39.768196
  GET /meta.json [33m404[39m in 859ms[2m (compile: 328ms, render: 531ms)[22m
  GET /meta.json [33m404[39m in 256ms[2m (compile: 39ms, render: 217ms)[22m
  GET /meta.json [33m404[39m in 139ms[2m (compile: 19ms, render: 119ms)[22m
+^C^C
+
+============================================================
+Sessão iniciada em 2026-03-28T00:46:00.345069
+============================================================
+
+> nx-relatorios-sp@1.0.0 dev
+> next dev
+[1m[38;2;173;127;168m▲ Next.js 16.1.6[39m[22m (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.100.11:3000
+[32m[1m✓[22m[39m Starting...
+[32m[1m✓[22m[39m Ready in 2.6s
+[37m[1m○[22m[39m Compiling / ...
+ GET / [32m200[39m in 4.3s[2m (compile: 3.8s, render: 470ms)[22m
+ GET /meta.json [33m404[39m in 1144ms[2m (compile: 634ms, render: 510ms)[22m
+ GET /meta.json [33m404[39m in 215ms[2m (compile: 38ms, render: 177ms)[22m
+ GET /meta.json [33m404[39m in 224ms[2m (compile: 23ms, render: 201ms)[22m
+^C^C
