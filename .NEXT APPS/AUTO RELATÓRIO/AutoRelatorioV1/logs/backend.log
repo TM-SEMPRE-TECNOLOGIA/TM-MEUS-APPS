@@ -1656,3 +1656,14 @@ INFO:     127.0.0.1:56168 - "OPTIONS /api/generate HTTP/1.1" 200 OK
 INFO:     127.0.0.1:56168 - "POST /api/generate HTTP/1.1" 200 OK
 INFO:     127.0.0.1:58109 - "OPTIONS /api/open-folder HTTP/1.1" 200 OK
 INFO:     127.0.0.1:58109 - "POST /api/open-folder HTTP/1.1" 200 OK
+
+============================================================
+Sessão iniciada em 2026-03-28T00:12:37.116158
+============================================================
+
+INFO:     Started server process [26952]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:58232 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53599 - "GET /api/templates HTTP/1.1" 200 OK
