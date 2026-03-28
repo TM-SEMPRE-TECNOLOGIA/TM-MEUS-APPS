@@ -1,10 +1,10 @@
 PROCESS LOG - Geração de Relatório via Web (FastAPI)
 
-Pasta raiz: C:/Users/thiag/Desktop/000 - Minha Demanda/2 - EM ANDAMENTO/LORENA 0857 - (Em andamento)
-Modelo: C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELATÓRIO\AutoRelatorioV1\APP\backend\templates\MODELO - 0908 - SAO PAULO - ATUALIZADO.docx
+Pasta raiz: C:/Users/thiag/Desktop/000 - Minha Demanda/2 - EM ANDAMENTO/CARMOPOLIS DE MINAS 1753 - (em separação)
+Modelo: C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELATÓRIO\AutoRelatorioV1\APP\backend\templates\MODELO - 2056 - DIVINOPOLIS - ATUALIZADO.docx
 Tipo: tradicional
 Saída: C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELATÓRIO\AutoRelatorioV1\APP\backend\output
 
 >>> Gerando relatório...
-[OK] Relatório salvo em: C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELATÓRIO\AutoRelatorioV1\APP\backend\output\RELATÓRIO FOTOGRÁFICO - LORENA 0857 - (Em andamento) - LEVANTAMENTO PREVENTIVO.docx
-[OK] Total de imagens inseridas: 873
+[OK] Relatório salvo em: C:\Users\thiag\TM-MEUS-APPS\.NEXT APPS\AUTO RELATÓRIO\AutoRelatorioV1\APP\backend\output\RELATÓRIO FOTOGRÁFICO - CARMOPOLIS DE MINAS 1753 - (em separação) - LEVANTAMENTO PREVENTIVO.docx
+[OK] Total de imagens inseridas: 418

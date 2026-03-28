@@ -921,3 +921,75 @@ Sessão iniciada em 2026-03-27T01:59:04.438165
  GET /meta.json [33m404[39m in 1423ms[2m (compile: 1298ms, render: 125ms)[22m
  GET / [32m200[39m in 124ms[2m (compile: 25ms, render: 99ms)[22m
  GET /meta.json [33m404[39m in 174ms[2m (compile: 33ms, render: 141ms)[22m
+
+============================================================
+Sessão iniciada em 2026-03-27T02:30:37.602502
+============================================================
+
+> nx-relatorios-sp@1.0.0 dev
+> next dev
+[1m[38;2;173;127;168m▲ Next.js 16.1.6[39m[22m (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.100.11:3000
+[32m[1m✓[22m[39m Starting...
+[32m[1m✓[22m[39m Ready in 1802ms
+ GET / [32m200[39m in 4.2s[2m (compile: 3.4s, render: 776ms)[22m
+ GET /meta.json [33m404[39m in 738ms[2m (compile: 254ms, render: 484ms)[22m
+ GET /meta.json [33m404[39m in 251ms[2m (compile: 30ms, render: 221ms)[22m
+ GET /meta.json [33m404[39m in 158ms[2m (compile: 19ms, render: 139ms)[22m
+^C^C
+
+============================================================
+Sessão iniciada em 2026-03-27T02:37:28.947980
+============================================================
+
+> nx-relatorios-sp@1.0.0 dev
+> next dev
+[1m[38;2;173;127;168m▲ Next.js 16.1.6[39m[22m (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.100.11:3000
+[32m[1m✓[22m[39m Starting...
+[32m[1m✓[22m[39m Ready in 5.8s
+[37m[1m○[22m[39m Compiling / ...
+ GET / [32m200[39m in 5.7s[2m (compile: 4.7s, render: 1010ms)[22m
+ GET /meta.json [33m404[39m in 903ms[2m (compile: 293ms, render: 610ms)[22m
+ GET /meta.json [33m404[39m in 392ms[2m (compile: 46ms, render: 346ms)[22m
+ GET /meta.json [33m404[39m in 164ms[2m (compile: 26ms, render: 138ms)[22m
+ GET / [32m200[39m in 175ms[2m (compile: 25ms, render: 150ms)[22m
+ GET /meta.json [33m404[39m in 138ms[2m (compile: 27ms, render: 111ms)[22m
+ GET /meta.json [33m404[39m in 161ms[2m (compile: 19ms, render: 142ms)[22m
+[32m[1m✓[22m[39m Compiled in 337ms
+[33m[1m⚠[22m[39m Fast Refresh had to perform a full reload due to a runtime error.
+ GET / [32m200[39m in 603ms[2m (compile: 201ms, render: 402ms)[22m
+ GET /meta.json [33m404[39m in 180ms[2m (compile: 19ms, render: 161ms)[22m
+[32m[1m✓[22m[39m Compiled in 418ms
+^C^C
+
+============================================================
+Sessão iniciada em 2026-03-27T23:19:43.599714
+============================================================
+
+> nx-relatorios-sp@1.0.0 dev
+> next dev
+[1m[38;2;173;127;168m▲ Next.js 16.1.6[39m[22m (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.100.11:3000
+[32m[1m✓[22m[39m Starting...
+[32m[1m✓[22m[39m Ready in 1876ms
+^C^C
+
+============================================================
+Sessão iniciada em 2026-03-27T23:20:24.076719
+============================================================
+
+> nx-relatorios-sp@1.0.0 dev
+> next dev
+[1m[38;2;173;127;168m▲ Next.js 16.1.6[39m[22m (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.100.11:3000
+[32m[1m✓[22m[39m Starting...
+[32m[1m✓[22m[39m Ready in 1518ms
+ GET / [32m200[39m in 2.3s[2m (compile: 1776ms, render: 526ms)[22m
+ GET /meta.json [33m404[39m in 1573ms[2m (compile: 670ms, render: 903ms)[22m
+ GET /meta.json [33m404[39m in 605ms[2m (compile: 25ms, render: 581ms)[22m
+ GET /meta.json [33m404[39m in 192ms[2m (compile: 32ms, render: 160ms)[22m

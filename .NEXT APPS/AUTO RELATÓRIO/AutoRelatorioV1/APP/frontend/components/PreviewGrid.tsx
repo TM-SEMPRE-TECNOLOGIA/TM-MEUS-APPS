@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { LayoutGrid, ClipboardCheck, MapPin, Eye, Paintbrush, Ruler, Info, CornerDownRight, Zap, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
