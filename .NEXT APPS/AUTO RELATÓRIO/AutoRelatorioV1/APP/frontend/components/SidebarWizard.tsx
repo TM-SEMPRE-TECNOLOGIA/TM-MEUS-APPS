@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { FolderOpen, Play, ChevronDown, ChevronUp, FileText, Settings, Eye } from 'lucide-react';
@@ -217,3 +217,4 @@ export default function SidebarWizard({
     </aside>
   );
 }
+

@@ -145,6 +145,21 @@ export default function Home() {
     }
   };
 
+  const resetApp = () => {
+    if (window.confirm("Tem certeza que deseja resetar todo o progresso?")) {
+      setPastaRaiz('');
+      setModeloSelecionado(templates.length > 0 ? templates[0] : '');
+      setPastaSaida('');
+      setConteudo(null);
+      setDocGerado(null);
+      setActiveStep(1);
+      setLogs([
+        { msg: "Sistema reiniciado com sucesso.", type: 'success' },
+        { msg: "Relatório limpo. Aguardando nova entrada no 'Diretório Raiz'...", type: 'info' }
+      ]);
+    }
+  };
+
   const openFolder = async (path: string) => {
     try {
       await fetch(`${API_URL}/api/open-folder`, {
@@ -185,20 +200,20 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50/50 flex flex-col font-sans selection:bg-brand-primary/10">
       
       {/* Header Premium - Desktop Reference */}
-      <header className="h-20 bg-white border-b border-slate-100 flex items-center px-10 sticky top-0 z-50">
-        <div className="flex items-center gap-10">
+      <header className="h-16 bg-white border-b border-slate-100 flex items-center px-8 sticky top-0 z-50">
+        <div className="flex items-center gap-8">
           <div className="flex items-center gap-3">
-             <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center shadow-lg shadow-brand-primary/20">
-                <FileText className="text-white" size={20} />
+             <div className="w-9 h-9 rounded-xl bg-brand-primary flex items-center justify-center shadow-lg shadow-brand-primary/20">
+                <FileText className="text-white" size={18} />
              </div>
              <div className="flex flex-col">
-               <h1 className="text-lg font-black text-slate-800 leading-none">NX Relatórios</h1>
-               <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-1">v2.1.0</span>
+               <h1 className="text-md font-black text-slate-800 leading-none">NX Relatórios</h1>
+               <span className="text-[7px] font-bold text-slate-400 uppercase tracking-widest mt-1">v2.1.0</span>
              </div>
           </div>
 
-          <nav className="flex items-center h-20 gap-8">
-             {['Dashboard', 'Logs de Execução'].map(tab => (
+          <nav className="flex items-center h-16 gap-6">
+             {['Dashboard'].map(tab => (
                <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -212,13 +227,13 @@ export default function Home() {
         </div>
 
         <div className="ml-auto flex items-center gap-3">
-           <button onClick={() => openFolder('output')} className="h-11 px-6 bg-slate-100 text-slate-700 text-[12px] font-bold rounded-xl hover:bg-slate-200 transition-colors">
+           <button onClick={() => openFolder('output')} className="h-10 px-5 bg-slate-100 text-slate-700 text-[11px] font-bold rounded-xl hover:bg-slate-200 transition-colors">
               Abrir Saída
            </button>
            <button 
             disabled={!docGerado} 
             onClick={handleDownload}
-            className={`h-11 px-6 bg-brand-primary text-white text-[12px] font-bold rounded-xl shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary transition-colors ${!docGerado ? 'opacity-40 cursor-not-allowed' : ''}`}
+            className={`h-10 px-5 bg-brand-primary text-white text-[11px] font-bold rounded-xl shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary transition-colors ${!docGerado ? 'opacity-40 cursor-not-allowed' : ''}`}
            >
               Baixar Relatório
            </button>
@@ -257,8 +272,9 @@ export default function Home() {
 
       {/* Footer Console (Fixed Bottom) */}
       <footer className="w-full">
-        <ConsoleWatcher logs={logs} />
+        <ConsoleWatcher logs={logs} onReset={resetApp} />
       </footer>
     </div>
   );
 }
+

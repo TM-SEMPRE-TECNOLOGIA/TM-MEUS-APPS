@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutGrid, ClipboardCheck, MapPin, Eye, Paintbrush, Ruler, Info, CornerDownRight, Zap, Target } from 'lucide-react';
+import { LayoutGrid, MapPin, Eye, Paintbrush, Info, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface PreviewGridProps {
@@ -30,16 +30,18 @@ export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
   };
 
   return (
-    <div className="glass-panel rounded-2xl flex-1 flex flex-col shadow-[0_32px_64px_-16px_rgba(0,0,0,0.05)] relative overflow-hidden bg-white border-slate-100">
-      <div className="px-8 py-5 border-b border-slate-50 flex items-center justify-between">
+    <div className={`glass-panel flex flex-col relative overflow-hidden bg-white transition-all duration-500 ${!conteudo ? 'h-[425px]' : 'flex-1 min-h-[425px]'}`}>
+      <div className="px-8 py-4 border-b border-brand-primary/10 flex items-center justify-between bg-slate-50/50">
         <div className="flex items-center gap-3">
           <div className="w-6 h-6 flex items-center justify-center text-brand-primary">
-            <LayoutGrid size={18} strokeWidth={2.5} />
+            <LayoutGrid size={16} strokeWidth={2} />
           </div>
-          <h3 className="font-bold text-[13px] text-slate-700">Visualização da Estrutura</h3>
+          <h3 className="font-bold text-[13px] text-slate-700 uppercase tracking-wide">Visualização da Estrutura</h3>
         </div>
         <div className="flex gap-1.5">
-           {[1,2,3].map(i => <div key={i} className="w-2 h-2 rounded-full bg-slate-200" />)}
+           <div className="w-2 h-2 rounded-full bg-slate-300" />
+           <div className="w-2 h-2 rounded-full bg-slate-300" />
+           <div className="w-2 h-2 rounded-full bg-slate-300" />
         </div>
       </div>
 
@@ -61,7 +63,7 @@ export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
                     key={idx} 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className={`relative aspect-square rounded-xl border-2 overflow-hidden bg-slate-50 transition-all hover:ring-4 hover:ring-brand-primary/10 group ${isFachada ? 'border-brand-primary shadow-md' : 'border-slate-100 shadow-sm'}`}
+                    className={`relative aspect-square rounded-lg border-2 overflow-hidden bg-slate-50 transition-all hover:ring-2 hover:ring-brand-primary/20 group ${isFachada ? 'border-brand-primary shadow-sm' : 'border-slate-200'}`}
                    >
                      <img 
                       src={`${apiUrl}/api/thumbnail?path=${encodeURIComponent(imgPath)}`} 
@@ -91,14 +93,14 @@ export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
                   );
                } else if (descText) {
                   return (
-                    <div key={idx} className="col-span-full py-5 px-6 bg-slate-50/50 border border-slate-100 rounded-2xl my-4 text-slate-600 font-medium text-[13px] leading-relaxed italic pr-12 relative">
-                        <div className="absolute right-6 top-6 text-slate-200"><Info size={24} /></div>
-                        "{descText.replace(/<RED>|<\/RED>/g, '')}â€
+                    <div key={idx} className="col-span-full py-5 px-6 bg-slate-50 border-l-4 border-brand-accent my-4 text-slate-700 font-medium text-[13px] leading-relaxed pr-12 relative rounded-r-lg shadow-sm">
+                        <div className="absolute right-6 top-6 text-brand-accent/30"><Info size={20} /></div>
+                        "{descText.replace(/<RED>|<\/RED>/g, '')}"
                     </div>
                   );
                } else if (tableData) {
                   return (
-                    <div key={idx} className="col-span-full md:col-span-4 lg:col-span-3 py-5 px-6 bg-brand-primary text-white rounded-2xl flex items-center justify-between shadow-xl shadow-brand-primary/20 my-4 transform hover:scale-[1.02] transition-transform">
+                    <div key={idx} className="col-span-full md:col-span-4 lg:col-span-3 py-5 px-6 bg-brand-primary text-white rounded-xl flex items-center justify-between border border-brand-secondary my-4">
                        <div className="flex flex-col">
                           <span className="text-[9px] font-black uppercase tracking-[0.25em] opacity-60 mb-1">Medição Estimada</span>
                           <span className="text-[14px] font-black uppercase tracking-widest">{tableData.tipo === 'pintura' ? 'Consumo de Pintura' : 'Mobília'}</span>
@@ -115,8 +117,8 @@ export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
                   );
                } else if (detailText) {
                   return (
-                    <div key={idx} className="col-span-full py-3 mt-10 flex items-center justify-center bg-slate-900 rounded-2xl shadow-2xl overflow-hidden relative group">
-                       <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-brand-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div key={idx} className="col-span-full py-3 mt-10 flex items-center justify-center bg-slate-800 rounded-lg border border-slate-700 overflow-hidden relative group">
+                       <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                        <span className="text-[13px] font-black text-white uppercase tracking-[0.4em] relative z-10">{detailText}</span>
                     </div>
                   );
@@ -125,16 +127,16 @@ export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
              })}
           </div>
         ) : (
-          <div className="h-full flex flex-col items-center justify-center text-center py-20">
+          <div className="h-full flex flex-col items-center justify-center text-center py-4">
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="w-32 h-32 rounded-full bg-slate-50 flex items-center justify-center mb-8 border border-slate-100 shadow-inner"
+              className="w-16 h-16 rounded-full flex items-center justify-center mb-4 border-2 border-dashed border-slate-200"
             >
-              <ClipboardCheck size={48} className="text-slate-200" strokeWidth={1} />
+              <LayoutGrid size={24} className="text-slate-300" strokeWidth={1.5} />
             </motion.div>
-            <h4 className="text-xl font-bold text-slate-800 mb-2">Aguardando Análise</h4>
-            <p className="text-[13px] text-slate-400 max-w-sm leading-relaxed font-medium">
+            <h4 className="text-[14px] font-black text-slate-700 mb-2 uppercase tracking-wide">Aguardando Análise</h4>
+            <p className="text-[11px] text-slate-400 max-w-xs leading-relaxed font-medium">
               Insira o diretório raiz e clique em configurar para que o motor possa mapear a árvore de arquivos do projeto e gerar a prévia estrutural.
             </p>
           </div>
@@ -143,4 +145,3 @@ export default function PreviewGrid({ conteudo, apiUrl }: PreviewGridProps) {
     </div>
   );
 }
-
