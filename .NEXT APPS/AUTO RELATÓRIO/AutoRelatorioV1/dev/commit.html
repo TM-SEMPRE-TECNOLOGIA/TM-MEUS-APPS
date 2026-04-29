@@ -392,7 +392,7 @@
     </section>
     <div class="stats-bar">
         <div class="stat-item">
-            <div class="stat-value">8</div>
+            <div class="stat-value">9</div>
             <div class="stat-label">Commits</div>
         </div>
         <div class="stat-item">
@@ -463,6 +463,11 @@
                     <span class="node-date">09/03</span>
                     <div class="node-dot">📄</div>
                     <span class="node-label">Descrições Dinâmicas</span>
+                </div>
+                <div class="timeline-node" onclick="showCard(10, this)">
+                    <span class="node-date">27/03</span>
+                    <div class="node-dot">💾</div>
+                    <span class="node-label">Checkpoint v1</span>
                 </div>
             </div>
         </div>
@@ -579,6 +584,19 @@
                 <li><span class="check">✓</span>Seletor dropdown com 4 opções de texto</li>
                 <li><span class="check">✓</span>Regex find/replace no conteúdo do Word</li>
                 <li><span class="check">✓</span>Compatível com modo Tradicional e SP</li>
+            </ul>
+        </div>
+        <div class="detail-card" data-card="10">
+            <div class="card-header">
+                <h2 class="card-title">Checkpoint autorelatoriov1</h2>
+                <span class="card-badge">STABLE</span>
+            </div>
+            <p class="card-desc">Versão funcional estável antes de melhorias visuais.</p>
+            <ul class="card-features">
+                <li><span class="check">✓</span>Estabilização do Launcher Integrado</li>
+                <li><span class="check">✓</span>Correção de Panics do Turbopack (Desativado)</li>
+                <li><span class="check">✓</span>Proteção contra TypeErrors no PreviewGrid</li>
+                <li><span class="check">✓</span>Consolidação de logs de backend e frontend</li>
             </ul>
         </div>
     </div>

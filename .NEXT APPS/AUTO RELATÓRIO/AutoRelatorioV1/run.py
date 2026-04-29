@@ -45,6 +45,41 @@ def get_python():
     return sys.executable
 
 
+def kill_port(port: int):
+    """Mata qualquer processo usando a porta especificada (Windows)."""
+    if os.name != "nt":
+        return
+    try:
+        result = subprocess.run(
+            f'netstat -ano | findstr ":{port} "',
+            shell=True, capture_output=True, text=True
+        )
+        pids = set()
+        for line in result.stdout.splitlines():
+            parts = line.split()
+            if parts and parts[-1].isdigit():
+                # Apenas linhas LISTENING ou ESTABLISHED na porta certa
+                if f":{port}" in parts[1]:
+                    pids.add(parts[-1])
+        for pid in pids:
+            subprocess.run(f'taskkill /F /PID {pid}', shell=True,
+                           capture_output=True)
+            console.print(f"  [dim yellow]🔥 Porta {port} liberada (PID {pid})[/]")
+    except Exception:
+        pass
+
+
+def clean_nextjs_lock():
+    """Remove o arquivo de lock do Next.js se existir."""
+    lock_file = os.path.join(FRONTEND_DIR, ".next", "dev", "lock")
+    if os.path.isfile(lock_file):
+        try:
+            os.remove(lock_file)
+            console.print("  [dim yellow]🔥 Lock do Next.js removido[/]")
+        except Exception:
+            pass
+
+
 def show_banner():
     """Exibe o banner profissional do sistema."""
     now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
@@ -128,6 +163,10 @@ def start_process(cmd: list, cwd: str, label: str, color: str, log_name: str) ->
     """Inicia um subprocesso com stdout/stderr capturados."""
     log_file = os.path.join(LOG_DIR, log_name)
 
+    # Fix para rodar npm no Windows sem erro de FileNotFound
+    if os.name == "nt" and cmd and cmd[0] == "npm":
+        cmd[0] = "npm.cmd"
+
     env = os.environ.copy()
     # Forçar saída sem buffer para o Python
     env["PYTHONUNBUFFERED"] = "1"
@@ -199,7 +238,50 @@ def show_ready():
     console.print()
 
 
-def shutdown(signum=None, frame=None):
+def show_last_logs(log_name: str, lines: int = 40):
+    """Exibe as últimas N linhas do log no terminal."""
+    log_file = os.path.join(LOG_DIR, log_name)
+    if not os.path.isfile(log_file):
+        return
+    try:
+        with open(log_file, "r", encoding="utf-8", errors="replace") as f:
+            content = f.readlines()
+        tail = content[-lines:]
+        console.print()
+        console.print(f"  [bold yellow]📄 Últimas {lines} linhas de {log_name}:[/]")
+        console.print("  " + "─" * 60)
+        for line in tail:
+            line = line.rstrip()
+            if not line:
+                continue
+            style = "dim white"
+            ll = line.lower()
+            if any(k in ll for k in ["error", "erro", "exception", "traceback", "failed", "runtimeerror"]):
+                style = "bold red"
+            elif any(k in ll for k in ["warning", "warn"]):
+                style = "yellow"
+            console.print(f"  [dim]│[/] [{style}]{line}[/]")
+        console.print("  " + "─" * 60)
+    except Exception:
+        pass
+
+
+def pause_on_error():
+    """Pausa com mensagem clara para o usuário ler o erro."""
+    console.print()
+    console.print(Panel(
+        "[bold red]❌ O sistema encerrou com erro.[/]\n"
+        "[dim]Leia os logs acima e pressione [bold]ENTER[/bold] para fechar.[/]",
+        border_style="red",
+        box=box.ROUNDED,
+    ))
+    try:
+        input()
+    except Exception:
+        time.sleep(5)
+
+
+def shutdown(signum=None, frame=None, error: bool = False):
     """Encerra todos os subprocessos de forma limpa."""
     console.print()
     console.print("  [dim yellow]⏳ Encerrando processos...[/]")
@@ -222,6 +304,8 @@ def shutdown(signum=None, frame=None):
 
     console.print("  [bold green]✅ Tudo encerrado. Até a próxima![/]")
     console.print()
+    if error:
+        pause_on_error()
     sys.exit(0)
 
 
@@ -235,6 +319,13 @@ def main():
 
     # Banner
     show_banner()
+
+    # ─── PASSO 0: Limpar portas e locks ──────────────────────────
+    console.print("  [dim]🧹 Verificando portas em uso...[/]")
+    kill_port(5000)
+    kill_port(3000)
+    clean_nextjs_lock()
+    console.print()
 
     # ─── PASSO 1: Backend ───────────────────────────────────────
     python_path = get_python()
@@ -252,9 +343,10 @@ def main():
     backend_ok = wait_for_backend()
 
     if not backend_ok:
-        console.print("  [bold red]❌ Backend não respondeu em {HEALTH_TIMEOUT}s[/]")
-        console.print("  [dim]Verifique os logs em: logs/backend.log[/]")
-        shutdown()
+        console.print(f"  [bold red]❌ Backend não respondeu em {HEALTH_TIMEOUT}s[/]")
+        console.print("  [dim]Verifique os logs abaixo:[/]")
+        show_last_logs("backend.log")
+        shutdown(error=True)
         return
 
     console.print("  [bold green]✅[/] [white]Backend rodando na porta 5000[/]")
@@ -279,20 +371,25 @@ def main():
     show_ready()
 
     # Manter vivo e monitorar processos
+    crashed = False
     try:
         while True:
             # Verificar se algum processo morreu
             if backend_proc.poll() is not None:
-                console.print("\n  [bold red]⚠  Backend caiu! Verificando logs...[/]")
+                console.print("\n  [bold red]⚠  Backend caiu![/]")
+                show_last_logs("backend.log")
+                crashed = True
                 break
             if frontend_proc.poll() is not None:
-                console.print("\n  [bold red]⚠  Frontend caiu! Verificando logs...[/]")
+                console.print("\n  [bold red]⚠  Frontend caiu![/]")
+                show_last_logs("frontend.log")
+                crashed = True
                 break
             time.sleep(1)
     except KeyboardInterrupt:
         pass
 
-    shutdown()
+    shutdown(error=crashed)
 
 
 if __name__ == "__main__":
