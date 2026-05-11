@@ -63,7 +63,25 @@
       "Bash(mv \"MODELO - DIVINÓPOLIS - 2056.docx\" \"MODELO - 2056 - DIVINÓPOLIS.docx\")",
       "Bash(mv \"MODELO - MATO GROSSO DO SUL - 6122.docx\" \"MODELO - 6122 - MATO GROSSO DO SUL.docx\")",
       "Bash(mv \"MODELO - SALINAS - 2626.docx\" \"MODELO - 2626 - SALINAS.docx\")",
-      "Bash(mv \"MODELO - SAO JOSE DO RIO PRETO - 1565.docx\" \"MODELO - 1565 - SAO JOSE DO RIO PRETO.docx\")"
+      "Bash(mv \"MODELO - SAO JOSE DO RIO PRETO - 1565.docx\" \"MODELO - 1565 - SAO JOSE DO RIO PRETO.docx\")",
+      "Bash(pkill -f \"python run.py\")",
+      "Bash(python -m uvicorn server:app --host 127.0.0.1 --port 5000)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(find \"C:\\\\\\\\Users\\\\\\\\thiag\\\\\\\\Desktop\\\\\\\\TM-MEUS-APPS\\\\\\\\01_Golden_Apps_meu_uso\\\\\\\\AutoRelatorio_V2\" -type f -name \"*.py\")",
+      "WebSearch",
+      "Bash(xargs grep *)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:exceptionnotfound.net)",
+      "Bash(git clone *)",
+      "Bash(rsync -av --exclude='node_modules' --exclude='.next' --exclude='.git' \"C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V2/\" \"C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V3/\")",
+      "PowerShell(Remove-Item -Path \"C:\\\\Users\\\\thiag\\\\Desktop\\\\TM-MEUS-APPS\\\\01_Golden_Apps_meu_uso\\\\AutoRelatorio_V3\" -Recurse -Force -Confirm:$false -ErrorAction SilentlyContinue)",
+      "PowerShell(Copy-Item -Path \"C:\\\\Users\\\\thiag\\\\Desktop\\\\TM-MEUS-APPS\\\\01_Golden_Apps_meu_uso\\\\AutoRelatorio_V2\" -Destination \"C:\\\\Users\\\\thiag\\\\Desktop\\\\TM-MEUS-APPS\\\\01_Golden_Apps_meu_uso\\\\AutoRelatorio_V3\" -Recurse -Force)",
+      "Bash(cp -r C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V3/AutoRelatorio_V2/APP/backend C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V3/APP/)",
+      "Bash(cp -r C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V2/Documentos C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V3/)",
+      "Bash(cp -r C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V2/logs C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V3/)",
+      "Bash(cp -r C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V2/Minha.pasta.projeto.Autorelatorio.V2 C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V3/)",
+      "Bash(rsync -av --exclude=node_modules --exclude=.next C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V2/APP/frontend/ C:/Users/thiag/Desktop/TM-MEUS-APPS/01_Golden_Apps_meu_uso/AutoRelatorio_V3/APP/frontend/)"
     ]
   }
 }
