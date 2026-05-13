@@ -45,6 +45,7 @@ class ScanRequest(BaseModel):
     pasta_raiz: str
     pasta_saida: Optional[str] = None
     tipo_relatorio: str = "tradicional"
+    reading_mode: str = "disco"  # "disco" (pastas estruturadas) ou "app" (pasta plana)
 
 class GenerateRequest(BaseModel):
     pasta_raiz: str
@@ -157,12 +158,22 @@ async def scan_directory(data: ScanRequest):
     def dummy_logger(msg): pass
     
     try:
-        if data.tipo_relatorio == "sp":
+        # reading_mode define HOW to read folders (disco=estruturado ou app=plano)
+        # tipo_relatorio define HOW to generate Word (sp, sp2, tradicional)
+
+        if data.reading_mode == "app":
+            # Modo APP: lê todas as imagens de forma plana
+            from generator_app import build_content_app
+            conteudo = build_content_app(pasta_raiz, log_errors, logger=dummy_logger)
+        elif data.tipo_relatorio == "sp":
+            # Modo DISCO + SP: lê pastas com estrutura SP
             from generator_sp import build_content_sp
             conteudo = build_content_sp(pasta_raiz, log_errors, logger=dummy_logger)
         elif data.tipo_relatorio == "sp2":
+            # Modo DISCO + SP2: lê pastas com estrutura SP2
             conteudo = build_content_sp2(pasta_raiz, log_errors, logger=dummy_logger)
         else:
+            # Modo DISCO + Tradicional: lê pastas com estrutura tradicional
             conteudo = build_content_from_root(pasta_raiz, log_errors, logger=dummy_logger)
         return {"conteudo": conteudo}
     except Exception as e:
