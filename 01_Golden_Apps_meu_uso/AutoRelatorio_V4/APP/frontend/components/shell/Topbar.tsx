@@ -84,16 +84,17 @@ export function Topbar({ actions }: TopbarProps) {
 
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         {/* Seletor de Modo de Leitura */}
-        <div style={{ 
-          display: "flex", 
-          alignItems: "center", 
-          background: "var(--tm-bg-muted)", 
-          padding: 2, 
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          background: "var(--tm-bg-muted)",
+          padding: 2,
           borderRadius: 8,
           marginRight: 8
         }}>
           <button
             onClick={() => setReadingMode('disco')}
+            title="Modo DISCO: Lê estrutura de pastas organizadas manualmente"
             style={{
               padding: "4px 10px",
               fontSize: 10,
@@ -111,6 +112,7 @@ export function Topbar({ actions }: TopbarProps) {
           </button>
           <button
             onClick={() => setReadingMode('app')}
+            title="Modo APP: Lê pasta plana, organize no app"
             style={{
               padding: "4px 10px",
               fontSize: 10,

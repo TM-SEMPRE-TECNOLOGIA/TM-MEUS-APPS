@@ -150,7 +150,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   scanFolder: async () => {
-    const { pastaRaiz, pastaSaida, tipoRelatorio, apiUrl, addLog } = get();
+    const { pastaRaiz, pastaSaida, tipoRelatorio, readingMode, apiUrl, addLog } = get();
     if (!pastaRaiz) return addLog("Selecione uma pasta raiz antes de escanear.", "error");
 
     set({ isScanning: true, conteudo: null, photos: [], selection: new Set() });
@@ -160,7 +160,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       const res = await fetch(`${apiUrl}/api/scan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pasta_raiz: pastaRaiz, pasta_saida: pastaSaida, tipo_relatorio: tipoRelatorio })
+        body: JSON.stringify({ pasta_raiz: pastaRaiz, pasta_saida: pastaSaida, tipo_relatorio: tipoRelatorio, reading_mode: readingMode })
       });
       const data = await res.json();
       
